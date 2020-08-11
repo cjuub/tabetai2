@@ -14,6 +14,11 @@ target_include_directories(${PROJECT_NAME}
         include
 )
 
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+        warning
+)
+
 set_target_properties(${PROJECT_NAME}
     PROPERTIES
         LINKER_LANGUAGE CXX
