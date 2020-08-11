@@ -5,6 +5,7 @@
 #include "ingredient.h"
 
 #include <memory>
+#include <optional>
 
 namespace tabetai2::core::ingredient {
 
