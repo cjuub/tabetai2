@@ -9,7 +9,7 @@ namespace tabetai2::application {
 
 class ServerFactory : core::server::ServerFactory {
 public:
-    std::unique_ptr<core::server::Server> create() override;
+    std::unique_ptr<core::server::Server> create() const override;
 };
 
 }
