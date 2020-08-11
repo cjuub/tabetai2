@@ -1,25 +1,18 @@
 project(database)
 
-add_library(${PROJECT_NAME}
-    include/database/database.hpp
-)
+add_library(${PROJECT_NAME} INTERFACE)
 
 target_compile_features(${PROJECT_NAME}
-    PRIVATE
+    INTERFACE
         cxx_std_20
 )
 
 target_include_directories(${PROJECT_NAME}
-    PUBLIC
+    INTERFACE
         include
 )
 
 target_link_libraries(${PROJECT_NAME}
-    PRIVATE
+    INTERFACE
         warning
-)
-
-set_target_properties(${PROJECT_NAME}
-    PROPERTIES
-        LINKER_LANGUAGE CXX
 )
