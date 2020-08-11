@@ -17,14 +17,14 @@ void IngredientRepository::erase(const Ingredient& ingredient) {
     m_database->erase(ingredient);
 }
 
-std::optional<Ingredient> IngredientRepository::find_by_id(int id) {
+std::optional<Ingredient> IngredientRepository::find_by_id(int id) const {
     (void)id;
     // TODO fix this shit
 //    return m_database->get(id);
     return {};
 }
 
-std::optional<Ingredient> IngredientRepository::find_by_name(const std::string& name) {
+std::optional<Ingredient> IngredientRepository::find_by_name(const std::string& name) const {
     auto ingredients = m_database->get_all();
 
     for (auto& ingredient : ingredients) {

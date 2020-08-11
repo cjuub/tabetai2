@@ -16,8 +16,8 @@ public:
     void add(const Ingredient& ingredient);
     void erase(const Ingredient& ingredient);
 
-    std::optional<Ingredient> find_by_id(int id);
-    std::optional<Ingredient> find_by_name(const std::string& name);
+    std::optional<Ingredient> find_by_id(int id) const;
+    std::optional<Ingredient> find_by_name(const std::string& name) const;
 
 private:
     std::unique_ptr<database::Database<Ingredient>> m_database;

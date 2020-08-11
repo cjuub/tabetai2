@@ -16,11 +16,11 @@ public:
         m_database.erase(t.id());
     };
 
-    T get(int id) {
+    T get(int id) const {
         return m_database[id];
     }
 
-    std::vector<T> get_all() {
+    std::vector<T> get_all() const {
         std::vector<T> entries;
         for (auto& entry : m_database) {
             entries.push_back(entry.second);

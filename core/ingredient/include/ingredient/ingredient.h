@@ -14,7 +14,7 @@ public:
 
 private:
     const int m_id;
-    std::string m_name;
+    const std::string m_name;
 };
 
 }
