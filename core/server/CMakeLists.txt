@@ -3,7 +3,8 @@ project(server)
 add_library(${PROJECT_NAME}
     include/server/server.h
     include/server/server_factory.h
-    src/server.cpp
+    src/impl/server.h
+    src/impl/server.cpp
     src/server_factory.cpp
 )
 
@@ -15,11 +16,12 @@ target_compile_features(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME}
     PUBLIC
         include
+    PRIVATE
+        src
 )
 
 target_link_libraries(${PROJECT_NAME}
-    PUBLIC
-        ingredient
     PRIVATE
+        ingredient
         warning
 )
