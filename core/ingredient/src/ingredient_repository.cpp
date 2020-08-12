@@ -18,10 +18,7 @@ void IngredientRepository::erase(const Ingredient& ingredient) {
 }
 
 std::optional<Ingredient> IngredientRepository::find_by_id(int id) const {
-    (void)id;
-    // TODO fix this shit
-//    return m_database->get(id);
-    return {};
+    return m_database->get(id);
 }
 
 std::optional<Ingredient> IngredientRepository::find_by_name(const std::string& name) const {

@@ -17,7 +17,7 @@ public:
     };
 
     T get(int id) const {
-        return m_database[id];
+        return m_database.at(id);
     }
 
     std::vector<T> get_all() const {
