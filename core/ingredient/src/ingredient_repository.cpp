@@ -5,16 +5,8 @@ namespace tabetai2::core::ingredient {
 using namespace database;
 
 IngredientRepository::IngredientRepository(std::unique_ptr<Database<Ingredient>> database)
-: m_database(std::move(database)) {
+: Repository(std::move(database)) {
 
-}
-
-void IngredientRepository::add(const Ingredient& ingredient) {
-    m_database->add(ingredient);
-}
-
-void IngredientRepository::erase(const Ingredient& ingredient) {
-    m_database->erase(ingredient);
 }
 
 std::optional<Ingredient> IngredientRepository::find_by_id(int id) const {
