@@ -4,6 +4,7 @@ add_library(${PROJECT_NAME}
     include/server/server.h
     include/server/server_factory.h
     src/server.cpp
+    src/server_factory.cpp
 )
 
 target_compile_features(${PROJECT_NAME}
@@ -17,7 +18,8 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME}
-    PRIVATE
+    PUBLIC
         ingredient
+    PRIVATE
         warning
 )
