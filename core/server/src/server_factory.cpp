@@ -1,8 +1,8 @@
-#include "server_factory.h"
+#include "server/server_factory.h"
 
 #include <server/server.h>
 
-namespace tabetai2::application {
+namespace tabetai2::core::server {
 
 using namespace core::database;
 using namespace core::ingredient;

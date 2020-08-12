@@ -8,8 +8,7 @@ namespace tabetai2::core::server {
 
 class ServerFactory {
 public:
-    virtual ~ServerFactory() = default;
-    virtual std::unique_ptr<Server> create() const = 0;
+    std::unique_ptr<core::server::Server> create() const;
 };
 
 }

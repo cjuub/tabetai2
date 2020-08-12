@@ -1,7 +1,5 @@
-#include "server_factory.h"
-
-using namespace tabetai2::application;
+#include "server/server_factory.h"
 
 int main() {
-    ServerFactory().create()->run();
+    tabetai2::core::server::ServerFactory().create()->run();
 }
