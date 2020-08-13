@@ -13,13 +13,13 @@ class Repository : public util::Observable {
 public:
     explicit Repository(std::unique_ptr<database::Database<T>> database) : m_database(std::move(database)) {}
 
-    void add(const T& ingredient) {
-        m_database->add(ingredient);
+    void add(const T& t) {
+        m_database->add(t);
         notify_observers();
     }
 
-    void erase(const T& ingredient) {
-        m_database->erase(ingredient);
+    void erase(const T& t) {
+        m_database->erase(t);
         notify_observers();
     }
 
