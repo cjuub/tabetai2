@@ -8,5 +8,6 @@ add_subdirectory(core/database)
 add_subdirectory(core/ingredient)
 add_subdirectory(core/repository)
 add_subdirectory(core/server)
+add_subdirectory(core/util)
 
 add_subdirectory(application)
