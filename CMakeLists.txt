@@ -2,12 +2,14 @@ cmake_minimum_required(VERSION 3.17)
 
 project(tabetai2)
 
-add_subdirectory(warning)
-
+add_subdirectory(application)
 add_subdirectory(core/database)
 add_subdirectory(core/ingredient)
 add_subdirectory(core/repository)
 add_subdirectory(core/server)
 add_subdirectory(core/util)
-
-add_subdirectory(application)
+add_subdirectory(third_party/boost)
+add_subdirectory(third_party/websocketpp)
+add_subdirectory(third_party/msgpack_c)
+add_subdirectory(third_party/autobahn_cpp)
+add_subdirectory(warning)
