@@ -3,7 +3,6 @@ project(ingredient)
 add_library(${PROJECT_NAME}
     include/ingredient/ingredient.h
     include/ingredient/ingredient_repository.h
-
     src/ingredient.cpp
     src/ingredient_repository.cpp
 )
@@ -20,7 +19,6 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
-        database
         repository
     PRIVATE
         warning

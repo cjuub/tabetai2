@@ -1,6 +1,5 @@
 #pragma once
 
-#include <database/database.hpp>
 #include <repository/repository.hpp>
 
 #include "ingredient.h"
