@@ -9,10 +9,10 @@ template<class T>
 class Database {
 public:
     void add(T t) {
-        m_database.emplace(t.id(), t);
+        m_database.emplace(t.id(), std::move(t));
     };
 
-    void erase(T t) {
+    void erase(const T& t) {
         m_database.erase(t.id());
     };
 

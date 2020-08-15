@@ -4,6 +4,7 @@
 #include <util/impl/observable.h>
 
 #include <memory>
+#include <utility>
 
 namespace tabetai2::core::repository {
 
@@ -12,8 +13,8 @@ class Repository : public util::impl::Observable {
 public:
     explicit Repository(std::unique_ptr<database::Database<T>> database) : m_database(std::move(database)) {}
 
-    void add(const T& t) {
-        m_database->add(t);
+    void add(T t) {
+        m_database->add(std::move(t));
         notify_observers();
     }
 
