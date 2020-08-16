@@ -14,6 +14,7 @@ FetchContent_GetProperties(msgpack-c
     SOURCE_DIR msgpack-c_SOURCE_DIR
 )
 set(MSGPACK_ROOT "${msgpack-c_SOURCE_DIR}")
+set(AUTOBAHN_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 FetchContent_Declare(
     autobahn_cpp
