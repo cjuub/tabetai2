@@ -1,6 +1,6 @@
 #pragma once
 
-namespace tabetai2::core::util {
+namespace tabetai2::core::data_publisher {
 
 class Publisher {
 public:

@@ -1,11 +1,11 @@
-project(server)
+project(wamp_publisher)
 
 add_library(${PROJECT_NAME}
-    include/server/server.h
-    include/server/server_factory.h
-    src/impl/server.h
-    src/impl/server.cpp
-    src/server_factory.cpp
+    include/wamp_publisher/repository_publisher_factory.h
+
+    src/repository_publisher.cpp
+    src/repository_publisher.h
+    src/repository_publisher_factory.cpp
 )
 
 target_compile_features(${PROJECT_NAME}
@@ -16,14 +16,10 @@ target_compile_features(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME}
     PUBLIC
         include
-    PRIVATE
-        src
 )
 
 target_link_libraries(${PROJECT_NAME}
-    PUBLIC
-        data_publisher
     PRIVATE
+        data_publisher
         ingredient
-        warning
 )

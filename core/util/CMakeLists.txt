@@ -3,7 +3,6 @@ project(util)
 add_library(${PROJECT_NAME}
     include/util/observable.h
     include/util/observer.h
-    include/util/publisher.h
     include/util/impl/observable.h
     src/observable.cpp
 )

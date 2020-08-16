@@ -6,9 +6,10 @@
 namespace tabetai2::core::server::impl {
 
 using namespace ingredient;
+using namespace data_publisher;
 
 Server::Server(std::shared_ptr<IngredientRepository> ingredient_repository,
-               std::vector<std::shared_ptr<util::Publisher>> publishers)
+               std::vector<std::shared_ptr<Publisher>> publishers)
 : m_ingredient_repository(std::move(ingredient_repository)),
   m_publishers(std::move(publishers)) {
 
