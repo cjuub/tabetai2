@@ -6,7 +6,6 @@
 #include <util/observer.h>
 
 #include <memory>
-#include <iostream>
 
 namespace tabetai2::core::data_publisher {
 
