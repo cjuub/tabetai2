@@ -11,7 +11,6 @@ using namespace core::database;
 using namespace core::data_publisher;
 using namespace core::ingredient;
 using namespace core::repository;
-using namespace core::server;
 using namespace core::util;
 
 ServerFactory::ServerFactory(std::unique_ptr<RepositoryPublisherFactory> repository_publisher_factory)
