@@ -21,9 +21,8 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME}
-    PUBLIC
-        autobahn_cpp
     PRIVATE
+        autobahn_cpp
         data_publisher
         ingredient
 )

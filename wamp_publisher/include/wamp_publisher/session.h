@@ -1,8 +1,11 @@
 #pragma once
 
-#include <autobahn/autobahn.hpp>
-
+#include <functional>
 #include <memory>
+
+namespace autobahn {
+class wamp_session;
+}
 
 namespace tabetai2::wamp_publisher {
 
