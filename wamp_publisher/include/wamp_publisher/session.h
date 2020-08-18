@@ -1,6 +1,6 @@
 #pragma once
 
-#include <autobahn/wamp_session.hpp>
+#include <autobahn/autobahn.hpp>
 
 #include <memory>
 

@@ -22,3 +22,8 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(autobahn_cpp)
+
+target_link_libraries(autobahn_cpp
+    INTERFACE
+        $<$<BOOL:${WIN32}>:ws2_32>
+)
