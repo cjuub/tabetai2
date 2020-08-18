@@ -1,6 +1,7 @@
 #include "ingredient_repository_publisher.h"
 #include "wamp_publisher/session.h"
 
+#include <autobahn/autobahn.hpp>
 
 #include <iostream>
 
