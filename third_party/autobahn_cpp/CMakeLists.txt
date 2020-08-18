@@ -18,7 +18,7 @@ set(MSGPACK_ROOT "${msgpack-c_SOURCE_DIR}")
 FetchContent_Declare(
     autobahn_cpp
     GIT_REPOSITORY https://github.com/crossbario/autobahn-cpp.git
-    GIT_TAG        531341709b274c0cb75aff4018b7980e8bb99bb5
+    GIT_TAG        ceddeb73453a1d7678a184ac483a8e349d60ac2a
 )
 
 FetchContent_MakeAvailable(autobahn_cpp)
