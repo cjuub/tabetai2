@@ -16,5 +16,4 @@ target_link_libraries(${PROJECT_NAME}
     INTERFACE
         database
         util
-        warning
 )

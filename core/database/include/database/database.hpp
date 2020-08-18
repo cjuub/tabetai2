@@ -8,6 +8,8 @@ namespace tabetai2::core::database {
 template<class T>
 class Database {
 public:
+    Database() : m_database{} {}
+
     void add(T t) {
         m_database.emplace(t.id(), std::move(t));
     };

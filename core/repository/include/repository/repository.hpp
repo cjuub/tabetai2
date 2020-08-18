@@ -23,6 +23,10 @@ public:
         notify_observers();
     }
 
+    std::vector<T> find_all() const {
+        return m_database->get_all();
+    }
+
 protected:
     std::unique_ptr<database::Database<T>> m_database;
 };

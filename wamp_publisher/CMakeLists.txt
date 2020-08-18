@@ -2,10 +2,12 @@ project(wamp_publisher)
 
 add_library(${PROJECT_NAME}
     include/wamp_publisher/repository_publisher_factory.h
+    include/wamp_publisher/session.h
 
     src/ingredient_repository_publisher.cpp
     src/ingredient_repository_publisher.h
     src/repository_publisher_factory.cpp
+    src/session.cpp
 )
 
 target_compile_features(${PROJECT_NAME}
@@ -19,7 +21,14 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME}
+    PUBLIC
+        autobahn_cpp
     PRIVATE
         data_publisher
         ingredient
+)
+
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE
+        -DBOOST_ASIO_DISABLE_CONCEPTS
 )

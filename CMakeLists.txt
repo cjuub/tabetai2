@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.17)
 
 project(tabetai2)
 
-option(TABETAI2_USE_CONAN "Use Conan instead of FetchContent to download 3rd-party dependencies" OFF)
+option(TABETAI2_USE_CONAN "Use Conan instead of FetchContent to download 3rd-party dependencies" ON)
 
 add_subdirectory(application)
 add_subdirectory(core/database)
