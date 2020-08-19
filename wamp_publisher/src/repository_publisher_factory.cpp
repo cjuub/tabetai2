@@ -9,7 +9,8 @@ namespace tabetai2::wamp_publisher {
 using namespace core::data_publisher;
 using namespace core::ingredient;
 
-RepositoryPublisherFactory::RepositoryPublisherFactory(Session& session) : m_session(session) {
+RepositoryPublisherFactory::RepositoryPublisherFactory(WampSession& session)
+: m_session(session) {
 
 }
 
@@ -17,6 +18,5 @@ std::shared_ptr<Publisher> RepositoryPublisherFactory::create_ingredient_reposit
         std::shared_ptr<IngredientRepository> ingredient_repository) {
     return std::make_shared<IngredientRepositoryPublisher>(ingredient_repository, m_session);
 }
-
 
 }

@@ -1,14 +1,14 @@
-#include "wamp_publisher/session.h"
+#include "wamp_publisher/wamp_session.h"
 
 #include <autobahn/autobahn.hpp>
 
 namespace tabetai2::wamp_publisher {
 
-std::shared_ptr<autobahn::wamp_session> Session::session() {
+std::shared_ptr<autobahn::wamp_session> WampSession::session() {
     return m_session;
 }
 
-void Session::run(std::function<void()> func) {
+void WampSession::run(std::function<void()> func) {
     try {
         boost::asio::io_service io;
         bool debug = true;

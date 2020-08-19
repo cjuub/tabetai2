@@ -12,6 +12,7 @@ class RepositoryPublisherFactory {
 public:
     virtual std::shared_ptr<Publisher> create_ingredient_repository_publisher(
             std::shared_ptr<ingredient::IngredientRepository> ingredient_repository) = 0;
+
     virtual ~RepositoryPublisherFactory() = default;
 };
 

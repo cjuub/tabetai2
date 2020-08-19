@@ -2,12 +2,12 @@ project(wamp_publisher)
 
 add_library(${PROJECT_NAME}
     include/wamp_publisher/repository_publisher_factory.h
-    include/wamp_publisher/session.h
+    include/wamp_publisher/wamp_session.h
 
     src/ingredient_repository_publisher.cpp
     src/ingredient_repository_publisher.h
     src/repository_publisher_factory.cpp
-    src/session.cpp
+    src/wamp_session.cpp
 )
 
 target_compile_features(${PROJECT_NAME}

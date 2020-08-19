@@ -9,7 +9,7 @@ class wamp_session;
 
 namespace tabetai2::wamp_publisher {
 
-class Session {
+class WampSession {
 public:
     void run(std::function<void()> func);
 
