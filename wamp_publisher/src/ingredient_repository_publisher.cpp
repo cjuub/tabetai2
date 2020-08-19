@@ -22,7 +22,7 @@ void IngredientRepositoryPublisher::publish() {
         ingredients.push_back(ingredient.name());
     }
 
-    m_session.session()->publish("com.tabetai2.ingredients", ingredients);
+    m_session.publish("com.tabetai2.ingredients", ingredients);
 }
 
 }

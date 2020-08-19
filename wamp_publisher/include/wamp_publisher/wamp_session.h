@@ -1,22 +1,20 @@
 #pragma once
 
 #include <functional>
-#include <memory>
-
-namespace autobahn {
-class wamp_session;
-}
+#include <string>
+#include <variant>
 
 namespace tabetai2::wamp_publisher {
 
+using Publishable = std::variant<std::vector<std::string>>;
+
 class WampSession {
 public:
-    void run(std::function<void()> func);
+    virtual void run(std::function<void()> func) = 0;
 
-    std::shared_ptr<autobahn::wamp_session> session();
+    virtual void publish(const std::string& topic, const Publishable& object) = 0;
 
-private:
-    std::shared_ptr<autobahn::wamp_session> m_session;
+    virtual ~WampSession() = default;
 };
 
 }

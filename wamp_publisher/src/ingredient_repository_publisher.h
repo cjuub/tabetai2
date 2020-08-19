@@ -1,9 +1,10 @@
 #pragma once
 
+#include "impl/wamp_session.h"
+
 #include <data_publisher/repository_publisher.hpp>
 #include <ingredient/ingredient.h>
 #include <ingredient/ingredient_repository.h>
-#include <wamp_publisher/wamp_session.h>
 
 namespace tabetai2::wamp_publisher {
 
