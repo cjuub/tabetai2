@@ -15,8 +15,3 @@ target_link_libraries(${PROJECT_NAME}
         wamp_publisher
         warning
 )
-
-target_compile_definitions(${PROJECT_NAME}
-    PRIVATE
-        -DBOOST_ASIO_DISABLE_CONCEPTS
-)
