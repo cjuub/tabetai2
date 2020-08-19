@@ -1,19 +1,22 @@
 include(FetchContent)
 
-FetchContent_GetProperties(Boost
-    SOURCE_DIR Boost_SOURCE_DIR
-)
-set(BOOST_ROOT "${Boost_SOURCE_DIR}")
+if(NOT TABETAI2_USE_CONAN)
+    FetchContent_GetProperties(Boost
+        SOURCE_DIR Boost_SOURCE_DIR
+    )
+    set(BOOST_ROOT "${Boost_SOURCE_DIR}")
 
-FetchContent_GetProperties(websocketpp
-    SOURCE_DIR websocketpp_SOURCE_DIR
-)
-set(Websocketpp_INCLUDE_DIR "${websocketpp_SOURCE_DIR}/websocketpp")
+    FetchContent_GetProperties(websocketpp
+        SOURCE_DIR websocketpp_SOURCE_DIR
+    )
+    set(Websocketpp_INCLUDE_DIR "${websocketpp_SOURCE_DIR}/websocketpp")
 
-FetchContent_GetProperties(msgpack-c
-    SOURCE_DIR msgpack-c_SOURCE_DIR
-)
-set(MSGPACK_ROOT "${msgpack-c_SOURCE_DIR}")
+    FetchContent_GetProperties(msgpack-c
+        SOURCE_DIR msgpack-c_SOURCE_DIR
+    )
+    set(MSGPACK_ROOT "${msgpack-c_SOURCE_DIR}")
+endif()
+
 set(AUTOBAHN_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 FetchContent_Declare(

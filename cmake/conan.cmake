@@ -10,6 +10,7 @@ include(${CMAKE_BINARY_DIR}/conan.cmake)
 
 conan_cmake_run(
     REQUIRES
+        boost_asio/1.69.0@bincrafters/stable
         boost_program_options/1.69.0@bincrafters/stable
         boost_system/1.69.0@bincrafters/stable
         boost_thread/1.69.0@bincrafters/stable
