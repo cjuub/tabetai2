@@ -1,12 +1,8 @@
-#include "wamp_publisher/wamp_session.h"
+#include "wamp_session.h"
 
 #include <autobahn/autobahn.hpp>
 
-namespace tabetai2::wamp_publisher {
-
-std::shared_ptr<autobahn::wamp_session> WampSession::session() {
-    return m_session;
-}
+namespace tabetai2::wamp_publisher::impl {
 
 void WampSession::run(std::function<void()> func) {
     try {
@@ -67,6 +63,10 @@ void WampSession::run(std::function<void()> func) {
     } catch (const std::exception& e) {
         std::cerr << "exception: " << e.what() << std::endl;
     }
+}
+
+void WampSession::publish(const std::string& topic, const Publishable& object) {
+    std::visit([&](auto& arg) { m_session->publish(topic, arg); }, object);
 }
 
 }

@@ -1,8 +1,9 @@
 #pragma once
 
+#include "wamp_session.h"
+
 #include <data_publisher/repository_publisher_factory.h>
 #include <ingredient/ingredient_repository.h>
-#include "wamp_session.h"
 
 namespace tabetai2::wamp_publisher {
 
@@ -14,7 +15,6 @@ public:
 
 private:
     WampSession& m_session;
-
 };
 
 }
