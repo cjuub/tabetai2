@@ -30,4 +30,5 @@ target_link_libraries(${PROJECT_NAME}
         autobahn_cpp
         data_publisher
         ingredient
+        warning::low
 )
