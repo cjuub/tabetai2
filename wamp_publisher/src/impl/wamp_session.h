@@ -2,9 +2,7 @@
 
 #include <wamp_publisher/wamp_session.h>
 
-namespace autobahn {
-    class wamp_session;
-}
+#include <autobahn/autobahn.hpp>
 
 #include <functional>
 #include <memory>

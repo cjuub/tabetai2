@@ -1,7 +1,5 @@
 #include "wamp_session.h"
 
-#include <autobahn/autobahn.hpp>
-
 namespace tabetai2::wamp_publisher::impl {
 
 void WampSession::run(std::function<void()> func) {
