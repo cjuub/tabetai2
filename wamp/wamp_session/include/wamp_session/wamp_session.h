@@ -4,7 +4,7 @@
 #include <string>
 #include <variant>
 
-namespace tabetai2::wamp_publisher {
+namespace tabetai2::wamp_session {
 
 using Publishable = std::variant<std::vector<std::string>>;
 

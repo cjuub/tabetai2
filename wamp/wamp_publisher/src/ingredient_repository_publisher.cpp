@@ -1,11 +1,10 @@
 #include "ingredient_repository_publisher.h"
 
-#include <autobahn/autobahn.hpp>
-
 namespace tabetai2::wamp_publisher {
 
 using namespace core::repository;
 using namespace core::ingredient;
+using namespace wamp_session;
 
 IngredientRepositoryPublisher::IngredientRepositoryPublisher(
         const std::shared_ptr<core::ingredient::IngredientRepository>& repository,

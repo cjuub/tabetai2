@@ -4,7 +4,7 @@
 
 #include <memory>
 
-namespace tabetai2::wamp_publisher {
+namespace tabetai2::wamp_session {
 
 class WampSessionFactory {
 public:

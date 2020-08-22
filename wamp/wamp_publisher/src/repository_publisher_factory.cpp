@@ -8,6 +8,7 @@ namespace tabetai2::wamp_publisher {
 
 using namespace core::data_publisher;
 using namespace core::ingredient;
+using namespace wamp_session;
 
 RepositoryPublisherFactory::RepositoryPublisherFactory(WampSession& session)
 : m_session(session) {

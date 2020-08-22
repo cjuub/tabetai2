@@ -13,5 +13,6 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE
         server
         wamp_publisher
+        wamp_session
         warning
 )

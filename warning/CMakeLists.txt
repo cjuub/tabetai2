@@ -34,10 +34,10 @@ target_compile_options(warning_low INTERFACE
         -Wnull-dereference;
         -Wno-ignored-qualifiers; # autobahn-cpp
         -Wno-unused-parameter; # autobahn-cpp
+        -Wno-deprecated-copy; # autobahn-cpp
     >
     $<$<CXX_COMPILER_ID:GNU>:
         -Wno-cast-function-type; # boost/asio
-        -Wno-deprecated-copy; # autobahn-cpp
     >
     $<$<CXX_COMPILER_ID:MSVC>:
         /W3;
