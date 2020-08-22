@@ -22,7 +22,7 @@ set(AUTOBAHN_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 FetchContent_Declare(
     autobahn_cpp
     GIT_REPOSITORY https://github.com/crossbario/autobahn-cpp.git
-    GIT_TAG        ceddeb73453a1d7678a184ac483a8e349d60ac2a
+    GIT_TAG        47f9791b3200e4e674844bb4e35b444d5d5ee8c3
 )
 
 FetchContent_MakeAvailable(autobahn_cpp)
