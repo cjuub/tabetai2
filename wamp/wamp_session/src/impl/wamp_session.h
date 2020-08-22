@@ -1,15 +1,15 @@
 #pragma once
 
-#include <wamp_publisher/wamp_session.h>
+#include <wamp_session/wamp_session.h>
 
 #include <autobahn/autobahn.hpp>
 
 #include <functional>
 #include <memory>
 
-namespace tabetai2::wamp_publisher::impl {
+namespace tabetai2::wamp_session::impl {
 
-class WampSession : public wamp_publisher::WampSession {
+class WampSession : public wamp_session::WampSession {
 public:
     void run(std::function<void()> func) override;
 

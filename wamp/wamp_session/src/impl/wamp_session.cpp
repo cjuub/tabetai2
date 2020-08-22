@@ -1,6 +1,6 @@
 #include "wamp_session.h"
 
-namespace tabetai2::wamp_publisher::impl {
+namespace tabetai2::wamp_session::impl {
 
 void WampSession::run(std::function<void()> func) {
     try {
