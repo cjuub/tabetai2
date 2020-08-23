@@ -7,6 +7,7 @@ option(TABETAI2_USE_CONAN "Use Conan instead of FetchContent to download 3rd-par
 add_subdirectory(application)
 add_subdirectory(core/database)
 add_subdirectory(core/ingredient)
+add_subdirectory(core/recipe)
 add_subdirectory(core/data_publisher)
 add_subdirectory(core/repository)
 add_subdirectory(core/server)

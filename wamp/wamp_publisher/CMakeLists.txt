@@ -5,6 +5,8 @@ add_library(${PROJECT_NAME}
 
     src/ingredient_repository_publisher.cpp
     src/ingredient_repository_publisher.h
+    src/recipe_repository_publisher.h
+    src/recipe_repository_publisher.cpp
     src/repository_publisher_factory.cpp
 )
 
@@ -22,6 +24,7 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE
         data_publisher
         ingredient
+        recipe
         wamp_session
         warning
 )
