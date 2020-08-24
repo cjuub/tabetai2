@@ -20,10 +20,10 @@ ServerFactory::ServerFactory(std::unique_ptr<RepositoryPublisherFactory> reposit
 }
 
 std::unique_ptr<Server> ServerFactory::create() const {
-    auto ingredient_database = std::make_unique<Database<Ingredient>>();
+    auto ingredient_database = std::make_unique<InMemoryDatabase<Ingredient>>();
     auto ingredient_repository = std::make_shared<IngredientRepository>(std::move(ingredient_database));
 
-    auto recipe_database = std::make_unique<Database<Recipe>>();
+    auto recipe_database = std::make_unique<InMemoryDatabase<Recipe>>();
     auto recipe_repository = std::make_shared<RecipeRepository>(std::move(recipe_database));
 
     std::vector<std::shared_ptr<Publisher>> publishers;
