@@ -28,8 +28,8 @@ void Server::run() {
     std::cout << m_ingredient_repository->find_by_id(0)->name() << std::endl;
     std::cout << m_ingredient_repository->find_by_name("potatis")->id() << std::endl;
 
-    m_recipe_repository->add(Recipe(0, "fisk med potatis", {fisk, potatis}));
-    m_recipe_repository->add(Recipe(1, "fisk", {fisk}));
+    m_recipe_repository->add(Recipe(0, "fisk med potatis", {fisk, potatis}, {"koka fisken", "koka potatisen"}));
+    m_recipe_repository->add(Recipe(1, "fisk", {fisk}, {"stek fisken"}));
     std::cout << m_recipe_repository->find_by_id(0)->name() << std::endl;
     std::cout << m_recipe_repository->find_by_name("fisk med potatis")->id() << std::endl;
     std::cout << m_recipe_repository->find_by_ingredients({fisk})->size() << std::endl;
