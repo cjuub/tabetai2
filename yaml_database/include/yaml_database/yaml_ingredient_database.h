@@ -15,7 +15,7 @@ public:
 
     void add(core::ingredient::Ingredient ingredient) override;
 
-    void erase(const core::ingredient::Ingredient& ingredient) override;
+    void erase(int id) override;
 
     core::ingredient::Ingredient get(int id) const override;
 

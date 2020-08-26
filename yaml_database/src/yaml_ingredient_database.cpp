@@ -20,8 +20,8 @@ void YamlIngredientDatabase::add(Ingredient ingredient) {
     _commit_changes();
 }
 
-void YamlIngredientDatabase::erase(const Ingredient& ingredient) {
-    m_database["ingredients"].remove(std::to_string(ingredient.id()));
+void YamlIngredientDatabase::erase(int id) {
+    m_database["ingredients"].remove(std::to_string(id));
     _commit_changes();
 }
 

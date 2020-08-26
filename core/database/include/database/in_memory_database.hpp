@@ -15,8 +15,8 @@ public:
         m_database.emplace(t.id(), std::move(t));
     };
 
-    void erase(const T& t) override {
-        m_database.erase(t.id());
+    void erase(int id) override {
+        m_database.erase(id);
     };
 
     T get(int id) const override {

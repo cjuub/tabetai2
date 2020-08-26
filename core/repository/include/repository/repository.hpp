@@ -18,8 +18,8 @@ public:
         notify_observers();
     }
 
-    void erase(const T& t) {
-        m_database->erase(t);
+    void erase(int id) {
+        m_database->erase(id);
         notify_observers();
     }
 
