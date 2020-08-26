@@ -22,7 +22,7 @@ ServerFactory::ServerFactory(std::unique_ptr<RepositoryPublisherFactory> reposit
 }
 
 std::unique_ptr<Server> ServerFactory::create() const {
-    auto ingredient_database = std::make_unique<YamlIngredientDatabase>("database.yaml");
+    auto ingredient_database = std::make_unique<YamlIngredientDatabase>("database.yaml", "ingredients");
     auto ingredient_repository = std::make_shared<IngredientRepository>(std::move(ingredient_database));
 
     auto recipe_database = std::make_unique<InMemoryDatabase<Recipe>>();

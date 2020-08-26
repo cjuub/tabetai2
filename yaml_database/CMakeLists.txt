@@ -3,6 +3,7 @@ project(yaml_database)
 find_package(yaml-cpp REQUIRED)
 
 add_library(${PROJECT_NAME}
+    include/yaml_database/yaml_database.hpp
     include/yaml_database/yaml_ingredient_database.h
 
     src/yaml_ingredient_database.cpp

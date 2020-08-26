@@ -1,31 +1,19 @@
 #pragma once
 
-#include <database/database.h>
+#include <yaml_database/yaml_database.hpp>
 #include <ingredient/ingredient.h>
-
-#include <yaml-cpp/yaml.h>
 
 #include <string>
 
 namespace tabetai2::yaml_database {
 
-class YamlIngredientDatabase : public core::database::Database<core::ingredient::Ingredient> {
+class YamlIngredientDatabase : public YamlDatabase<core::ingredient::Ingredient> {
 public:
-    explicit YamlIngredientDatabase(std::string database_file);
+    using YamlDatabase<core::ingredient::Ingredient>::YamlDatabase;
 
-    void add(core::ingredient::Ingredient ingredient) override;
+    core::ingredient::Ingredient from_yaml(YAML::Node entry) const override;
 
-    void erase(int id) override;
-
-    core::ingredient::Ingredient get(int id) const override;
-
-    std::vector<core::ingredient::Ingredient> get_all() const override;
-
-private:
-    void _commit_changes();
-
-    std::string m_database_file;
-    YAML::Node m_database;
+    YAML::Node to_yaml(const core::ingredient::Ingredient& ingredient) const override;
 };
 
 }
