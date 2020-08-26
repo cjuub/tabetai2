@@ -11,7 +11,7 @@ namespace tabetai2::core::repository {
 template<class T>
 class Repository : public util::impl::Observable {
 public:
-    explicit Repository(std::unique_ptr<database::InMemoryDatabase<T>> database) : m_database(std::move(database)) {}
+    explicit Repository(std::unique_ptr<database::Database<T>> database) : m_database(std::move(database)) {}
 
     void add(T t) {
         m_database->add(std::move(t));
@@ -28,7 +28,7 @@ public:
     }
 
 protected:
-    std::unique_ptr<database::InMemoryDatabase<T>> m_database;
+    std::unique_ptr<database::Database<T>> m_database;
 };
 
 }

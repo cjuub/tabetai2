@@ -18,6 +18,7 @@ conan_cmake_run(
         cmake_findboost_modular/1.69.0@bincrafters/stable
         msgpack/3.2.1
         websocketpp/0.8.2
+        yaml-cpp/0.6.3
         zlib/1.2.11
         bzip2/1.0.8
     BASIC_SETUP
@@ -27,4 +28,4 @@ conan_cmake_run(
     PROFILE_AUTO ALL
 )
 
-list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
