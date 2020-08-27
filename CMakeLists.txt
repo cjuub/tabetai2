@@ -13,6 +13,9 @@ else()
     add_subdirectory(third_party/yaml_cpp)
 endif()
 add_subdirectory(third_party/autobahn_cpp) # Doesn't exist on conan.
+add_subdirectory(third_party/catch2) # Header-only, no dependencies.
+
+enable_testing()
 
 add_subdirectory(application)
 add_subdirectory(core/database)

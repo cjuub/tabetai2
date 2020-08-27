@@ -23,8 +23,10 @@ target_include_directories(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
         repository
-    PRIVATE
         ingredient
+    PRIVATE
         warning
         range-v3::range-v3
 )
+
+add_subdirectory(test)
