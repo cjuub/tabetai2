@@ -33,6 +33,7 @@ void Server::run() {
     std::cout << m_recipe_repository->find_by_id(0)->name() << std::endl;
     std::cout << m_recipe_repository->find_by_name("fisk med potatis")->id() << std::endl;
     std::cout << m_recipe_repository->find_by_ingredients({fisk})->size() << std::endl;
+    std::cout << m_recipe_repository->find_by_id(0)->ingredients()[0].name() << std::endl;
 }
 
 }

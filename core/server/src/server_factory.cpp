@@ -5,6 +5,7 @@
 #include <data_publisher/publisher.h>
 #include <data_publisher/repository_publisher_factory.h>
 #include <yaml_database/yaml_ingredient_database.h>
+#include <yaml_database/yaml_recipe_database.h>
 
 namespace tabetai2::core::server {
 
@@ -22,10 +23,10 @@ ServerFactory::ServerFactory(std::unique_ptr<RepositoryPublisherFactory> reposit
 }
 
 std::unique_ptr<Server> ServerFactory::create() const {
-    auto ingredient_database = std::make_unique<YamlIngredientDatabase>("database.yaml", "ingredients");
+    auto ingredient_database = std::make_unique<YamlIngredientDatabase>("db_ingredient.yaml", "ingredients");
     auto ingredient_repository = std::make_shared<IngredientRepository>(std::move(ingredient_database));
 
-    auto recipe_database = std::make_unique<InMemoryDatabase<Recipe>>();
+    auto recipe_database = std::make_unique<YamlRecipeDatabase>("db_recipe.yaml", "recipes", ingredient_repository);
     auto recipe_repository = std::make_shared<RecipeRepository>(std::move(recipe_database));
 
     std::vector<std::shared_ptr<Publisher>> publishers;

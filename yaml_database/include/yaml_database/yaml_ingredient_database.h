@@ -3,8 +3,6 @@
 #include <yaml_database/yaml_database.hpp>
 #include <ingredient/ingredient.h>
 
-#include <string>
-
 namespace tabetai2::yaml_database {
 
 class YamlIngredientDatabase : public YamlDatabase<core::ingredient::Ingredient> {
