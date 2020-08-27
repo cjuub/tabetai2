@@ -10,12 +10,6 @@ Ingredient::Ingredient(int id, std::string name)
 
 }
 
-Ingredient::Ingredient(const Ingredient& other)
-: m_id(other.id()),
-  m_name(other.name()) {
-
-}
-
 int Ingredient::id() const {
     return m_id;
 }
