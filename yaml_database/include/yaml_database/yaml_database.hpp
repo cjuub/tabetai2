@@ -2,6 +2,8 @@
 
 #include <database/database.h>
 
+#include <range/v3/to_container.hpp>
+#include <range/v3/view/transform.hpp>
 #include <yaml-cpp/yaml.h>
 
 #include <fstream>
@@ -39,12 +41,7 @@ public:
 
     std::vector<T> get_all() const override {
         auto db = m_database[m_database_name];
-        std::vector<T> ts;
-        std::transform(db.begin(), db.end(), std::back_inserter(ts), [&](const auto& entry) {
-            return from_yaml(entry.second);
-        });
-
-        return ts;
+        return db | ranges::views::transform([&](auto y) { return from_yaml(y.second); }) | ranges::to<std::vector>();
     }
 
 protected:

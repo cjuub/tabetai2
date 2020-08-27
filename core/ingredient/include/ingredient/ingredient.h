@@ -13,8 +13,8 @@ public:
     std::string name() const;
 
 private:
-    const int m_id;
-    const std::string m_name;
+    int m_id;
+    std::string m_name;
 };
 
 }

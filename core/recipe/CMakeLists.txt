@@ -1,5 +1,7 @@
 project(recipe)
 
+find_package(range-v3 REQUIRED)
+
 add_library(${PROJECT_NAME}
     include/recipe/recipe.h
     include/recipe/recipe_repository.h
@@ -24,4 +26,5 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE
         ingredient
         warning
+        range-v3::range-v3
 )

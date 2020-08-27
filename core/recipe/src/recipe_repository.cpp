@@ -1,5 +1,9 @@
 #include <recipe/recipe_repository.h>
 
+#include <range/v3/algorithm/any_of.hpp>
+#include <range/v3/algorithm/find_if.hpp>
+#include <range/v3/action/remove_if.hpp>
+
 namespace tabetai2::core::recipe {
 
 using namespace ingredient;
@@ -10,43 +14,24 @@ std::optional<Recipe> RecipeRepository::find_by_id(int id) const {
 
 std::optional<Recipe> RecipeRepository::find_by_name(const std::string& name) const {
     auto recipes = m_database->get_all();
-
-    for (auto& recipe : recipes) {
-        if (recipe.name() == name) {
-            return recipe;
-        }
-    }
-
-    return {};
+    auto it = ranges::find_if(recipes, [&](const auto &r) { return r.name() == name; });
+    return it == recipes.end() ? std::nullopt : std::make_optional(*it);
 }
 
 std::optional<std::vector<Recipe>> RecipeRepository::find_by_ingredients(
         const std::vector<Ingredient>& ingredients) const {
+
+    auto is_missing_ingredients = [&](const Recipe &r) {
+        return ranges::any_of(r.ingredients(), [&](const auto &i) {
+            return ranges::find_if(ingredients, [&](const auto &repo_ingredient) {
+                return i.id() == repo_ingredient.id();
+            }) == std::end(ingredients);
+        });
+    };
+
     auto recipes = m_database->get_all();
-
-    // TODO Use some std algorithm instead?
-    std::vector<Recipe> recipes_found;
-    for (auto& recipe : recipes) {
-        for (auto& recipe_ingredient : recipe.ingredients()) {
-            bool found_all = true;
-            for (auto& ingredient : ingredients) {
-                if (recipe_ingredient.id() != ingredient.id()) {
-                    found_all = false;
-                    break;
-                }
-            }
-
-            if (found_all) {
-                recipes_found.push_back(recipe);
-            }
-        }
-    }
-
-    if (recipes_found.empty()) {
-        return {};
-    }
-
-    return recipes;
+    recipes |= ranges::actions::remove_if(is_missing_ingredients);
+    return recipes.empty() ? std::nullopt : std::make_optional(recipes);
 }
 
 }
