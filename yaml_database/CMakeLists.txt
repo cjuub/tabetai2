@@ -1,5 +1,6 @@
 project(yaml_database)
 
+find_package(range-v3 REQUIRED)
 find_package(yaml-cpp REQUIRED)
 
 add_library(${PROJECT_NAME}
@@ -23,6 +24,7 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
+        range-v3::range-v3
         yaml-cpp::yaml-cpp
     PRIVATE
         database

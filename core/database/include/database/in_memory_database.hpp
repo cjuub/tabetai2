@@ -2,6 +2,9 @@
 
 #include "database.h"
 
+#include <range/v3/view/map.hpp>
+#include <range/v3/to_container.hpp>
+
 #include <unordered_map>
 
 namespace tabetai2::core::database {
@@ -24,12 +27,7 @@ public:
     }
 
     std::vector<T> get_all() const override {
-        std::vector<T> entries;
-        for (auto& entry : m_database) {
-            entries.push_back(entry.second);
-        }
-
-        return entries;
+        return m_database | ranges::views::values | ranges::to<std::vector>();
     }
 
 private:

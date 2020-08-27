@@ -17,6 +17,7 @@ conan_cmake_run(
         boost_random/1.69.0@bincrafters/stable
         cmake_findboost_modular/1.69.0@bincrafters/stable
         msgpack/3.2.1
+        range-v3/0.10.0
         websocketpp/0.8.2
         yaml-cpp/0.6.3
         zlib/1.2.11

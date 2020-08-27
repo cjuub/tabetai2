@@ -17,7 +17,7 @@ public:
     std::vector<std::string> steps() const;
 
 private:
-    const int m_id;
+    int m_id;
     std::string m_name;
     std::vector<ingredient::Ingredient> m_ingredients;
     std::vector<std::string> m_steps;
