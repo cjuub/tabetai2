@@ -5,8 +5,10 @@ find_package(yaml-cpp REQUIRED)
 add_library(${PROJECT_NAME}
     include/yaml_database/yaml_database.hpp
     include/yaml_database/yaml_ingredient_database.h
+    include/yaml_database/yaml_recipe_database.h
 
     src/yaml_ingredient_database.cpp
+    src/yaml_recipe_database.cpp
 )
 
 target_compile_features(${PROJECT_NAME}
@@ -25,4 +27,5 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE
         database
         ingredient
+        recipe
 )
