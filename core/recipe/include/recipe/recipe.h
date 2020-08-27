@@ -16,6 +16,12 @@ public:
     std::vector<ingredient::Ingredient> ingredients() const;
     std::vector<std::string> steps() const;
 
+    bool operator<(const Recipe &r) const {
+        return m_id < r.m_id;
+    }
+
+    bool operator==(const Recipe &) const = default;
+
 private:
     int m_id;
     std::string m_name;

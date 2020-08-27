@@ -2,10 +2,14 @@
 
 #include <range/v3/algorithm/find_if.hpp>
 
+#include <stdexcept>
+
 namespace tabetai2::core::ingredient {
 
-std::optional<Ingredient> IngredientRepository::find_by_id(int id) const {
+std::optional<Ingredient> IngredientRepository::find_by_id(int id) const try {
     return m_database->get(id);
+} catch (const std::out_of_range&) {
+    return std::nullopt;
 }
 
 std::optional<Ingredient> IngredientRepository::find_by_name(const std::string& name) const {

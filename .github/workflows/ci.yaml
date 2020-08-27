@@ -48,3 +48,5 @@ jobs:
         run: |
           cmake -S . -B build ${{ matrix.cmake-args }} -DCMAKE_BUILD_TYPE=Debug -DTABETAI2_USE_CONAN=TRUE
           cmake --build build --config Debug
+      - name: Test
+        run: (cd build && ctest)
