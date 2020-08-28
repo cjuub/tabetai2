@@ -25,12 +25,12 @@ public:
 
     void add(T t) override {
         m_database[m_database_name][std::to_string(t.id())] = to_yaml(t);
-        _commit_changes();
+        commit_changes();
     }
 
     void erase(int id) override {
         m_database[m_database_name].remove(std::to_string(id));
-        _commit_changes();
+        commit_changes();
     }
 
     T get(int id) const override {
@@ -53,7 +53,7 @@ protected:
     virtual YAML::Node to_yaml(const T& t) const = 0;
 
 private:
-    void _commit_changes() {
+    void commit_changes() {
         std::ofstream fs;
         fs.open(m_database_file, std::ios::out);
         if (fs.is_open()) {
