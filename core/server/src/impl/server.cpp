@@ -28,12 +28,25 @@ void Server::run() {
     std::cout << m_ingredient_repository->find_by_id(0)->name() << std::endl;
     std::cout << m_ingredient_repository->find_by_name("potatis")->id() << std::endl;
 
-    m_recipe_repository->add(Recipe(0, "fisk med potatis", {fisk, potatis}, {"koka fisken", "koka potatisen"}));
-    m_recipe_repository->add(Recipe(1, "fisk", {fisk}, {"stek fisken"}));
+    auto fisk_med_potatis = Recipe(
+            0,
+            "fisk med potatis",
+            {{fisk, Quantity(100, Unit::KG)},
+                      {potatis, Quantity(5, Unit::KRM)}},
+            {"koka fisken", "koka potatisen"});
+    m_recipe_repository->add(fisk_med_potatis);
+
+    auto stekt_fisk = Recipe(
+            1,
+            "stekt fisk",
+            {{fisk, Quantity(5, Unit::PCS)}},
+            {"stek fisken"});
+    m_recipe_repository->add(stekt_fisk);
+
     std::cout << m_recipe_repository->find_by_id(0)->name() << std::endl;
     std::cout << m_recipe_repository->find_by_name("fisk med potatis")->id() << std::endl;
     std::cout << m_recipe_repository->find_by_ingredients({fisk})->size() << std::endl;
-    std::cout << m_recipe_repository->find_by_id(0)->ingredients()[0].name() << std::endl;
+    std::cout << m_recipe_repository->find_by_id(0)->ingredients()[0].first.name() << std::endl;
 }
 
 }

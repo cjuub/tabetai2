@@ -1,7 +1,9 @@
 #pragma once
 
 #include <ingredient/ingredient.h>
+#include <recipe/quantity.h>
 
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -9,11 +11,14 @@ namespace tabetai2::core::recipe {
 
 class Recipe {
 public:
-    Recipe(int id, std::string name, std::vector<ingredient::Ingredient> ingredients, std::vector<std::string> steps);
+    Recipe(int id,
+           std::string name,
+           std::vector<std::pair<ingredient::Ingredient, std::optional<Quantity>>> ingredients,
+           std::vector<std::string> steps);
 
     int id() const;
     std::string name() const;
-    std::vector<ingredient::Ingredient> ingredients() const;
+    std::vector<std::pair<ingredient::Ingredient, std::optional<Quantity>>> ingredients() const;
     std::vector<std::string> steps() const;
 
     bool operator<(const Recipe &r) const {
@@ -25,7 +30,7 @@ public:
 private:
     int m_id;
     std::string m_name;
-    std::vector<ingredient::Ingredient> m_ingredients;
+    std::vector<std::pair<ingredient::Ingredient, std::optional<Quantity>>> m_ingredients;
     std::vector<std::string> m_steps;
 };
 
