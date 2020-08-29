@@ -12,8 +12,8 @@ using SerializedIngredient = std::map<int, std::pair<unsigned, int>>;
 YamlRecipeDatabase::YamlRecipeDatabase(std::string database_file,
                                        std::string database_name,
                                        std::shared_ptr<IngredientRepository> ingredient_repository)
-: YamlDatabase<core::recipe::Recipe>(std::move(database_file), std::move(database_name)),
-  m_ingredient_repository(std::move(ingredient_repository)) {
+: YamlDatabase<core::recipe::Recipe>{std::move(database_file), std::move(database_name)},
+  m_ingredient_repository{std::move(ingredient_repository)} {
 
 }
 
@@ -33,11 +33,11 @@ Recipe YamlRecipeDatabase::from_yaml(YAML::Node entry) const {
         }
     }
 
-    return Recipe(entry["id"].as<int>(),
+    return Recipe{entry["id"].as<int>(),
                   entry["name"].as<std::string>(),
-                  entry["servings"].as<int>(),
+                  entry["servings"].as<unsigned>(),
                   std::move(ingredients),
-                  entry["steps"].as<std::vector<std::string>>());
+                  entry["steps"].as<std::vector<std::string>>()};
 }
 
 YAML::Node YamlRecipeDatabase::to_yaml(const Recipe& recipe) const {

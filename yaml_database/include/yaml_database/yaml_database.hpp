@@ -15,8 +15,8 @@ template<class T>
 class YamlDatabase : public core::database::Database<T> {
 public:
     explicit YamlDatabase(std::string database_file, std::string database_name)
-    : m_database_file(std::move(database_file)),
-      m_database_name(std::move(database_name)),
+    : m_database_file{std::move(database_file)},
+      m_database_name{std::move(database_name)},
       m_database() {
         try {
             m_database = YAML::LoadFile(m_database_file);

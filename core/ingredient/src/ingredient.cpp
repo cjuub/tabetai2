@@ -5,8 +5,8 @@
 namespace tabetai2::core::ingredient {
 
 Ingredient::Ingredient(int id, std::string name)
-: m_id(id),
-  m_name(std::move(name)) {
+: m_id{id},
+  m_name{std::move(name)} {
 
 }
 

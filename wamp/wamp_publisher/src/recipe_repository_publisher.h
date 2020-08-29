@@ -10,7 +10,7 @@ namespace tabetai2::wamp_publisher {
 class RecipeRepositoryPublisher : public core::data_publisher::RepositoryPublisher<core::recipe::Recipe> {
 public:
     explicit RecipeRepositoryPublisher(const std::shared_ptr<core::recipe::RecipeRepository>& repository,
-                                           wamp_session::WampSession& session);
+                                       wamp_session::WampSession& session);
 
     void publish() override;
 

@@ -5,7 +5,7 @@ namespace tabetai2::yaml_database {
 using namespace core::ingredient;
 
 Ingredient YamlIngredientDatabase::from_yaml(YAML::Node entry) const {
-    return Ingredient(entry["id"].as<int>(), entry["name"].as<std::string>());
+    return Ingredient{entry["id"].as<int>(), entry["name"].as<std::string>()};
 }
 
 YAML::Node YamlIngredientDatabase::to_yaml(const Ingredient& ingredient) const {

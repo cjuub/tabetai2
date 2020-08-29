@@ -11,7 +11,7 @@ using namespace core::recipe;
 using namespace wamp_session;
 
 RepositoryPublisherFactory::RepositoryPublisherFactory(WampSession& session)
-: m_session(session) {
+: m_session{session} {
 
 }
 

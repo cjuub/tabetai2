@@ -18,7 +18,7 @@ using namespace core::util;
 using namespace yaml_database;
 
 ServerFactory::ServerFactory(std::unique_ptr<RepositoryPublisherFactory> repository_publisher_factory)
-: m_repository_publisher_factory(std::move(repository_publisher_factory)) {
+: m_repository_publisher_factory{std::move(repository_publisher_factory)} {
 
 }
 

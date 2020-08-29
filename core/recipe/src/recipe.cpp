@@ -11,11 +11,11 @@ Recipe::Recipe(int id,
                unsigned servings,
                std::vector<std::pair<Ingredient, std::optional<Quantity>>> ingredients,
                std::vector<std::string> steps)
-: m_id(id),
-  m_name(std::move(name)),
-  m_servings(servings),
-  m_ingredients(std::move(ingredients)),
-  m_steps(std::move(steps)) {
+: m_id{id},
+  m_name{std::move(name)},
+  m_servings{servings},
+  m_ingredients{std::move(ingredients)},
+  m_steps{std::move(steps)} {
 
 }
 

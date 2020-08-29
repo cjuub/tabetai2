@@ -9,9 +9,9 @@ using namespace wamp_session;
 IngredientRepositoryPublisher::IngredientRepositoryPublisher(
         const std::shared_ptr<core::ingredient::IngredientRepository>& repository,
         WampSession& session)
-: RepositoryPublisher<Ingredient>(repository),
-  m_repository(repository),
-  m_session(session) {
+: RepositoryPublisher<Ingredient>{repository},
+  m_repository{repository},
+  m_session{session} {
 
 }
 
