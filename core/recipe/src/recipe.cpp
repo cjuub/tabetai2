@@ -8,10 +8,12 @@ using namespace ingredient;
 
 Recipe::Recipe(int id,
                std::string name,
+               unsigned servings,
                std::vector<std::pair<Ingredient, std::optional<Quantity>>> ingredients,
                std::vector<std::string> steps)
 : m_id(id),
   m_name(std::move(name)),
+  m_servings(servings),
   m_ingredients(std::move(ingredients)),
   m_steps(std::move(steps)) {
 
@@ -23,6 +25,10 @@ int Recipe::id() const {
 
 std::string Recipe::name() const {
     return m_name;
+}
+
+unsigned Recipe::servings() const {
+    return m_servings;
 }
 
 std::vector<std::pair<ingredient::Ingredient, std::optional<Quantity>>> Recipe::ingredients() const {
