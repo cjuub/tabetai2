@@ -12,8 +12,6 @@ namespace tabetai2::core::database {
 template<class T>
 class InMemoryDatabase : public Database<T> {
 public:
-    InMemoryDatabase() : m_database{} {}
-
     void add(T t) override {
         m_database.emplace(t.id(), std::move(t));
     };
