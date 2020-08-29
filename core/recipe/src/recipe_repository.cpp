@@ -28,7 +28,7 @@ std::optional<std::vector<Recipe>> RecipeRepository::find_by_ingredients(
     auto is_missing_ingredients = [&](const Recipe &r) {
         return ranges::any_of(r.ingredients(), [&](const auto &i) {
             return ranges::find_if(ingredients, [&](const auto &repo_ingredient) {
-                return i.id() == repo_ingredient.id();
+                return i.first.id() == repo_ingredient.id();
             }) == std::end(ingredients);
         });
     };

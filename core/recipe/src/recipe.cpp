@@ -6,7 +6,10 @@ namespace tabetai2::core::recipe {
 
 using namespace ingredient;
 
-Recipe::Recipe(int id, std::string name, std::vector<Ingredient> ingredients, std::vector<std::string> steps)
+Recipe::Recipe(int id,
+               std::string name,
+               std::vector<std::pair<Ingredient, std::optional<Quantity>>> ingredients,
+               std::vector<std::string> steps)
 : m_id(id),
   m_name(std::move(name)),
   m_ingredients(std::move(ingredients)),
@@ -22,7 +25,7 @@ std::string Recipe::name() const {
     return m_name;
 }
 
-std::vector<ingredient::Ingredient> Recipe::ingredients() const {
+std::vector<std::pair<ingredient::Ingredient, std::optional<Quantity>>> Recipe::ingredients() const {
     return m_ingredients;
 }
 

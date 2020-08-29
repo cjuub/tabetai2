@@ -17,18 +17,42 @@ TEST_CASE("RecipeRepository") {
     const auto potato = Ingredient{2, "fish"};
     const auto hedgehog = Ingredient{5, "fish"};
     const auto water = Ingredient{42, "water"};
-    const auto boiled_fish = Recipe{13, "boiled fish", {fish, water}, {"boil"}};
-    const auto boiled_potato = Recipe{14, "boiled potato", {potato, water}, {"boil"}};
-    const auto boiled_hedgehog = Recipe{17, "boiled hedgehog", {hedgehog, water}, {"boil"}};
-    const auto hedgehog_with_potato = Recipe{15, "hedgehog with potato", {hedgehog, potato},
-                                             {"feed potato to hedgehog"}};
+    const auto boiled_fish = Recipe{
+        13,
+        "boiled fish",
+        {{fish, Quantity(1, Unit::PCS)},
+         {water, Quantity(5, Unit::DL)}},
+        {"boil"}};
+    const auto boiled_potato = Recipe{
+        14,
+        "boiled potato",
+        {{potato, Quantity(2, Unit::PCS)},
+         {water, Quantity(4, Unit::L)}},
+        {"boil"}};
+    const auto boiled_hedgehog = Recipe{
+        17,
+        "boiled hedgehog",
+        {{hedgehog, Quantity(1, Unit::PCS)},
+         {water, Quantity(4, Unit::L)}},
+        {"boil"}};
+    const auto hedgehog_with_potato = Recipe{
+        15,
+        "hedgehog with potato",
+        {{hedgehog, Quantity(1, Unit::PCS)},
+         {potato, Quantity(1, Unit::PCS)}},
+        {"feed potato to hedgehog"}};
     r.add(boiled_fish);
     r.add(boiled_potato);
     r.add(boiled_hedgehog);
     r.add(hedgehog_with_potato);
 
     SECTION("add") {
-        auto potato_with_potato = Recipe{19, "potato_with_potato", {potato, potato}, {"stack potatoes"}};
+        auto potato_with_potato = Recipe{
+            19,
+            "potato_with_potato",
+            {{potato, Quantity(1, Unit::PCS)},
+             {potato, Quantity(1, Unit::PCS)}},
+            {"stack potatoes"}};
         REQUIRE(r.find_by_id(19).has_value() == false);
         auto count = r.find_all().size();
         r.add(potato_with_potato);

@@ -3,15 +3,21 @@ recipes:
     id: 0
     name: fisk med potatis
     ingredients:
-      - 0
-      - 1
+      - 0:
+          - 100
+          - 2
+      - 1:
+          - 5
+          - 3
     steps:
       - koka fisken
       - koka potatisen
   1:
     id: 1
-    name: fisk
+    name: stekt fisk
     ingredients:
-      - 0
+      - 0:
+          - 5
+          - 8
     steps:
       - stek fisken

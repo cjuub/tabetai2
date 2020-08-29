@@ -5,9 +5,12 @@ find_package(range-v3 REQUIRED)
 add_library(${PROJECT_NAME}
     include/recipe/recipe.h
     include/recipe/recipe_repository.h
+    include/recipe/unit.h
+    include/recipe/quantity.h
 
     src/recipe.cpp
     src/recipe_repository.cpp
+    src/quantity.cpp
 )
 
 target_compile_features(${PROJECT_NAME}
