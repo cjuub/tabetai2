@@ -35,6 +35,7 @@ Recipe YamlRecipeDatabase::from_yaml(YAML::Node entry) const {
 
     return Recipe(entry["id"].as<int>(),
                   entry["name"].as<std::string>(),
+                  entry["servings"].as<int>(),
                   std::move(ingredients),
                   entry["steps"].as<std::vector<std::string>>());
 }
@@ -43,6 +44,7 @@ YAML::Node YamlRecipeDatabase::to_yaml(const Recipe& recipe) const {
     YAML::Node entry;
     entry["id"] = recipe.id();
     entry["name"] = recipe.name();
+    entry["servings"] = recipe.servings();
 
     std::vector<SerializedIngredient> ingredients;
     for (const auto& ingredient : recipe.ingredients()) {

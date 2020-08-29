@@ -20,24 +20,28 @@ TEST_CASE("RecipeRepository") {
     const auto boiled_fish = Recipe{
         13,
         "boiled fish",
+        1,
         {{fish, Quantity(1, Unit::PCS)},
          {water, Quantity(5, Unit::DL)}},
         {"boil"}};
     const auto boiled_potato = Recipe{
         14,
         "boiled potato",
+        2,
         {{potato, Quantity(2, Unit::PCS)},
          {water, Quantity(4, Unit::L)}},
         {"boil"}};
     const auto boiled_hedgehog = Recipe{
         17,
         "boiled hedgehog",
+        1,
         {{hedgehog, Quantity(1, Unit::PCS)},
          {water, Quantity(4, Unit::L)}},
         {"boil"}};
     const auto hedgehog_with_potato = Recipe{
         15,
         "hedgehog with potato",
+        2,
         {{hedgehog, Quantity(1, Unit::PCS)},
          {potato, Quantity(1, Unit::PCS)}},
         {"feed potato to hedgehog"}};
@@ -50,6 +54,7 @@ TEST_CASE("RecipeRepository") {
         auto potato_with_potato = Recipe{
             19,
             "potato_with_potato",
+            2,
             {{potato, Quantity(1, Unit::PCS)},
              {potato, Quantity(1, Unit::PCS)}},
             {"stack potatoes"}};

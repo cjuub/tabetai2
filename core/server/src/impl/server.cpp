@@ -31,6 +31,7 @@ void Server::run() {
     auto fisk_med_potatis = Recipe(
             0,
             "fisk med potatis",
+            100,
             {{fisk, Quantity(100, Unit::KG)},
                       {potatis, Quantity(5, Unit::KRM)}},
             {"koka fisken", "koka potatisen"});
@@ -39,6 +40,7 @@ void Server::run() {
     auto stekt_fisk = Recipe(
             1,
             "stekt fisk",
+            5,
             {{fisk, Quantity(5, Unit::PCS)}},
             {"stek fisken"});
     m_recipe_repository->add(stekt_fisk);

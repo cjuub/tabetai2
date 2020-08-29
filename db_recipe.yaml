@@ -2,6 +2,7 @@ recipes:
   0:
     id: 0
     name: fisk med potatis
+    servings: 100
     ingredients:
       - 0:
           - 100
@@ -15,6 +16,7 @@ recipes:
   1:
     id: 1
     name: stekt fisk
+    servings: 5
     ingredients:
       - 0:
           - 5
