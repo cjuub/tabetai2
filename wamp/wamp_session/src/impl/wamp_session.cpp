@@ -2,6 +2,8 @@
 
 namespace tabetai2::wamp_session::impl {
 
+using namespace wamp_data;
+
 void WampSession::run(std::function<void()> func) {
     boost::asio::io_service io;
     bool debug = true;
