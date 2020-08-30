@@ -13,7 +13,7 @@ class WampSession : public wamp_session::WampSession {
 public:
     void run(std::function<void()> func) override;
 
-    void publish(const std::string& topic, const Publishable& object) override;
+    void publish(const std::string& topic, const wamp_data::Publishable& object) override;
 
 private:
     std::shared_ptr<autobahn::wamp_session> m_session;

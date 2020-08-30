@@ -25,6 +25,7 @@ target_link_libraries(${PROJECT_NAME}
         data_publisher
         ingredient
         recipe
+        wamp_data
         wamp_session
         warning
 )
