@@ -31,7 +31,7 @@ std::unique_ptr<Server> ServerFactory::create() const {
 
     std::vector<std::shared_ptr<Publisher>> publishers;
     publishers.push_back(m_repository_publisher_factory->create_ingredient_repository_publisher(ingredient_repository));
-    publishers.push_back(m_repository_publisher_factory->create_recipe_repository_publisher(recipe_repository));
+    publishers.push_back(m_repository_publisher_factory->create_recipe_repository_publisher(recipe_repository, ingredient_repository));
 
     return std::make_unique<impl::Server>(ingredient_repository, recipe_repository, publishers);
 }

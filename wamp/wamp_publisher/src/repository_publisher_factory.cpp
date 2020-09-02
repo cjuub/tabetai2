@@ -21,8 +21,9 @@ std::shared_ptr<Publisher> RepositoryPublisherFactory::create_ingredient_reposit
 }
 
 std::shared_ptr<Publisher> RepositoryPublisherFactory::create_recipe_repository_publisher(
-        std::shared_ptr<RecipeRepository> recipe_repository) {
-    return std::make_shared<RecipeRepositoryPublisher>(recipe_repository, m_session);
+        std::shared_ptr<RecipeRepository> recipe_repository,
+        std::shared_ptr<IngredientRepository> ingredient_repository) {
+    return std::make_shared<RecipeRepositoryPublisher>(recipe_repository, ingredient_repository, m_session);
 }
 
 }

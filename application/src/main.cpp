@@ -8,8 +8,9 @@ using namespace tabetai2::wamp_publisher;
 using namespace tabetai2::wamp_session;
 
 int main() {
-    auto session = WampSessionFactory::create();
-    session->run([&]() {
-        ServerFactory(std::make_unique<RepositoryPublisherFactory>(*session)).create()->run();
+    std::unique_ptr<Server> server;
+    WampSessionFactory::create()->run([&](WampSession& session) {
+        server = ServerFactory(std::make_unique<RepositoryPublisherFactory>(session)).create();
+        server->run();
     });
 }
