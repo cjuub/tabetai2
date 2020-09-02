@@ -16,6 +16,13 @@ IngredientRepositoryPublisher::IngredientRepositoryPublisher(
   m_repository{repository},
   m_session{session} {
 
+    m_session.create_rpc("com.tabetai2.add_ingredient", std::function([&](int id, std::string name) {
+        m_repository->add(Ingredient(id, std::move(name)));
+    }));
+
+    m_session.create_rpc("com.tabetai2.erase_ingredient", std::function([&](int id) {
+        m_repository->erase(id);
+    }));
 }
 
 void IngredientRepositoryPublisher::publish() {
