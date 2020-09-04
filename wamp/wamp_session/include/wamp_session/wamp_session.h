@@ -16,6 +16,16 @@ public:
     virtual void publish(const std::string& topic, const wamp_data::Publishable& object) = 0;
 
     template<typename... Ts>
+    void create_rpc(const std::string& topic, const std::function<void(Ts...)>& rpc) {
+        create_rpc_impl(topic, [rpc](const std::vector<std::any>& args) {
+            std::apply(rpc, ArgHelper<Ts...>::unpack(args));
+        });
+    }
+
+    virtual ~WampSession() = default;
+
+private:
+    template<typename... Ts>
     class ArgHelper {
     public:
         constexpr static std::tuple<Ts...> unpack(const std::vector<std::any>& args) {
@@ -30,18 +40,7 @@ public:
         }
     };
 
-    template<typename... Ts>
-    void create_rpc(const std::string& topic, const std::function<void(Ts...)>& rpc) {
-        create_rpc_impl(topic, [rpc](const std::vector<std::any>& args) {
-            std::apply(rpc, ArgHelper<Ts...>::unpack(args));
-        });
-    }
-
-    virtual ~WampSession() = default;
-
-private:
     virtual void create_rpc_impl(const std::string& topic, const std::function<void(std::vector<std::any>)>& rpc) = 0;
-
 };
 
 }
