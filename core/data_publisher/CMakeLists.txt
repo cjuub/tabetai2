@@ -19,3 +19,5 @@ target_link_libraries(${PROJECT_NAME}
         repository
         util
 )
+
+add_subdirectory(test)
