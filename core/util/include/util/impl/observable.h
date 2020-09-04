@@ -10,6 +10,7 @@ namespace tabetai2::core::util::impl {
 class Observable : public util::Observable {
 public:
     void add_observer(util::Observer* observer);
+    void remove_observer(const util::Observer* observer);
 
 protected:
     void notify_observers() override;
