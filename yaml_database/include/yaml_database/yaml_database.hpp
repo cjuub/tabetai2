@@ -19,10 +19,16 @@ public:
     : m_database_file{std::move(database_file)},
       m_database_name{std::move(database_name)},
       m_database() {
+        std::string current_version = "1.0";
         try {
             m_database = YAML::LoadFile(m_database_file);
         } catch (...) {
+            m_database["version"] = current_version;
+            commit_changes();
+        }
 
+        if (!m_database["version"].IsDefined() || m_database["version"].as<std::string>() != current_version) {
+            throw std::runtime_error("Incompatible database file");
         }
     }
 
