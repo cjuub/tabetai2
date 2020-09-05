@@ -1,5 +1,6 @@
 #pragma once
 
+#include <database/database.h>
 #include <ingredient/ingredient.h>
 #include <recipe/quantity.h>
 
@@ -11,13 +12,13 @@ namespace tabetai2::core::recipe {
 
 class Recipe {
 public:
-    Recipe(int id,
+    Recipe(database::Id id,
            std::string name,
            unsigned servings,
            std::vector<std::pair<ingredient::Ingredient, std::optional<Quantity>>> ingredients,
            std::vector<std::string> steps);
 
-    int id() const;
+    database::Id id() const;
 
     std::string name() const;
 
@@ -34,7 +35,7 @@ public:
     bool operator==(const Recipe &) const = default;
 
 private:
-    int m_id;
+    database::Id m_id;
     std::string m_name;
     unsigned m_servings;
     std::vector<std::pair<ingredient::Ingredient, std::optional<Quantity>>> m_ingredients;

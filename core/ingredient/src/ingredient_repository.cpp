@@ -6,7 +6,9 @@
 
 namespace tabetai2::core::ingredient {
 
-std::optional<Ingredient> IngredientRepository::find_by_id(int id) const try {
+using namespace core::database;
+
+std::optional<Ingredient> IngredientRepository::find_by_id(Id id) const try {
     return m_database->get(id);
 } catch (const std::out_of_range&) {
     return std::nullopt;

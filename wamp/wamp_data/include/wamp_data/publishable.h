@@ -7,14 +7,14 @@
 namespace tabetai2::wamp_data {
 
 using IngredientData = std::tuple<
-        int, // id
+        std::string, // id, as string due to clients may not be able to handle uint64_t
         std::string>; // name
 
 using RecipeData = std::tuple<
-        int, // id
+        std::string, // id, as string due to clients may not be able to handle uint64_t
         std::string, // name
         unsigned, // servings
-        std::vector<std::pair<int, std::pair<unsigned, int>>>, // ingredients (id, (amount, unit))
+        std::vector<std::pair<std::string, std::pair<unsigned, int>>>, // ingredients (id, (amount, unit))
         std::vector<std::string>>; // steps
 
 using Publishable = std::variant<

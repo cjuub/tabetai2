@@ -16,11 +16,11 @@ public:
         m_database.emplace(t.id(), std::move(t));
     };
 
-    void erase(int id) override {
+    void erase(Id id) override {
         m_database.erase(id);
     };
 
-    T get(int id) const override {
+    T get(Id id) const override {
         return m_database.at(id);
     }
 
@@ -29,7 +29,7 @@ public:
     }
 
 private:
-    std::unordered_map<int, T> m_database;
+    std::unordered_map<Id, T> m_database;
 };
 
 }

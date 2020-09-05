@@ -8,9 +8,10 @@
 
 namespace tabetai2::core::recipe {
 
-using namespace ingredient;
+using namespace core::ingredient;
+using namespace core::database;
 
-std::optional<Recipe> RecipeRepository::find_by_id(int id) const try {
+std::optional<Recipe> RecipeRepository::find_by_id(Id id) const try {
     return m_database->get(id);
 } catch (const std::out_of_range&) {
     return std::nullopt;
