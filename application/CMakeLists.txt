@@ -11,6 +11,7 @@ target_compile_features(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
+        database
         server
         wamp_publisher
         wamp_session

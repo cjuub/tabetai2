@@ -4,10 +4,11 @@
 
 namespace tabetai2::yaml_database {
 
+using namespace core::database;
 using namespace core::ingredient;
 using namespace core::recipe;
 
-using SerializedIngredient = std::map<int, std::pair<unsigned, int>>;
+using SerializedIngredient = std::map<Id, std::pair<unsigned, int>>;
 
 YamlRecipeDatabase::YamlRecipeDatabase(std::string database_file,
                                        std::string database_name,
@@ -33,7 +34,7 @@ Recipe YamlRecipeDatabase::from_yaml(YAML::Node entry) const {
         }
     }
 
-    return Recipe{entry["id"].as<int>(),
+    return Recipe{entry["id"].as<Id>(),
                   entry["name"].as<std::string>(),
                   entry["servings"].as<unsigned>(),
                   std::move(ingredients),

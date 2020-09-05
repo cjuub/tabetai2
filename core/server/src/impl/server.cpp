@@ -5,9 +5,9 @@
 
 namespace tabetai2::core::server::impl {
 
-using namespace data_publisher;
-using namespace ingredient;
-using namespace recipe;
+using namespace core::data_publisher;
+using namespace core::ingredient;
+using namespace core::recipe;
 
 Server::Server(std::shared_ptr<IngredientRepository> ingredient_repository,
                std::shared_ptr<RecipeRepository> recipe_repository,

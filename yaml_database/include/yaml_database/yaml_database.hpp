@@ -1,6 +1,7 @@
 #pragma once
 
 #include <database/database.h>
+#include <database/id_generator.h>
 
 #include <range/v3/to_container.hpp>
 #include <range/v3/view/transform.hpp>
@@ -30,12 +31,12 @@ public:
         commit_changes();
     }
 
-    void erase(int id) override {
+    void erase(core::database::Id id) override {
         m_database[m_database_name].remove(std::to_string(id));
         commit_changes();
     }
 
-    T get(int id) const override {
+    T get(core::database::Id id) const override {
         return from_yaml(m_database[m_database_name][std::to_string(id)]);
     }
 

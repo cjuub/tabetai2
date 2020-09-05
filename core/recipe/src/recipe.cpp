@@ -4,9 +4,10 @@
 
 namespace tabetai2::core::recipe {
 
-using namespace ingredient;
+using namespace core::database;
+using namespace core::ingredient;
 
-Recipe::Recipe(int id,
+Recipe::Recipe(Id id,
                std::string name,
                unsigned servings,
                std::vector<std::pair<Ingredient, std::optional<Quantity>>> ingredients,
@@ -19,7 +20,7 @@ Recipe::Recipe(int id,
 
 }
 
-int Recipe::id() const {
+Id Recipe::id() const {
     return m_id;
 }
 

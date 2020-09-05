@@ -1,5 +1,6 @@
 #pragma once
 
+#include <database/id_generator.h>
 #include <data_publisher/repository_publisher.hpp>
 #include <ingredient/ingredient_repository.h>
 #include <recipe/recipe.h>
@@ -12,7 +13,8 @@ class RecipeRepositoryPublisher : public core::data_publisher::RepositoryPublish
 public:
     explicit RecipeRepositoryPublisher(const std::shared_ptr<core::recipe::RecipeRepository>& repository,
                                        const std::shared_ptr<core::ingredient::IngredientRepository>& ingredient_repository,
-                                       wamp_session::WampSession& session);
+                                       wamp_session::WampSession& session,
+                                       std::shared_ptr<core::database::IdGenerator> id_generator);
 
     void publish() override;
 

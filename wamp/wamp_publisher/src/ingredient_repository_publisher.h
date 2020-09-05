@@ -1,5 +1,6 @@
 #pragma once
 
+#include <database/id_generator.h>
 #include <data_publisher/repository_publisher.hpp>
 #include <ingredient/ingredient.h>
 #include <ingredient/ingredient_repository.h>
@@ -10,7 +11,8 @@ namespace tabetai2::wamp_publisher {
 class IngredientRepositoryPublisher : public core::data_publisher::RepositoryPublisher<core::ingredient::Ingredient> {
 public:
     explicit IngredientRepositoryPublisher(const std::shared_ptr<core::ingredient::IngredientRepository>& repository,
-                                           wamp_session::WampSession& session);
+                                           wamp_session::WampSession& session,
+                                           std::shared_ptr<core::database::IdGenerator> id_generator);
 
     void publish() override;
 

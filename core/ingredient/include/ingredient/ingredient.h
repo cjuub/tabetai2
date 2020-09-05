@@ -1,14 +1,16 @@
 #pragma once
 
+#include <database/database.h>
+
 #include <string>
 
 namespace tabetai2::core::ingredient {
 
 class Ingredient {
 public:
-    Ingredient(int id, std::string name);
+    Ingredient(database::Id id, std::string name);
 
-    int id() const;
+    database::Id id() const;
     std::string name() const;
 
     bool operator<(const Ingredient &i) const {
@@ -18,7 +20,7 @@ public:
     bool operator==(const Ingredient &) const = default;
 
 private:
-    int m_id;
+    database::Id m_id;
     std::string m_name;
 };
 

@@ -1,6 +1,7 @@
 #pragma once
 
-#include <database/in_memory_database.hpp>
+#include <database/database.h>
+
 #include <util/impl/observable.h>
 
 #include <memory>
@@ -18,7 +19,7 @@ public:
         notify_observers();
     }
 
-    void erase(int id) {
+    void erase(database::Id id) {
         m_database->erase(id);
         notify_observers();
     }

@@ -4,13 +4,15 @@
 
 namespace tabetai2::core::ingredient {
 
-Ingredient::Ingredient(int id, std::string name)
+using namespace core::database;
+
+Ingredient::Ingredient(Id id, std::string name)
 : m_id{id},
   m_name{std::move(name)} {
 
 }
 
-int Ingredient::id() const {
+Id Ingredient::id() const {
     return m_id;
 }
 
