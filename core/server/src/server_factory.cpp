@@ -36,5 +36,4 @@ std::unique_ptr<Server> ServerFactory::create() const {
     return std::make_unique<impl::Server>(ingredient_repository, recipe_repository, publishers);
 }
 
-
 }
