@@ -20,6 +20,10 @@ Server::Server(std::shared_ptr<IngredientRepository> ingredient_repository,
 
 void Server::run() {
     std::cout << "Server started" << std::endl;
+
+    for (auto& publisher : m_publishers) {
+        publisher->publish();
+    }
 }
 
 }
