@@ -7,6 +7,7 @@
 #include <range/v3/view/transform.hpp>
 #include <yaml-cpp/yaml.h>
 
+#include <filesystem>
 #include <fstream>
 #include <string>
 
@@ -20,9 +21,9 @@ public:
       m_database_name{std::move(database_name)},
       m_database() {
         std::string current_version = "1.0";
-        try {
+        if (std::filesystem::exists(m_database_file)) {
             m_database = YAML::LoadFile(m_database_file);
-        } catch (...) {
+        } else {
             m_database["version"] = current_version;
             commit_changes();
         }
