@@ -8,11 +8,9 @@ namespace tabetai2::core::database::impl {
 
 class IdGenerator : public database::IdGenerator {
 public:
-    IdGenerator() : m_engine(std::random_device()()), m_distribution{} {}
+    IdGenerator();
 
-    Id generate() override {
-        return m_distribution(m_engine);
-    }
+    Id generate() override;
 
 private:
     std::mt19937 m_engine;
