@@ -3,7 +3,7 @@
 #include <database/database.h>
 #include <database/id_generator.h>
 
-#include <range/v3/to_container.hpp>
+#include <range/v3/range/conversion.hpp>
 #include <range/v3/view/transform.hpp>
 #include <yaml-cpp/yaml.h>
 

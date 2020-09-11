@@ -27,6 +27,18 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(autobahn_cpp)
 
+if(TABETAI2_USE_CONAN)
+    find_package(msgpack REQUIRED)
+    find_package(OpenSSL REQUIRED)
+    find_package(websocketpp REQUIRED)
+    target_link_libraries(autobahn_cpp
+        INTERFACE
+            msgpack::msgpack
+            OpenSSL::OpenSSL
+            websocketpp::websocketpp
+    )
+endif()
+
 target_link_libraries(autobahn_cpp
     INTERFACE
         $<$<BOOL:${WIN32}>:ws2_32>

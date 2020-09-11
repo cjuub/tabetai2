@@ -10,12 +10,7 @@ include(${CMAKE_BINARY_DIR}/conan.cmake)
 
 conan_cmake_run(
     REQUIRES
-        boost_asio/1.69.0@bincrafters/stable
-        boost_program_options/1.69.0@bincrafters/stable
-        boost_system/1.69.0@bincrafters/stable
-        boost_thread/1.69.0@bincrafters/stable
-        boost_random/1.69.0@bincrafters/stable
-        cmake_findboost_modular/1.69.0@bincrafters/stable
+        boost/1.73.0
         msgpack/3.2.1
         range-v3/0.10.0
         websocketpp/0.8.2
@@ -30,3 +25,20 @@ conan_cmake_run(
 )
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
+
+find_package(range-v3 REQUIRED)
+target_compile_options(range-v3::range-v3
+    INTERFACE
+        $<$<CXX_COMPILER_ID:MSVC>:
+            /Zc:preprocessor;
+            /permissive-;
+        >
+)
+
+find_package(yaml-cpp REQUIRED)
+target_compile_definitions(yaml-cpp::yaml-cpp
+    INTERFACE
+        $<$<CXX_COMPILER_ID:MSVC>:
+            _SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;
+        >
+)

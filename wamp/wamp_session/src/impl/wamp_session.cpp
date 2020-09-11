@@ -55,7 +55,7 @@ void WampSession::run(std::function<void(wamp_session::WampSession&)> func) {
 
                 try {
                     func(*this);
-                } catch (const std::exception& e) {
+                } catch (const std::exception&) {
                     io.stop();
                     throw;
                 }
