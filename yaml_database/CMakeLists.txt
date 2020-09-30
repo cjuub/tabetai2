@@ -1,4 +1,4 @@
-project(yaml_database)
+project(tabetai_yaml_database)
 
 find_package(range-v3 REQUIRED)
 find_package(yaml-cpp REQUIRED)
@@ -11,6 +11,7 @@ add_library(${PROJECT_NAME}
     src/yaml_ingredient_database.cpp
     src/yaml_recipe_database.cpp
 )
+add_library(tabetai::yaml_database ALIAS ${PROJECT_NAME})
 
 target_compile_features(${PROJECT_NAME}
     PRIVATE
@@ -34,8 +35,8 @@ target_link_libraries(${PROJECT_NAME}
         range-v3::range-v3
         yaml-cpp::yaml-cpp
     PRIVATE
-        database
-        ingredient
-        recipe
-        warning
+        tabetai::database
+        tabetai::ingredient
+        tabetai::recipe
+        tabetai::warning
 )

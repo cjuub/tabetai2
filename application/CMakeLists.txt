@@ -18,9 +18,9 @@ set_target_properties(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-        database
-        server
-        wamp_publisher
-        wamp_session
-        warning
+        tabetai::database
+        tabetai::server
+        tabetai::wamp_publisher
+        tabetai::wamp_session
+        tabetai::warning
 )

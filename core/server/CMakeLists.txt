@@ -1,4 +1,4 @@
-project(server)
+project(tabetai_server)
 
 add_library(${PROJECT_NAME}
     include/server/server.h
@@ -7,6 +7,7 @@ add_library(${PROJECT_NAME}
     src/impl/server.cpp
     src/server_factory.cpp
 )
+add_library(tabetai::server ALIAS ${PROJECT_NAME})
 
 target_compile_features(${PROJECT_NAME}
     PRIVATE
@@ -29,10 +30,10 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
-        data_publisher
+        tabetai::data_publisher
     PRIVATE
-        ingredient
-        recipe
-        warning
-        yaml_database
+        tabetai::ingredient
+        tabetai::recipe
+        tabetai::warning
+        tabetai::yaml_database
 )

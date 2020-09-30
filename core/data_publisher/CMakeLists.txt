@@ -1,6 +1,7 @@
-project(data_publisher)
+project(tabetai_data_publisher)
 
 add_library(${PROJECT_NAME} INTERFACE)
+add_library(tabetai::data_publisher ALIAS ${PROJECT_NAME})
 
 target_compile_features(${PROJECT_NAME}
     INTERFACE
@@ -14,10 +15,10 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     INTERFACE
-        ingredient
-        recipe
-        repository
-        util
+        tabetai::ingredient
+        tabetai::recipe
+        tabetai::repository
+        tabetai::util
 )
 
 add_subdirectory(test)

@@ -1,5 +1,6 @@
-add_library(warning INTERFACE)
-target_compile_options(warning INTERFACE
+add_library(tabetai_warning INTERFACE)
+add_library(tabetai::warning ALIAS tabetai_warning)
+target_compile_options(tabetai_warning INTERFACE
     $<$<CXX_COMPILER_ID:Clang,GNU>:
         -Wall;
         -Wcast-align;
@@ -22,8 +23,9 @@ target_compile_options(warning INTERFACE
     >
 )
 
-add_library(warning_low INTERFACE)
-target_compile_options(warning_low INTERFACE
+add_library(tabetai_warning_low INTERFACE)
+add_library(tabetai::warning::low ALIAS tabetai_warning_low)
+target_compile_options(tabetai_warning_low INTERFACE
     $<$<CXX_COMPILER_ID:Clang,GNU>:
         -Wall;
         -Wcast-align;
@@ -41,8 +43,7 @@ target_compile_options(warning_low INTERFACE
         /WX;
     >
 )
-target_compile_definitions(warning_low
+target_compile_definitions(tabetai_warning_low
     INTERFACE
         _SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING # boost/asio
 )
-add_library(warning::low ALIAS warning_low)

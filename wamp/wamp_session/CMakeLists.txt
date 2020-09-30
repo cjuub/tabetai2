@@ -1,4 +1,4 @@
-project(wamp_session)
+project(tabetai_wamp_session)
 
 add_library(${PROJECT_NAME}
     include/wamp_session/wamp_session_factory.h
@@ -8,6 +8,7 @@ add_library(${PROJECT_NAME}
     src/impl/wamp_session.h
     src/wamp_session_factory.cpp
 )
+add_library(tabetai::wamp_session ALIAS ${PROJECT_NAME})
 
 target_compile_features(${PROJECT_NAME}
     PRIVATE
@@ -28,8 +29,8 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
-        wamp_data
+        tabetai::wamp_data
     PRIVATE
         autobahn_cpp
-        warning::low
+        tabetai::warning::low
 )

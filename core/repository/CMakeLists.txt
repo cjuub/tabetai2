@@ -1,6 +1,7 @@
-project(repository)
+project(tabetai_repository)
 
 add_library(${PROJECT_NAME} INTERFACE)
+add_library(tabetai::repository ALIAS ${PROJECT_NAME})
 
 target_compile_features(${PROJECT_NAME}
     INTERFACE
@@ -14,6 +15,6 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     INTERFACE
-        database
-        util
+        tabetai::database
+        tabetai::util
 )

@@ -1,4 +1,4 @@
-project(wamp_publisher)
+project(tabetai_wamp_publisher)
 
 add_library(${PROJECT_NAME}
     include/wamp_publisher/repository_publisher_factory.h
@@ -9,6 +9,7 @@ add_library(${PROJECT_NAME}
     src/recipe_repository_publisher.cpp
     src/repository_publisher_factory.cpp
 )
+add_library(tabetai::wamp_publisher ALIAS ${PROJECT_NAME})
 
 target_compile_features(${PROJECT_NAME}
     PRIVATE
@@ -29,10 +30,10 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-        data_publisher
-        ingredient
-        recipe
-        wamp_data
-        wamp_session
-        warning
+        tabetai::data_publisher
+        tabetai::ingredient
+        tabetai::recipe
+        tabetai::wamp_data
+        tabetai::wamp_session
+        tabetai::warning
 )
