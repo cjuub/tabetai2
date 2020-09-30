@@ -1,4 +1,4 @@
-project(util)
+project(tabetai_util)
 
 add_library(${PROJECT_NAME}
     include/util/observable.h
@@ -7,6 +7,7 @@ add_library(${PROJECT_NAME}
 
     src/observable.cpp
 )
+add_library(tabetai::util ALIAS ${PROJECT_NAME})
 
 target_compile_features(${PROJECT_NAME}
     PRIVATE
@@ -27,5 +28,5 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-        warning
+        tabetai::warning
 )

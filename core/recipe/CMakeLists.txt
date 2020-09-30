@@ -1,4 +1,4 @@
-project(recipe)
+project(tabetai_recipe)
 
 find_package(range-v3 REQUIRED)
 
@@ -12,6 +12,7 @@ add_library(${PROJECT_NAME}
     src/recipe_repository.cpp
     src/quantity.cpp
 )
+add_library(tabetai::recipe ALIAS ${PROJECT_NAME})
 
 target_compile_features(${PROJECT_NAME}
     PRIVATE
@@ -32,10 +33,10 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
-        repository
-        ingredient
+        tabetai::repository
+        tabetai::ingredient
     PRIVATE
-        warning
+        tabetai::warning
         range-v3::range-v3
 )
 

@@ -1,4 +1,4 @@
-project(database)
+project(tabetai_database)
 
 find_package(range-v3 REQUIRED)
 
@@ -12,6 +12,7 @@ add_library(${PROJECT_NAME}
     src/impl/id_generator.cpp
     src/impl/id_generator.h
 )
+add_library(tabetai::database ALIAS ${PROJECT_NAME})
 
 target_compile_features(${PROJECT_NAME}
     PRIVATE

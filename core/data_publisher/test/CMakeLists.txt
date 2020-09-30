@@ -1,4 +1,4 @@
-project(test_data_publisher)
+project(test_tabetai_data_publisher)
 
 include(Catch)
 
@@ -9,10 +9,10 @@ add_executable(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-        data_publisher
+        tabetai::data_publisher
         # TODO(robinlinden): Mocking a repository would be cleaner, but we
         # already get this dependency from data_publisher.
-        ingredient
+        tabetai::ingredient
         Catch2::Catch2
 )
 
