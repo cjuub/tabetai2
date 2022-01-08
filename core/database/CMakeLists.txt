@@ -1,7 +1,5 @@
 project(tabetai_database)
 
-find_package(range-v3 REQUIRED)
-
 add_library(${PROJECT_NAME}
     include/database/database.h
     include/database/id_generator.h

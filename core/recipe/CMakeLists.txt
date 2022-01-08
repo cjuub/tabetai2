@@ -1,7 +1,5 @@
 project(tabetai_recipe)
 
-find_package(range-v3 REQUIRED)
-
 add_library(${PROJECT_NAME}
     include/recipe/recipe.h
     include/recipe/recipe_repository.h

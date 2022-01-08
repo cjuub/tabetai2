@@ -2,17 +2,14 @@ cmake_minimum_required(VERSION 3.17)
 
 project(tabetai2)
 
-option(TABETAI2_USE_CONAN "Use Conan instead of FetchContent to download 3rd-party dependencies" ON)
+option(TABETAI2_USE_CONAN "Use Conan instead of FetchContent to download 3rd-party dependencies" OFF)
 
 if(TABETAI2_USE_CONAN)
     include(cmake/conan.cmake)
 else()
-    add_subdirectory(third_party/boost)
-    add_subdirectory(third_party/websocketpp)
-    add_subdirectory(third_party/msgpack_c)
+    add_subdirectory(third_party/range-v3)
     add_subdirectory(third_party/yaml_cpp)
 endif()
-add_subdirectory(third_party/autobahn_cpp) # Doesn't exist on conan.
 add_subdirectory(third_party/catch2) # Header-only, no dependencies.
 
 enable_testing()
@@ -25,8 +22,5 @@ add_subdirectory(core/data_publisher)
 add_subdirectory(core/repository)
 add_subdirectory(core/server)
 add_subdirectory(core/util)
-add_subdirectory(wamp/wamp_data)
-add_subdirectory(wamp/wamp_publisher)
-add_subdirectory(wamp/wamp_session)
 add_subdirectory(warning)
 add_subdirectory(yaml_database)

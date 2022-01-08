@@ -1,7 +1,5 @@
 project(tabetai_ingredient)
 
-find_package(range-v3 REQUIRED)
-
 add_library(${PROJECT_NAME}
     include/ingredient/ingredient.h
     include/ingredient/ingredient_repository.h
