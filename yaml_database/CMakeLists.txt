@@ -1,8 +1,5 @@
 project(tabetai_yaml_database)
 
-find_package(range-v3 REQUIRED)
-find_package(yaml-cpp REQUIRED)
-
 add_library(${PROJECT_NAME}
     include/yaml_database/yaml_database.hpp
     include/yaml_database/yaml_ingredient_database.h

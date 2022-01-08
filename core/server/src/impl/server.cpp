@@ -1,5 +1,8 @@
 #include "impl/server.h"
 
+#include <ingredient/ingredient.h>
+#include <recipe/recipe.h>
+
 #include <iostream>
 #include <utility>
 
@@ -19,6 +22,11 @@ Server::Server(std::shared_ptr<IngredientRepository> ingredient_repository,
 }
 
 void Server::run() {
+    auto ing = Ingredient(0, "fisk");
+    auto ing2 = Ingredient(1, "disp");
+    m_ingredient_repository->add(ing);
+    m_ingredient_repository->add(ing2);
+    m_recipe_repository->add(Recipe(0, "recept", 4, {std::make_pair(ing, Quantity(2, Unit::DL))}, {"disp"}));
     std::cout << "Server started" << std::endl;
 
     for (auto& publisher : m_publishers) {

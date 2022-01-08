@@ -20,7 +20,5 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE
         tabetai::database
         tabetai::server
-        tabetai::wamp_publisher
-        tabetai::wamp_session
         tabetai::warning
 )
