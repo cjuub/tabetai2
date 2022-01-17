@@ -1,0 +1,2 @@
+build:msvc --cxxopt -std:c++20
+build:gnulike --cxxopt -std=c++20

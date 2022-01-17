@@ -1,3 +1,4 @@
 .idea
+bazel-*
 cmake-build-*
 db_*.yaml
