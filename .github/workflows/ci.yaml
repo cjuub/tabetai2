@@ -50,3 +50,16 @@ jobs:
           cmake --build build --config Debug
       - name: Test
         run: (cd build && ctest)
+
+  bazel:
+    name: linux-bazel
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup
+        run: |
+          echo "CC=gcc-10" >> $GITHUB_ENV
+          echo "CXX=g++-10" >> $GITHUB_ENV
+      - name: Build and test
+        run: bazel test ... --config gnulike
