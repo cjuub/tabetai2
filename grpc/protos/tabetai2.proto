@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+service Tabetai2 {
+    rpc list_ingredients(ListIngredientsRequest) returns (stream Ingredient) {}
+    rpc list_recipes(ListRecipesRequest) returns (stream Recipe) {}
+    rpc add_ingredient(AddIngredientRequest) returns (AddIngredientResponse) {}
+    rpc add_recipe(AddRecipeRequest) returns (AddRecipeResponse) {}
+    rpc erase_ingredient(EraseIngredientRequest) returns (EraseIngredientResponse) {}
+    rpc erase_recipe(EraseRecipeRequest) returns (EraseRecipeResponse) {}
+}
+
+message ListIngredientsRequest {}
+message ListRecipesRequest {}
+
+message Ingredient {
+    uint64 id = 1;
+    string name = 2;
+}
+
+message AddIngredientRequest {
+    string name = 1;
+}
+
+message AddIngredientResponse {
+    uint64 ingredient_id = 1;
+}
+
+message EraseIngredientRequest {
+    uint64 id = 1;
+}
+
+message EraseIngredientResponse {}
+
+enum Unit {
+    g = 0;
+    hg = 1;
+    kg = 2;
+    krm = 3;
+    msk = 4;
+    ml = 5;
+    dl = 6;
+    l = 7;
+    pcs = 8;
+}
+
+message Quantity {
+    uint32 amount = 1;
+    Unit unit = 2;
+}
+
+message RecipeIngredientEntry {
+    uint32 id = 1;
+    Quantity quantity = 2;
+}
+
+message Recipe {
+    uint64 id = 1;
+    string name = 2;
+    uint32 servings = 3;
+    repeated RecipeIngredientEntry ingredients = 4;
+    repeated string steps = 5;
+}
+
+message AddRecipeRequest {
+    string name = 1;
+    uint32 servings = 2;
+    repeated RecipeIngredientEntry ingredients = 3;
+    repeated string steps = 4;
+}
+
+message AddRecipeResponse {
+    uint64 recipe_id = 1;
+}
+
+message EraseRecipeRequest {
+    uint64 id = 1;
+}
+
+message EraseRecipeResponse {}

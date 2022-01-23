@@ -1,12 +1,9 @@
-project(tabetai_server)
+project(grpc_communicator)
 
 add_library(${PROJECT_NAME}
-    include/server/server.h
-    include/server/server_factory.h
-    src/impl/server.h
-    src/impl/server.cpp
+    include/grpc_communicator/grpc_communicator.h
+    src/grpc_communicator.cpp
 )
-add_library(tabetai::server ALIAS ${PROJECT_NAME})
 
 target_compile_features(${PROJECT_NAME}
     PRIVATE
@@ -23,15 +20,13 @@ set_target_properties(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME}
     PUBLIC
         include
-        src
 )
 
 target_link_libraries(${PROJECT_NAME}
-    PUBLIC
-        tabetai::communicator
-        tabetai::data_publisher
     PRIVATE
-        tabetai::ingredient
-        tabetai::recipe
-        tabetai::warning
+        communicator
+        ingredient
+        recipe
+        grpc
+        tabetai2_grpc_proto
 )
