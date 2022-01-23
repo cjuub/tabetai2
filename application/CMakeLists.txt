@@ -18,6 +18,7 @@ set_target_properties(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
+        tabetai::application_server
         tabetai::database
         tabetai::server
         tabetai::warning

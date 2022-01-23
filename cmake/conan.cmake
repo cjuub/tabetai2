@@ -12,6 +12,7 @@ conan_cmake_run(
     REQUIRES
         range-v3/0.10.0
         yaml-cpp/0.6.3
+        grpc/1.42.0
     BASIC_SETUP
     CMAKE_TARGETS
     GENERATORS cmake_find_package
