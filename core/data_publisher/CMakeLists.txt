@@ -19,6 +19,7 @@ target_link_libraries(${PROJECT_NAME}
         tabetai::recipe
         tabetai::repository
         tabetai::util
+        tabetai::warning
 )
 
 add_subdirectory(test)

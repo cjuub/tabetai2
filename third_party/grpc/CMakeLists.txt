@@ -7,9 +7,3 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(grpc)
-
-set(_PROTOBUF_LIBPROTOBUF libprotobuf PARENT_SCOPE)
-set(_REFLECTION grpc++_reflection PARENT_SCOPE)
-set(_PROTOBUF_PROTOC $<TARGET_FILE:protoc> PARENT_SCOPE)
-set(_GRPC_GRPCPP grpc++ PARENT_SCOPE)
-set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin> PARENT_SCOPE)

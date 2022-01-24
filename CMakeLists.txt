@@ -13,20 +13,23 @@ else()
 endif()
 add_subdirectory(third_party/catch2) # Header-only, no dependencies.
 
-enable_testing()
+add_subdirectory(warning)
 
 add_subdirectory(core/communicator)
+add_subdirectory(core/data_publisher)
 add_subdirectory(core/database)
 add_subdirectory(core/ingredient)
 add_subdirectory(core/recipe)
-add_subdirectory(core/data_publisher)
 add_subdirectory(core/repository)
 add_subdirectory(core/server)
 add_subdirectory(core/util)
+
 add_subdirectory(grpc/proto)
 add_subdirectory(grpc/grpc_communicator)
-add_subdirectory(warning)
+
 add_subdirectory(yaml_database)
 
 add_subdirectory(application_server)
 add_subdirectory(application)
+
+enable_testing()

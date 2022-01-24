@@ -20,7 +20,7 @@ target_link_libraries(${PROJECT_NAME}
         data_publisher
     PRIVATE
         grpc_communicator
-        grpc_server
         server
         yaml_database
+        warning
 )
