@@ -38,3 +38,10 @@ target_compile_definitions(yaml-cpp::yaml-cpp
             _SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;
         >
 )
+
+find_package(gRPC REQUIRED)
+add_library(grpc++ ALIAS gRPC::grpc++)
+add_library(grpc++_reflection ALIAS gRPC::grpc++_reflection)
+add_library(libprotobuf ALIAS protobuf::libprotobuf)
+set(grpc_cpp_plugin $<TARGET_FILE:gRPC::grpc_cpp_plugin>)
+set(protoc $<TARGET_FILE:protobuf::protoc>)

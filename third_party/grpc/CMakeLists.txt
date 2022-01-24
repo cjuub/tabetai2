@@ -7,3 +7,6 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(grpc)
+
+set(grpc_cpp_plugin $<TARGET_FILE:grpc_cpp_plugin> PARENT_SCOPE)
+set(protoc $<TARGET_FILE:protoc> PARENT_SCOPE)
