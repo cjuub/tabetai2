@@ -3,17 +3,17 @@
 namespace tabetai2::core::recipe {
 
 enum class Unit {
-    g,
-    hg,
-    kg,
+    G,
+    HG,
+    KG,
 
-    krm,
-    msk,
-    ml,
-    dl,
-    l,
+    KRM,
+    MSK,
+    ML,
+    DL,
+    L,
 
-    pcs
+    PCS
 };
 
 }

@@ -1,36 +1,42 @@
-# Proto file
-get_filename_component(tabetai2_proto "../protos/tabetai2.proto" ABSOLUTE)
+project(tabetai2_grpc_proto)
+
+set(gen_output ${CMAKE_BINARY_DIR}/gen/proto)
+file(MAKE_DIRECTORY ${gen_output})
+
+get_filename_component(tabetai2_proto "${CMAKE_SOURCE_DIR}/data/proto/tabetai2.proto" ABSOLUTE)
 get_filename_component(tabetai2_proto_path "${tabetai2_proto}" PATH)
-
-# Generated sources
-set(tabetai2_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/tabetai2.pb.cc")
-set(tabetai2_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/tabetai2.pb.h")
-set(tabetai2_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/tabetai2.grpc.pb.cc")
-set(tabetai2_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/tabetai2.grpc.pb.h")
 add_custom_command(
-        OUTPUT "${tabetai2_proto_srcs}" "${tabetai2_proto_hdrs}" "${tabetai2_grpc_srcs}" "${tabetai2_grpc_hdrs}"
-        COMMAND ${_PROTOBUF_PROTOC}
-        ARGS --grpc_out "${CMAKE_CURRENT_BINARY_DIR}"
-        --cpp_out "${CMAKE_CURRENT_BINARY_DIR}"
+    OUTPUT
+        ${gen_output}/tabetai2.pb.cc
+        ${gen_output}/tabetai2.pb.h
+        ${gen_output}/tabetai2.grpc.pb.cc
+        ${gen_output}/tabetai2.grpc.pb.h
+    COMMAND
+        protoc
+    ARGS
+        --grpc_out "${gen_output}"
+        --cpp_out "${gen_output}"
         -I "${tabetai2_proto_path}"
-        --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
+        --plugin=protoc-gen-grpc=$<TARGET_FILE:grpc_cpp_plugin> "${tabetai2_proto}"
+    DEPENDS
         "${tabetai2_proto}"
-        DEPENDS "${tabetai2_proto}")
+)
 
-# Include generated *.pb.h files
-include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
-add_library(tabetai2_grpc_proto
-        ${tabetai2_grpc_srcs}
-        ${tabetai2_grpc_hdrs}
-        ${tabetai2_proto_srcs}
-        ${tabetai2_proto_hdrs})
-target_link_libraries(tabetai2_grpc_proto
-        ${_REFLECTION}
-        ${_GRPC_GRPCPP}
-        ${_PROTOBUF_LIBPROTOBUF})
+add_library(${PROJECT_NAME}
+    ${gen_output}/tabetai2.pb.cc
+    ${gen_output}/tabetai2.pb.h
+    ${gen_output}/tabetai2.grpc.pb.cc
+    ${gen_output}/tabetai2.grpc.pb.h
+)
 
-target_include_directories(tabetai2_grpc_proto
+target_include_directories(${PROJECT_NAME}
     PUBLIC
-        ${CMAKE_CURRENT_BINARY_DIR}
+        ${gen_output}
+)
+
+target_link_libraries(${PROJECT_NAME}
+    PUBLIC
+        grpc++_reflection
+        libprotobuf
 )

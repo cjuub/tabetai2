@@ -1,8 +1,6 @@
 project(communicator)
 
-add_library(${PROJECT_NAME} INTERFACE
-    include/communicator/communicator.h
-)
+add_library(${PROJECT_NAME} INTERFACE)
 
 target_compile_features(${PROJECT_NAME}
     INTERFACE
