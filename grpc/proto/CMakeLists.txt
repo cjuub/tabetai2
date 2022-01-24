@@ -5,6 +5,7 @@ file(MAKE_DIRECTORY ${gen_output})
 
 get_filename_component(tabetai2_proto "${CMAKE_SOURCE_DIR}/data/proto/tabetai2.proto" ABSOLUTE)
 get_filename_component(tabetai2_proto_path "${tabetai2_proto}" PATH)
+
 add_custom_command(
     OUTPUT
         ${gen_output}/tabetai2.pb.cc
@@ -12,12 +13,12 @@ add_custom_command(
         ${gen_output}/tabetai2.grpc.pb.cc
         ${gen_output}/tabetai2.grpc.pb.h
     COMMAND
-        protoc
+        ${protoc}
     ARGS
         --grpc_out "${gen_output}"
         --cpp_out "${gen_output}"
         -I "${tabetai2_proto_path}"
-        --plugin=protoc-gen-grpc=$<TARGET_FILE:grpc_cpp_plugin> "${tabetai2_proto}"
+        --plugin=protoc-gen-grpc=${grpc_cpp_plugin} "${tabetai2_proto}"
     DEPENDS
         "${tabetai2_proto}"
 )
