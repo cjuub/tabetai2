@@ -40,8 +40,7 @@ target_compile_definitions(yaml-cpp::yaml-cpp
 )
 
 find_package(gRPC REQUIRED)
-add_library(grpc++ ALIAS gRPC::grpc++)
-add_library(grpc++_reflection ALIAS gRPC::grpc++_reflection)
-add_library(libprotobuf ALIAS protobuf::libprotobuf)
-set(grpc_cpp_plugin $<TARGET_FILE:gRPC::grpc_cpp_plugin>)
-set(protoc $<TARGET_FILE:protobuf::protoc>)
+add_library(grpc::grpc++ ALIAS gRPC::grpc++)
+add_library(grpc::grpc++_reflection ALIAS gRPC::grpc++_reflection)
+set(GRPC_CPP_PLUGIN $<TARGET_FILE:gRPC::grpc_cpp_plugin>)
+set(PROTOC $<TARGET_FILE:protobuf::protoc>)

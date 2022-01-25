@@ -1,9 +1,10 @@
-project(application_server)
+project(tabetai_application_server)
 
 add_library(${PROJECT_NAME}
         include/application_server/server_factory.h
         src/server_factory.cpp
 )
+add_library(tabetai::application_server ALIAS ${PROJECT_NAME})
 
 target_compile_features(${PROJECT_NAME}
     PRIVATE
@@ -17,10 +18,10 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     INTERFACE
-        data_publisher
+        tabetai::data_publisher
     PRIVATE
-        grpc_communicator
-        server
-        yaml_database
-        warning
+        tabetai::grpc_communicator
+        tabetai::server
+        tabetai::yaml_database
+        tabetai::warning
 )

@@ -1,9 +1,10 @@
-project(grpc_communicator)
+project(tabetai_grpc_communicator)
 
 add_library(${PROJECT_NAME}
     include/grpc_communicator/grpc_communicator.h
     src/grpc_communicator.cpp
 )
+add_library(tabetai::grpc_communicator ALIAS ${PROJECT_NAME})
 
 target_compile_features(${PROJECT_NAME}
     PRIVATE
@@ -24,10 +25,9 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
-        communicator
+        tabetai::communicator
     PRIVATE
-        ingredient
-        recipe
-        grpc
-        tabetai2_grpc_proto
+        tabetai::ingredient
+        tabetai::recipe
+        tabetai::grpc_proto
 )

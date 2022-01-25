@@ -8,5 +8,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(grpc)
 
-set(grpc_cpp_plugin $<TARGET_FILE:grpc_cpp_plugin> PARENT_SCOPE)
-set(protoc $<TARGET_FILE:protoc> PARENT_SCOPE)
+add_library(grpc::grpc++ ALIAS grpc++)
+add_library(grpc::grpc++_reflection ALIAS grpc++_reflection)
+set(GRPC_CPP_PLUGIN $<TARGET_FILE:grpc_cpp_plugin> PARENT_SCOPE)
+set(PROTOC $<TARGET_FILE:protoc> PARENT_SCOPE)
