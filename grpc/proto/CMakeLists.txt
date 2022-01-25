@@ -1,4 +1,4 @@
-project(tabetai2_grpc_proto)
+project(tabetai_grpc_proto)
 
 set(gen_output ${CMAKE_BINARY_DIR}/gen/proto)
 file(MAKE_DIRECTORY ${gen_output})
@@ -13,12 +13,12 @@ add_custom_command(
         ${gen_output}/tabetai2.grpc.pb.cc
         ${gen_output}/tabetai2.grpc.pb.h
     COMMAND
-        ${protoc}
+        ${PROTOC}
     ARGS
         --grpc_out "${gen_output}"
         --cpp_out "${gen_output}"
         -I "${tabetai2_proto_path}"
-        --plugin=protoc-gen-grpc=${grpc_cpp_plugin} "${tabetai2_proto}"
+        --plugin=protoc-gen-grpc=${GRPC_CPP_PLUGIN} "${tabetai2_proto}"
     DEPENDS
         "${tabetai2_proto}"
 )
@@ -30,6 +30,7 @@ add_library(${PROJECT_NAME}
     ${gen_output}/tabetai2.grpc.pb.cc
     ${gen_output}/tabetai2.grpc.pb.h
 )
+add_library(tabetai::grpc_proto ALIAS ${PROJECT_NAME})
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC
@@ -38,6 +39,6 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
-        grpc++_reflection
-        libprotobuf
+        grpc::grpc++_reflection
+        protobuf::libprotobuf
 )
