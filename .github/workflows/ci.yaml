@@ -10,6 +10,7 @@ jobs:
     env:
       CTEST_OUTPUT_ON_FAILURE: ON
       CTEST_PARALLEL_LEVEL: 2
+      WORKING_DIR: .
 
     strategy:
       fail-fast: false
@@ -44,6 +45,10 @@ jobs:
             echo "CC=clang-${{ matrix.version }}" >> $GITHUB_ENV
             echo "CXX=clang++-${{ matrix.version }}" >> $GITHUB_ENV
           fi
+
+          git clone --depth=1 https://github.com/flutter/flutter.git
+          echo "FLUTTER_DART_BIN=${{ github.workspace }}/flutter/bin/dart" >> $GITHUB_ENV
+          echo "${{ github.workspace }}/flutter/bin" >> $GITHUB_PATH
       - name: Build
         run: |
           cmake -S . -B build ${{ matrix.cmake-args }} -DCMAKE_BUILD_TYPE=Debug -DTABETAI2_USE_CONAN=TRUE

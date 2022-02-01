@@ -32,4 +32,6 @@ add_subdirectory(yaml_database)
 add_subdirectory(application_server)
 add_subdirectory(application)
 
+add_subdirectory(gui)
+
 enable_testing()
