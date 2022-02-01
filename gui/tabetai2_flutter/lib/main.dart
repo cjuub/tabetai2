@@ -1,6 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:grpc/grpc_web.dart';
 
-void main() {
+import 'gen/proto/tabetai2.pbgrpc.dart';
+
+
+void main() async {
+  GrpcWebClientChannel channel =
+  GrpcWebClientChannel.xhr(Uri.parse('http://localhost:8080'));
+  final stub = Tabetai2Client(channel);
+
+  final ingredients = ListIngredientsRequest();
+  try {
+    await for (var ingredient in stub.list_ingredients(ingredients)) {
+      print(ingredient);
+    }
+  } catch (e) {
+    print('Caught error: $e');
+  }
+  await channel.shutdown();
   runApp(const MyApp());
 }
 
