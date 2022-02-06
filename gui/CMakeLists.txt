@@ -1,6 +1,6 @@
 project(tabetai_gui_grpc_proto)
 
-set(gen_output ${PROJECT_SOURCE_DIR}/tabetai2_flutter/lib/gen/proto)
+set(gen_output ${PROJECT_SOURCE_DIR}/tabetai2_flutter/lib/backend/gen/proto)
 file(MAKE_DIRECTORY ${gen_output})
 
 get_filename_component(tabetai2_proto "${CMAKE_SOURCE_DIR}/data/proto/tabetai2.proto" ABSOLUTE)
