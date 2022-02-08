@@ -7,6 +7,13 @@ service Tabetai2 {
     rpc add_recipe(AddRecipeRequest) returns (AddRecipeResponse) {}
     rpc erase_ingredient(EraseIngredientRequest) returns (EraseIngredientResponse) {}
     rpc erase_recipe(EraseRecipeRequest) returns (EraseRecipeResponse) {}
+
+    rpc subscribe(SubscriptionRequest) returns (stream SubscriptionResponse) {}
+}
+
+message SubscriptionRequest {}
+message SubscriptionResponse {
+    bool server_changed = 1;
 }
 
 message ListIngredientsRequest {}

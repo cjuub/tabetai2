@@ -38,4 +38,10 @@ class BackendCommunicator {
 
     return recipes;
   }
+
+  Stream<bool> subscribe() async* {
+    await for (var resp in stub.subscribe(SubscriptionRequest())) {
+      yield resp.serverChanged;
+    }
+  }
 }

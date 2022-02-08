@@ -6,16 +6,40 @@ abstract class TopicSubscriber {
 
 class BackendClient {
   final BackendCommunicator _backendCommunicator;
-  final _subscribers = <String, List<TopicSubscriber>>{};
-  final _topicDataFunctions = {};
+  late final Map<String, List<TopicSubscriber>> _subscribers = {"com.tabetai2.ingredients": [], "com.tabetai2.recipes": []};
+  late final _topicDataFunctions = {};
+  late final Stream<bool> _backendSubscription;
 
   BackendClient(this._backendCommunicator) {
     _topicDataFunctions["com.tabetai2.ingredients"] = _backendCommunicator.getIngredients;
     _topicDataFunctions["com.tabetai2.recipes"] = _backendCommunicator.getRecipes;
+    _backendSubscription = _backendCommunicator.subscribe();
   }
 
-  dynamic subscribe(TopicSubscriber subscriber, String topic) {
+  void subscribe(TopicSubscriber subscriber, String topic) {
     _subscribers[topic]?.add(subscriber);
-    return _topicDataFunctions[topic]();
+    _sendInitialData(subscriber, topic);
+  }
+
+  void unsubscribe(TopicSubscriber subscriber, String topic) {
+    _subscribers[topic]?.remove(subscriber);
+  }
+
+  void _sendInitialData(TopicSubscriber subscriber, String topic) async {
+    var data = await _topicDataFunctions[topic]();
+    subscriber.onTopicUpdated(topic, data);
+  }
+
+  void handleSubscription() async {
+    await for (bool res in _backendSubscription) {
+      if (res) {
+        _subscribers.forEach((topic, subscribers) async {
+          var data = await _topicDataFunctions[topic]();
+          for (TopicSubscriber subscriber in subscribers) {
+            subscriber.onTopicUpdated(topic, data);
+          }
+        });
+      }
+    }
   }
 }

@@ -2,6 +2,8 @@
 
 #include <string>
 #include <utility>
+#include <thread>
+#include <chrono>
 
 #include <grpcpp/security/server_credentials.h>
 #include <grpcpp/server.h>
@@ -14,8 +16,9 @@ namespace tabetai2::grpc_communicator {
 using namespace core::database;
 using namespace core::ingredient;
 using namespace core::recipe;
+using namespace core::util;
 
-class Tabetai2Impl final : public Tabetai2::Service {
+class Tabetai2Impl final : public Tabetai2::Service, public Observer {
 public:
     explicit Tabetai2Impl(std::shared_ptr<IngredientRepository> ingredient_repository,
                           std::shared_ptr<RecipeRepository> recipe_repository,
@@ -23,8 +26,10 @@ public:
     : m_ingredient_repository{std::move(ingredient_repository)},
       m_recipe_repository{std::move(recipe_repository)},
       m_id_generator{std::move(id_generator)} {
-
+        m_ingredient_repository->add_observer(this);
+        m_recipe_repository->add_observer(this);
     };
+
     grpc::Status list_ingredients(grpc::ServerContext* context, const ListIngredientsRequest* request, grpc::ServerWriter<::Ingredient>* writer) override {
         for (const auto& ingredient : m_ingredient_repository->find_all()) {
             ::Ingredient ingredient_entry;
@@ -102,10 +107,43 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status subscribe(grpc::ServerContext* context, const SubscriptionRequest* request, grpc::ServerWriter<SubscriptionResponse>* writer) override {
+        auto status = grpc::Status::OK;
+        m_subscribers.push_back(writer);
+        while (true) {
+            try {
+                auto response = SubscriptionResponse();
+                response.set_server_changed(false);
+                if (!writer->Write(response)) {
+                    m_subscribers.erase(std::remove(m_subscribers.begin(), m_subscribers.end(), writer), m_subscribers.end());
+                    std::cout << "grpc: Connection with client lost, stopping subscription" << std::endl;
+                    status = grpc::Status::CANCELLED;
+                    break;
+                }
+
+                std::this_thread::sleep_for(std::chrono::seconds(10));
+            } catch (...) {
+                break;
+            }
+        }
+
+        return status;
+    }
+
+    void notify() override {
+        auto response = SubscriptionResponse();
+        response.set_server_changed(true);
+        for (auto& subscriber : m_subscribers) {
+            subscriber->Write(response);
+        }
+    }
+
 private:
     std::shared_ptr<IngredientRepository> m_ingredient_repository;
     std::shared_ptr<RecipeRepository> m_recipe_repository;
     std::shared_ptr<IdGenerator> m_id_generator;
+
+    std::vector<grpc::ServerWriter<SubscriptionResponse>*> m_subscribers;
 };
 
 GrpcCommunicator::GrpcCommunicator(std::shared_ptr<IngredientRepository> ingredient_repository,

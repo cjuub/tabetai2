@@ -15,15 +15,16 @@ class IngredientsViewWidget extends StatefulWidget {
 class _IngredientsViewWidgetState extends State<IngredientsViewWidget> implements TopicSubscriber {
   List<IngredientData> _ingredients = [];
 
-  void _init() async {
-    _ingredients = await widget.backendClient.subscribe(this, "com.tabetai2.ingredients");
-    setState(() {});
+  @override
+  void initState() {
+    widget.backendClient.subscribe(this, "com.tabetai2.ingredients");
+    super.initState();
   }
 
   @override
-  void initState() {
-    _init();
-    super.initState();
+  void dispose() {
+    widget.backendClient.unsubscribe(this, "com.tabetai2.ingredients");
+    super.dispose();
   }
 
   @override
@@ -36,10 +37,9 @@ class _IngredientsViewWidgetState extends State<IngredientsViewWidget> implement
   }
 
   @override
-  void onTopicUpdated(String topic, data) async {
-    _ingredients = await data;
+  void onTopicUpdated(String topic, data) {
     setState(() {
-
+      _ingredients = data;
     });
   }
 }

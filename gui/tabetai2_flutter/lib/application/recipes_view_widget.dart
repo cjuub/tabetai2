@@ -14,15 +14,16 @@ class RecipesViewWidget extends StatefulWidget {
 class _RecipesViewWidgetState extends State<RecipesViewWidget> implements TopicSubscriber {
   List<RecipeData> _recipes = [];
 
-  void _init() async {
-    _recipes = await widget.backendClient.subscribe(this, "com.tabetai2.recipes");
-    setState(() {});
+  @override
+  void initState() {
+    widget.backendClient.subscribe(this, "com.tabetai2.recipes");
+    super.initState();
   }
 
   @override
-  void initState() {
-    _init();
-    super.initState();
+  void dispose() {
+    widget.backendClient.unsubscribe(this, "com.tabetai2.recipes");
+    super.dispose();
   }
 
   @override
@@ -36,9 +37,8 @@ class _RecipesViewWidgetState extends State<RecipesViewWidget> implements TopicS
 
   @override
   void onTopicUpdated(String topic, data) async {
-    _recipes = await data;
     setState(() {
-
+      _recipes = data;
     });
   }
 }
