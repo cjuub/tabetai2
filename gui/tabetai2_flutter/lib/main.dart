@@ -8,5 +8,6 @@ import 'application/application.dart';
 void main() async {
   BackendCommunicator backendCommunicator = BackendCommunicator();
   BackendClient backendClient = BackendClient(backendCommunicator);
+  backendClient.handleSubscription();
   runApp(MyApp(backendClient: backendClient));
 }
