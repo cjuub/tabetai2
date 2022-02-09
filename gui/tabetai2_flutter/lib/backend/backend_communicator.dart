@@ -13,6 +13,13 @@ class BackendCommunicator {
     stub = Tabetai2Client(channel);
   }
 
+  bool addIngredient(String name) {
+    var request = AddIngredientRequest();
+    request.name = name;
+    stub.add_ingredient(request);
+    return true;
+  }
+
   Future<List<IngredientData>> getIngredients() async {
     List<IngredientData> ingredients = [];
     try {

@@ -29,11 +29,47 @@ class _IngredientsViewWidgetState extends State<IngredientsViewWidget> implement
 
   @override
   Widget build(BuildContext context) {
-    String ingredientsStr = "";
-    for (IngredientData ing in _ingredients) {
-      ingredientsStr += ing.name + '; ';
-    }
-    return Text(ingredientsStr);
+    var controller = TextEditingController();
+    return Scaffold(
+      body: ListView.builder(
+          itemCount: _ingredients.length,
+          itemBuilder: (BuildContext context, int index) {
+          return Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey)
+            ),
+            height: 50,
+            child: Center(
+              child: Text(_ingredients[index].name)
+            )
+          );
+        }
+      ).build(context),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(context: context, builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Add Ingredient"),
+              content: TextFormField(
+                controller: controller,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  hintText: "Banana",
+                  labelText: "Enter ingredient name",
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.send),
+                    onPressed: () {
+                      widget.backendClient.addIngredient(controller.text);
+                      Navigator.pop(context);
+                    },
+                  )
+                ),
+              )
+            );
+          });
+        },
+      ),
+    );
   }
 
   @override

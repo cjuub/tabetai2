@@ -25,6 +25,10 @@ class BackendClient {
     _subscribers[topic]?.remove(subscriber);
   }
 
+  bool addIngredient(String name) {
+    return _backendCommunicator.addIngredient(name);
+  }
+
   void _sendInitialData(TopicSubscriber subscriber, String topic) async {
     var data = await _topicDataFunctions[topic]();
     subscriber.onTopicUpdated(topic, data);
