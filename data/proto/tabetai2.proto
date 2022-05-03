@@ -56,7 +56,7 @@ message Quantity {
 }
 
 message RecipeIngredientEntry {
-    uint32 id = 1;
+    uint64 id = 1;
     Quantity quantity = 2;
 }
 

@@ -1,6 +1,6 @@
 import 'package:grpc/grpc_web.dart';
-
-import 'gen/proto/tabetai2.pbgrpc.dart';
+import 'package:tabetai2_flutter/backend/gen/proto/tabetai2.pb.dart';
+import 'package:tabetai2_flutter/backend/gen/proto/tabetai2.pbgrpc.dart';
 
 import 'backend_data.dart';
 
@@ -23,8 +23,10 @@ class BackendCommunicator {
   Future<List<IngredientData>> getIngredients() async {
     List<IngredientData> ingredients = [];
     try {
-      await for (var ingredient in stub.list_ingredients(ListIngredientsRequest())) {
-        ingredients.add(IngredientData(ingredient.id.toStringUnsigned(), ingredient.name));
+      await for (var ingredient
+          in stub.list_ingredients(ListIngredientsRequest())) {
+        ingredients.add(
+            IngredientData(ingredient.id.toStringUnsigned(), ingredient.name));
       }
     } catch (e) {
       print('Caught error: $e');
@@ -35,9 +37,19 @@ class BackendCommunicator {
 
   Future<List<RecipeData>> getRecipes() async {
     List<RecipeData> recipes = [];
+
     try {
-      await for (var recipe in stub.list_recipes(ListRecipesRequest())) {
-        recipes.add(RecipeData(recipe.id.toStringUnsigned(), recipe.name));
+      await for (Recipe recipe in stub.list_recipes(ListRecipesRequest())) {
+        List<RecipeIngredientData> ingredientsData = [];
+        for (RecipeIngredientEntry recipeIngredient in recipe.ingredients) {
+          var quantityData = RecipeIngredientQuantityData(
+              recipeIngredient.quantity.amount,
+              recipeIngredient.quantity.unit.toString());
+          ingredientsData.add(RecipeIngredientData(
+              recipeIngredient.id.toStringUnsigned(), quantityData));
+        }
+        recipes.add(RecipeData(recipe.id.toStringUnsigned(), recipe.name,
+            ingredientsData, recipe.steps));
       }
     } catch (e) {
       print('Caught error: $e');
