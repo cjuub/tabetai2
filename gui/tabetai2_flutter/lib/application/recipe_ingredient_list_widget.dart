@@ -32,30 +32,54 @@ class _RecipeIngredientListWidgetState
   @override
   Widget build(BuildContext context) {
     return Column(children: [
+      const Padding(padding: EdgeInsets.only(top: 60)),
       Slider(
           value: _servings.toDouble(),
-          divisions: 10,
+          divisions: 7,
           min: 1,
-          max: 10,
+          max: 8,
           label: _servings.round().toString(),
           onChanged: (double value) {
             setState(() => {updateNbrServings(value.round())});
           }),
+      const Padding(padding: EdgeInsets.only(top: 50)),
       Expanded(
           child: ListView.builder(
               itemCount: widget.recipeData.ingredients.length,
               itemBuilder: (BuildContext context, int index) {
                 String ingredientId = widget.recipeData.ingredients[index].id;
-                String val = widget.ingredientsDataMap[ingredientId]!.name;
-                RecipeIngredientQuantityData quantity =
-                    widget.recipeIngredientsDataMap[ingredientId]!.quantity;
-                val += " " + quantity.amount.toString();
-                val += " " + quantity.unit;
-                return Container(
-                  height: 50,
-                  child: Text(val),
-                );
+                return RecipeIngredientWidget(
+                    ingredientData: widget.ingredientsDataMap[ingredientId]!,
+                    recipeIngredientData:
+                        widget.recipeIngredientsDataMap[ingredientId]!);
               }))
+    ]);
+  }
+}
+
+class RecipeIngredientWidget extends StatelessWidget {
+  final IngredientData ingredientData;
+  final RecipeIngredientData recipeIngredientData;
+
+  const RecipeIngredientWidget(
+      {required this.ingredientData,
+      required this.recipeIngredientData,
+      Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    String ingredientName = ingredientData.name;
+    RecipeIngredientQuantityData quantity = recipeIngredientData.quantity;
+    String amount = quantity.amount.toString() + " " + quantity.unit;
+    return Row(children: [
+      Text(ingredientName, textScaleFactor: 1.5),
+      const Padding(padding: EdgeInsets.only(bottom: 50)),
+      Expanded(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(amount, textScaleFactor: 1.5))),
+      const Padding(padding: EdgeInsets.only(right: 10)),
     ]);
   }
 }
