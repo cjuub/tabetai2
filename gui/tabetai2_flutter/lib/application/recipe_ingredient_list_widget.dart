@@ -25,8 +25,10 @@ class _RecipeIngredientListWidgetState
     extends State<RecipeIngredientListWidget> {
   int _servings = 4;
 
-  void updateNbrServings(int servings) {
-    _servings = servings;
+  @override
+  void initState() {
+    super.initState();
+    _servings = widget.recipeData.servings;
   }
 
   @override
@@ -40,7 +42,7 @@ class _RecipeIngredientListWidgetState
           max: 8,
           label: _servings.round().toString(),
           onChanged: (double value) {
-            setState(() => {updateNbrServings(value.round())});
+            setState(() => {_servings = value.round()});
           }),
       const Padding(padding: EdgeInsets.only(top: 50)),
       Expanded(
