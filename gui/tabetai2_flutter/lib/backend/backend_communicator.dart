@@ -49,7 +49,7 @@ class BackendCommunicator {
               recipeIngredient.id.toStringUnsigned(), quantityData));
         }
         recipes.add(RecipeData(recipe.id.toStringUnsigned(), recipe.name,
-            ingredientsData, recipe.steps));
+            recipe.servings, ingredientsData, recipe.steps));
       }
     } catch (e) {
       print('Caught error: $e');

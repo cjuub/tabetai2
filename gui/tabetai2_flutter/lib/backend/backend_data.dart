@@ -22,8 +22,9 @@ class RecipeIngredientData {
 class RecipeData {
   final String id;
   final String name;
+  final int servings;
   final List<RecipeIngredientData> ingredients;
   final List<String> steps;
 
-  RecipeData(this.id, this.name, this.ingredients, this.steps);
+  RecipeData(this.id, this.name, this.servings, this.ingredients, this.steps);
 }
