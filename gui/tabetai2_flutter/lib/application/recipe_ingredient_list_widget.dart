@@ -40,7 +40,7 @@ class _RecipeIngredientListWidgetState
           divisions: 7,
           min: 1,
           max: 8,
-          label: _servings.round().toString(),
+          label: _servings.toString(),
           onChanged: (double value) {
             setState(() => {_servings = value.round()});
           }),
@@ -53,7 +53,9 @@ class _RecipeIngredientListWidgetState
                 return RecipeIngredientWidget(
                     ingredientData: widget.ingredientsDataMap[ingredientId]!,
                     recipeIngredientData:
-                        widget.recipeIngredientsDataMap[ingredientId]!);
+                        widget.recipeIngredientsDataMap[ingredientId]!,
+                    recipeServings: widget.recipeData.servings,
+                    userServings: _servings);
               }))
     ]);
   }
@@ -62,10 +64,14 @@ class _RecipeIngredientListWidgetState
 class RecipeIngredientWidget extends StatelessWidget {
   final IngredientData ingredientData;
   final RecipeIngredientData recipeIngredientData;
+  final int recipeServings;
+  final int userServings;
 
   const RecipeIngredientWidget(
       {required this.ingredientData,
       required this.recipeIngredientData,
+      required this.recipeServings,
+      required this.userServings,
       Key? key})
       : super(key: key);
 
@@ -73,14 +79,15 @@ class RecipeIngredientWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String ingredientName = ingredientData.name;
     RecipeIngredientQuantityData quantity = recipeIngredientData.quantity;
-    String amount = quantity.amount.toString() + " " + quantity.unit;
+    double amount = (quantity.amount / recipeServings) * userServings;
+    String amountStr = amount.toString() + " " + quantity.unit;
     return Row(children: [
       Text(ingredientName, textScaleFactor: 1.5),
       const Padding(padding: EdgeInsets.only(bottom: 50)),
       Expanded(
           child: Align(
               alignment: Alignment.centerRight,
-              child: Text(amount, textScaleFactor: 1.5))),
+              child: Text(amountStr, textScaleFactor: 1.5))),
       const Padding(padding: EdgeInsets.only(right: 10)),
     ]);
   }
