@@ -44,7 +44,8 @@ class BackendCommunicator {
         for (RecipeIngredientEntry recipeIngredient in recipe.ingredients) {
           var quantityData = RecipeIngredientQuantityData(
               recipeIngredient.quantity.amount,
-              recipeIngredient.quantity.unit.toString());
+              recipeIngredient.quantity.unit.toString(),
+              recipeIngredient.quantity.exponent);
           ingredientsData.add(RecipeIngredientData(
               recipeIngredient.id.toStringUnsigned(), quantityData));
         }

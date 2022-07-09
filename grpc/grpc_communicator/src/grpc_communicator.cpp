@@ -55,6 +55,7 @@ public:
                 auto quantity_entry = recipe_ingredient_entry->mutable_quantity();
                 quantity_entry->set_amount(quantity->amount());
                 quantity_entry->set_unit(static_cast<::Unit>(quantity->unit()));
+                quantity_entry->set_exponent(quantity->exponent());
             }
             for (const auto& recipe_step : recipe.steps()) {
                 recipe_entry.add_steps(recipe_step);
@@ -84,7 +85,7 @@ public:
         std::vector<std::pair<Ingredient, std::optional<Quantity>>> ingredients;
         for (const auto& ingredient_entry : request->ingredients()) {
             const auto& quantity_entry = ingredient_entry.quantity();
-            auto quantity = std::make_optional(Quantity{quantity_entry.amount(), static_cast<Unit>(quantity_entry.unit())});
+            auto quantity = std::make_optional(Quantity{quantity_entry.amount(), static_cast<Unit>(quantity_entry.unit()), quantity_entry.exponent()});
             ingredients.emplace_back(m_ingredient_repository->find_by_id(ingredient_entry.id()).value(), quantity);
         }
 
