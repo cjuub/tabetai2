@@ -1,5 +1,6 @@
 #include <yaml_database/yaml_recipe_database.h>
 
+#include <iostream>
 #include <string>
 
 namespace tabetai2::yaml_database {
@@ -7,8 +8,6 @@ namespace tabetai2::yaml_database {
 using namespace core::database;
 using namespace core::ingredient;
 using namespace core::recipe;
-
-using SerializedIngredient = std::map<Id, std::pair<unsigned, int>>;
 
 YamlRecipeDatabase::YamlRecipeDatabase(std::string database_file,
                                        std::string database_name,
@@ -20,18 +19,18 @@ YamlRecipeDatabase::YamlRecipeDatabase(std::string database_file,
 
 Recipe YamlRecipeDatabase::from_yaml(YAML::Node entry) const {
     std::vector<std::pair<Ingredient, std::optional<Quantity>>> ingredients;
-    for (const auto& ingredient_entry : entry["ingredients"].as<std::vector<SerializedIngredient>>()) {
-        auto id = ingredient_entry.begin()->first;
-        auto quantity = ingredient_entry.at(id);
-
+    for (const auto& ingredient_entry : entry["ingredients"]) {
+        auto id = ingredient_entry.first.as<Id>();
         auto ingredient = m_ingredient_repository->find_by_id(id);
-        if (ingredient) {
-            auto amount = quantity.first;
-            auto unit = static_cast<Unit>(quantity.second);
-            ingredients.emplace_back(*ingredient,Quantity(amount, unit));
-        } else {
-            // TODO non-existing ingredient referenced in recipe, what do?
+        if (!ingredient) {
+            std::cout << "Non-existing ingredient referenced in recipe." << std::endl;
         }
+
+        auto ingredient_data = ingredient_entry.second;
+        auto amount = ingredient_data["amount"].as<unsigned>();
+        auto unit = static_cast<Unit>(ingredient_data["unit"].as<int>());
+        auto exponent = ingredient_data["exponent"].as<int>();
+        ingredients.emplace_back(*ingredient, Quantity(amount, unit, exponent));
     }
 
     return Recipe{entry["id"].as<Id>(),
@@ -47,15 +46,12 @@ YAML::Node YamlRecipeDatabase::to_yaml(const Recipe& recipe) const {
     entry["name"] = recipe.name();
     entry["servings"] = recipe.servings();
 
-    std::vector<SerializedIngredient> ingredients;
     for (const auto& ingredient : recipe.ingredients()) {
-        SerializedIngredient serialized_ingredient;
-        serialized_ingredient[ingredient.first.id()] =
-                std::make_pair(ingredient.second->amount(), static_cast<int>(ingredient.second->unit()));
-        ingredients.push_back(std::move(serialized_ingredient));
+        entry["ingredients"][ingredient.first.id()]["amount"] = ingredient.second->amount();
+        entry["ingredients"][ingredient.first.id()]["unit"] = static_cast<int>(ingredient.second->unit());
+        entry["ingredients"][ingredient.first.id()]["exponent"] = ingredient.second->exponent();
     }
 
-    entry["ingredients"] = ingredients;
     entry["steps"] = recipe.steps();
 
     return entry;

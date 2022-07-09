@@ -48,11 +48,13 @@ enum Unit {
     dl = 6;
     l = 7;
     pcs = 8;
+    tsk = 9;
 }
 
 message Quantity {
     uint32 amount = 1;
     Unit unit = 2;
+    int32 exponent = 3;
 }
 
 message RecipeIngredientEntry {

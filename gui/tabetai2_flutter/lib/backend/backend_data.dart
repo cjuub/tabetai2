@@ -8,8 +8,9 @@ class IngredientData {
 class RecipeIngredientQuantityData {
   final int amount;
   final String unit;
+  final int exponent;
 
-  RecipeIngredientQuantityData(this.amount, this.unit);
+  RecipeIngredientQuantityData(this.amount, this.unit, this.exponent);
 }
 
 class RecipeIngredientData {
