@@ -44,6 +44,10 @@ public:
     }
 
     T get(core::database::Id id) const override {
+        auto entry = m_database[m_database_name][std::to_string(id)];
+        if (!entry.IsDefined()) {
+            throw std::out_of_range("Access to ID not in database");
+        }
         return from_yaml(m_database[m_database_name][std::to_string(id)]);
     }
 
