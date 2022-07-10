@@ -86,7 +86,11 @@ public:
         for (const auto& ingredient_entry : request->ingredients()) {
             const auto& quantity_entry = ingredient_entry.quantity();
             auto quantity = std::make_optional(Quantity{quantity_entry.amount(), static_cast<Unit>(quantity_entry.unit()), quantity_entry.exponent()});
-            ingredients.emplace_back(m_ingredient_repository->find_by_id(ingredient_entry.id()).value(), quantity);
+            auto ingredient = m_ingredient_repository->find_by_id(ingredient_entry.id());
+            if (!ingredient) {
+                return {grpc::StatusCode::ABORTED, "Invalid ingredient ID in recipe"};
+            }
+            ingredients.emplace_back(ingredient.value(), quantity);
         }
 
         std::vector<std::string> steps(request->steps().size());
