@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+import 'package:global_configuration/global_configuration.dart';
 import 'package:grpc/grpc_web.dart';
 import 'package:tabetai2_flutter/backend/gen/proto/tabetai2.pb.dart';
 import 'package:tabetai2_flutter/backend/gen/proto/tabetai2.pbgrpc.dart';
@@ -5,11 +7,13 @@ import 'package:tabetai2_flutter/backend/gen/proto/tabetai2.pbgrpc.dart';
 import 'backend_data.dart';
 
 class BackendCommunicator {
-  GrpcWebClientChannel channel;
+  late GrpcWebClientChannel channel;
   late Tabetai2Client stub;
 
-  BackendCommunicator()
-      : channel = GrpcWebClientChannel.xhr(Uri.parse('http://localhost:8080')) {
+  BackendCommunicator() {
+    String host = GlobalConfiguration().getValue("host");
+    String port = GlobalConfiguration().getValue("grpc_http_port");
+    channel = GrpcWebClientChannel.xhr(Uri.parse("http://$host:$port"));
     stub = Tabetai2Client(channel);
   }
 
