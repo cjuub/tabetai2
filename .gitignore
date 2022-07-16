@@ -2,3 +2,6 @@
 cmake-build-*
 db_*.yaml
 docker/build
+tabetai1
+test.json
+venv
