@@ -36,7 +36,7 @@ class _RecipeIngredientListWidgetState
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      const Padding(padding: EdgeInsets.only(top: 60)),
+      const Padding(padding: EdgeInsets.only(top: 10)),
       Slider(
           value: _servings.toDouble(),
           divisions: 7,
@@ -46,7 +46,7 @@ class _RecipeIngredientListWidgetState
           onChanged: (double value) {
             setState(() => {_servings = value.round()});
           }),
-      const Padding(padding: EdgeInsets.only(top: 50)),
+      const Padding(padding: EdgeInsets.only(top: 10)),
       Expanded(
           child: ListView.builder(
               itemCount: widget.recipeData.ingredients.length,
@@ -86,12 +86,12 @@ class RecipeIngredientWidget extends StatelessWidget {
             userServings;
     String amountStr = amount.toString() + " " + quantity.unit;
     return Row(children: [
-      Text(ingredientName, textScaleFactor: 1.5),
-      const Padding(padding: EdgeInsets.only(bottom: 50)),
+      Text(ingredientName, textScaleFactor: 1.1),
+      const Padding(padding: EdgeInsets.only(bottom: 30)),
       Expanded(
           child: Align(
               alignment: Alignment.centerRight,
-              child: Text(amountStr, textScaleFactor: 1.5))),
+              child: Text(amountStr, textScaleFactor: 1.1))),
       const Padding(padding: EdgeInsets.only(right: 10)),
     ]);
   }

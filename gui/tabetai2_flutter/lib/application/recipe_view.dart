@@ -25,7 +25,7 @@ class RecipeView extends StatelessWidget {
               child: RecipeIngredientListWidget(
                   recipeData: recipeData, ingredientsData: ingredientsData)),
           const VerticalDivider(),
-          const Padding(padding: EdgeInsets.only(left: 100)),
+          const Padding(padding: EdgeInsets.only(left: 70)),
           Expanded(
               flex: 8, child: RecipeStepListWidget(recipeData: recipeData)),
         ],

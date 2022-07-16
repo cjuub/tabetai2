@@ -29,14 +29,14 @@ class RecipeStepWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      const Padding(padding: EdgeInsets.only(bottom: 50)),
+      const Padding(padding: EdgeInsets.only(bottom: 30)),
       Row(children: [
         Text("${stepIndex + 1}.",
-            textScaleFactor: 1.5, style: const TextStyle(color: Colors.grey)),
+            textScaleFactor: 1.3, style: const TextStyle(color: Colors.grey)),
         const Padding(
           padding: EdgeInsets.only(right: 50),
         ),
-        Flexible(child: Text(stepString, textScaleFactor: 1.5)),
+        Flexible(child: Text(stepString, textScaleFactor: 1.3)),
         const Padding(
           padding: EdgeInsets.only(right: 100),
         ),
