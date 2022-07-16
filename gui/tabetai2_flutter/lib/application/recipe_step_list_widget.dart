@@ -10,7 +10,6 @@ class RecipeStepListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        padding: const EdgeInsets.only(top: 100),
         itemCount: recipeData.steps.length,
         itemBuilder: (BuildContext context, int index) {
           return RecipeStepWidget(
