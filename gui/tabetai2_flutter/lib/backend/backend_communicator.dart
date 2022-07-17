@@ -1,19 +1,27 @@
-import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:global_configuration/global_configuration.dart';
-import 'package:grpc/grpc_web.dart';
+import 'package:grpc/grpc_connection_interface.dart';
 import 'package:tabetai2_flutter/backend/gen/proto/tabetai2.pb.dart';
 import 'package:tabetai2_flutter/backend/gen/proto/tabetai2.pbgrpc.dart';
 
 import 'backend_data.dart';
+import 'grpc_channel_factory.dart'
+    if (dart.library.html) 'grpc_web_channel_factory.dart'
+    if (dart.library.io) 'grpc_channel_factory.dart';
 
 class BackendCommunicator {
-  late GrpcWebClientChannel channel;
+  late ClientChannelBase channel;
   late Tabetai2Client stub;
 
   BackendCommunicator() {
     String host = GlobalConfiguration().getValue("host");
-    String port = GlobalConfiguration().getValue("grpc_http_port");
-    channel = GrpcWebClientChannel.xhr(Uri.parse("http://$host:$port"));
+    if (kIsWeb) {
+      channel = GrpcChannelFactory.create(
+          host, GlobalConfiguration().getValue("grpc_http_port"));
+    } else {
+      channel = GrpcChannelFactory.create(
+          host, GlobalConfiguration().getValue("grpc_port"));
+    }
     stub = Tabetai2Client(channel);
   }
 
