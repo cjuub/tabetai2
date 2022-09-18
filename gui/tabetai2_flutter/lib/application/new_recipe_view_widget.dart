@@ -34,28 +34,71 @@ class _NewRecipeViewState extends State<NewRecipeViewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Row(
-        children: [
-          const Padding(padding: EdgeInsets.only(left: 20)),
-          Expanded(
-              flex: 3,
-              child: NewRecipeIngredientListWidget(
-                  ingredientsData: widget.ingredientsData,
-                  recipeIngredientsData: recipeIngredientsData,
-                  units: widget.units)),
-          const VerticalDivider(),
-          const Padding(padding: EdgeInsets.only(left: 70)),
-          Expanded(flex: 7, child: NewRecipeStepListWidget(steps: steps)),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        addRecipe();
-        Navigator.pop(context);
-      }),
-    );
+    return WillPopScope(
+        child: Scaffold(
+          appBar: AppBar(title: Text(widget.title)),
+          body: Row(
+            children: [
+              const Padding(padding: EdgeInsets.only(left: 20)),
+              Expanded(
+                  flex: 3,
+                  child: NewRecipeIngredientListWidget(
+                      ingredientsData: widget.ingredientsData,
+                      recipeIngredientsData: recipeIngredientsData,
+                      units: widget.units)),
+              const VerticalDivider(),
+              const Padding(padding: EdgeInsets.only(left: 70)),
+              Expanded(flex: 7, child: NewRecipeStepListWidget(steps: steps)),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("Confirm Complete"),
+                    content: const Text("Is the recipe ready for publication?"),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("No")),
+                      TextButton(
+                          onPressed: () {
+                            addRecipe();
+                            setState(() {});
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          },
+                          child: const Text("Yes")),
+                    ],
+                  );
+                });
+          }),
+        ),
+        onWillPop: () async {
+          return (await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text("Confirm Abort"),
+                  content: const Text("Are you sure you want to abort?"),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text("No")),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Yes")),
+                  ],
+                );
+              })) ?? false;
+        });
   }
 }
