@@ -24,8 +24,29 @@ class RecipeView extends StatelessWidget {
         actions: <Widget>[
           PopupMenuButton<String>(onSelected: (String choice) {
             if (choice == "Delete") {
-              backendClient.removeRecipe(recipeData.id);
-              Navigator.pop(context);
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text("Confirm Deletion"),
+                      content: const Text(
+                          "This will permanently delete the recipe!"),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text("Cancel")),
+                        TextButton(
+                            onPressed: () {
+                              backendClient.removeRecipe(recipeData.id);
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                            child: const Text("Delete")),
+                      ],
+                    );
+                  });
             }
           }, itemBuilder: (BuildContext context) {
             return {"Delete"}.map((String choice) {
