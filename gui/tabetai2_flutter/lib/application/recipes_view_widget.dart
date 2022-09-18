@@ -55,7 +55,8 @@ class _RecipesViewWidgetState extends State<RecipesViewWidget>
                       MaterialPageRoute(
                           builder: (BuildContext context) => RecipeView(
                               recipeData: _recipes[index],
-                              ingredientsData: _ingredients)));
+                              ingredientsData: _ingredients,
+                              backendClient: widget.backendClient)));
                 },
               ));
         },
