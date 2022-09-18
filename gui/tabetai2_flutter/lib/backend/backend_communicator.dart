@@ -44,6 +44,7 @@ class BackendCommunicator {
       print('Caught error: $e');
     }
 
+    ingredients.sort((IngredientData a, IngredientData b) => a.name.compareTo(b.name));
     return ingredients;
   }
 
@@ -107,6 +108,7 @@ class BackendCommunicator {
       print('Caught error: $e');
     }
 
+    recipes.sort((RecipeData a, RecipeData b) => a.name.compareTo(b.name));
     return recipes;
   }
 
