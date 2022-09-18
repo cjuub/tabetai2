@@ -79,6 +79,13 @@ class BackendCommunicator {
     return true;
   }
 
+  bool eraseRecipe(String id) {
+    var request = EraseRecipeRequest();
+    request.id = Int64.parseInt(id);
+    stub.erase_recipe(request);
+    return true;
+  }
+
   Future<List<RecipeData>> getRecipes() async {
     List<RecipeData> recipes = [];
 

@@ -44,6 +44,10 @@ class BackendClient {
         name, servings, recipeIngredients, steps);
   }
 
+  bool removeRecipe(String id) {
+    return _backendCommunicator.eraseRecipe(id);
+  }
+
   void _sendInitialData(TopicSubscriber subscriber, String topic) async {
     var data = await _topicDataFunctions[topic]();
     subscriber.onTopicUpdated(topic, data);
