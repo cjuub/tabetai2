@@ -1,7 +1,7 @@
+import 'package:fixnum/fixnum.dart';
 import 'package:flutter/foundation.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:grpc/grpc_connection_interface.dart';
-import 'package:tabetai2_flutter/backend/gen/proto/tabetai2.pb.dart';
 import 'package:tabetai2_flutter/backend/gen/proto/tabetai2.pbgrpc.dart';
 
 import 'backend_data.dart';
@@ -47,6 +47,38 @@ class BackendCommunicator {
     return ingredients;
   }
 
+  bool addRecipe(String name, int servings,
+      List<RecipeIngredientData> recipeIngredients, List<String> steps) {
+    var request = AddRecipeRequest();
+    request.name = name;
+    request.servings = servings;
+
+    Map<String, Unit> unitMapper = {};
+    for (Unit unit in Unit.values) {
+      unitMapper[unit.toString()] = unit;
+    }
+
+    for (RecipeIngredientData recipeIngredient in recipeIngredients) {
+      RecipeIngredientEntry recipeIngredientEntry = RecipeIngredientEntry();
+      recipeIngredientEntry.id = Int64.parseInt(recipeIngredient.id);
+
+      Quantity quantity = Quantity();
+      quantity.amount = recipeIngredient.quantity.amount;
+      quantity.unit = unitMapper[recipeIngredient.quantity.unit]!;
+      quantity.exponent = recipeIngredient.quantity.exponent;
+      recipeIngredientEntry.quantity = quantity;
+
+      request.ingredients.add(recipeIngredientEntry);
+    }
+
+    for (String step in steps) {
+      request.steps.add(step);
+    }
+
+    stub.add_recipe(request);
+    return true;
+  }
+
   Future<List<RecipeData>> getRecipes() async {
     List<RecipeData> recipes = [];
 
@@ -69,6 +101,14 @@ class BackendCommunicator {
     }
 
     return recipes;
+  }
+
+  List<String> getUnits() {
+    List<String> units = [];
+    for (Unit unit in Unit.values) {
+      units.add(unit.toString());
+    }
+    return units;
   }
 
   Stream<bool> subscribe() async* {
