@@ -80,6 +80,39 @@ class BackendCommunicator {
     return true;
   }
 
+  bool updateRecipe(String id, String name, int servings,
+      List<RecipeIngredientData> recipeIngredients, List<String> steps) {
+    var request = UpdateRecipeRequest();
+    request.id = Int64.parseInt(id);
+    request.name = name;
+    request.servings = servings;
+
+    Map<String, Unit> unitMapper = {};
+    for (Unit unit in Unit.values) {
+      unitMapper[unit.toString()] = unit;
+    }
+
+    for (RecipeIngredientData recipeIngredient in recipeIngredients) {
+      RecipeIngredientEntry recipeIngredientEntry = RecipeIngredientEntry();
+      recipeIngredientEntry.id = Int64.parseInt(recipeIngredient.id);
+
+      Quantity quantity = Quantity();
+      quantity.amount = recipeIngredient.quantity.amount;
+      quantity.unit = unitMapper[recipeIngredient.quantity.unit]!;
+      quantity.exponent = recipeIngredient.quantity.exponent;
+      recipeIngredientEntry.quantity = quantity;
+
+      request.ingredients.add(recipeIngredientEntry);
+    }
+
+    for (String step in steps) {
+      request.steps.add(step);
+    }
+
+    stub.update_recipe(request);
+    return true;
+  }
+
   bool eraseRecipe(String id) {
     var request = EraseRecipeRequest();
     request.id = Int64.parseInt(id);

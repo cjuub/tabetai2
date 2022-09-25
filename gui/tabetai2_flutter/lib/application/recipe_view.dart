@@ -4,25 +4,34 @@ import 'package:tabetai2_flutter/application/recipe_step_list_widget.dart';
 import 'package:tabetai2_flutter/backend/backend_client.dart';
 import 'package:tabetai2_flutter/backend/backend_data.dart';
 
-class RecipeView extends StatelessWidget {
+import 'edit_recipe_view_widget.dart';
+
+class RecipeView extends StatefulWidget {
   final RecipeData recipeData;
   final List<IngredientData> ingredientsData;
   final BackendClient backendClient;
+  final List<String> units;
 
   const RecipeView(
       {required this.recipeData,
       required this.ingredientsData,
       required this.backendClient,
+      required this.units,
       Key? key})
       : super(key: key);
 
   @override
+  State<StatefulWidget> createState() => _RecipeViewState();
+}
+
+class _RecipeViewState extends State<RecipeView> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(recipeData.name),
+        title: Text(widget.recipeData.name),
         actions: <Widget>[
-          PopupMenuButton<String>(onSelected: (String choice) {
+          PopupMenuButton<String>(onSelected: (String choice) async {
             if (choice == "Delete") {
               showDialog(
                   context: context,
@@ -39,7 +48,8 @@ class RecipeView extends StatelessWidget {
                             child: const Text("Cancel")),
                         TextButton(
                             onPressed: () {
-                              backendClient.removeRecipe(recipeData.id);
+                              widget.backendClient
+                                  .removeRecipe(widget.recipeData.id);
                               Navigator.pop(context);
                               Navigator.pop(context);
                             },
@@ -47,12 +57,27 @@ class RecipeView extends StatelessWidget {
                       ],
                     );
                   });
+            } else if (choice == "Edit") {
+              await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => EditRecipeViewWidget(
+                            title: widget.recipeData.name,
+                            backendClient: widget.backendClient,
+                            ingredientsData: widget.ingredientsData,
+                            units: widget.units,
+                            recipeIngredientsData:
+                                widget.recipeData.ingredients,
+                            steps: widget.recipeData.steps,
+                            recipeId: widget.recipeData.id,
+                          )));
+              setState(() {});
             }
           }, itemBuilder: (BuildContext context) {
-            return {"Delete"}.map((String choice) {
+            return {"Edit", "Delete"}.map((String choice) {
               return PopupMenuItem<String>(value: choice, child: Text(choice));
             }).toList();
-          })
+          }),
         ],
       ),
       body: Row(
@@ -61,11 +86,13 @@ class RecipeView extends StatelessWidget {
           Expanded(
               flex: 3,
               child: RecipeIngredientListWidget(
-                  recipeData: recipeData, ingredientsData: ingredientsData)),
+                  recipeData: widget.recipeData,
+                  ingredientsData: widget.ingredientsData)),
           const VerticalDivider(),
           const Padding(padding: EdgeInsets.only(left: 70)),
           Expanded(
-              flex: 7, child: RecipeStepListWidget(recipeData: recipeData)),
+              flex: 7,
+              child: RecipeStepListWidget(recipeData: widget.recipeData)),
         ],
       ),
     );

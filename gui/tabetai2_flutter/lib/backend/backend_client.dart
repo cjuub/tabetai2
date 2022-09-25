@@ -44,6 +44,12 @@ class BackendClient {
         name, servings, recipeIngredients, steps);
   }
 
+  bool updateRecipe(String id, String name, int servings,
+      List<RecipeIngredientData> recipeIngredients, List<String> steps) {
+    return _backendCommunicator.updateRecipe(id,
+        name, servings, recipeIngredients, steps);
+  }
+
   bool removeRecipe(String id) {
     return _backendCommunicator.eraseRecipe(id);
   }

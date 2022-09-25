@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tabetai2_flutter/backend/backend_data.dart';
@@ -36,8 +38,10 @@ class _EditRecipeIngredientListWidgetState
     defaultIngredientId = widget.ingredientsData[0].id;
     defaultUnit = widget.units[0];
 
-    widget.recipeIngredientsData.add(RecipeIngredientData(
-        defaultIngredientId, RecipeIngredientQuantityData(0, defaultUnit, 0)));
+    if (widget.recipeIngredientsData.isEmpty) {
+      widget.recipeIngredientsData.add(RecipeIngredientData(defaultIngredientId,
+          RecipeIngredientQuantityData(0, defaultUnit, 0)));
+    }
   }
 
   @override
@@ -129,10 +133,20 @@ class _RecipeIngredientState extends State<RecipeIngredientWidget> {
   @override
   void initState() {
     super.initState();
-    selectedIngredientId = widget.defaultIngredientId;
-    selectedAmount = "0";
-    selectedUnit = widget.units[0];
-    _controller = TextEditingController(text: "");
+    if (widget.recipeIngredientsData.isEmpty) {
+      selectedIngredientId = widget.defaultIngredientId;
+      selectedAmount = "0";
+      selectedUnit = widget.units[0];
+      _controller = TextEditingController(text: "");
+    } else {
+      selectedIngredientId = widget.recipeIngredientData.id;
+      int amount = widget.recipeIngredientData.quantity.amount;
+      int exponent = widget.recipeIngredientData.quantity.exponent;
+      selectedAmount = "${amount * pow(10, exponent)}";
+      selectedUnit = widget.recipeIngredientData.quantity.unit;
+      _controller = TextEditingController(text: selectedAmount);
+      setRecipeIngredient();
+    }
   }
 
   void setRecipeIngredient() {

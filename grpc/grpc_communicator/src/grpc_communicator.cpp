@@ -102,6 +102,29 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status update_recipe(grpc::ServerContext* context, const UpdateRecipeRequest* request, UpdateRecipeResponse* recipe_id) override {
+        if (request->name().empty()) {
+            return grpc::Status::CANCELLED;
+        }
+
+        std::vector<std::pair<Ingredient, std::optional<Quantity>>> ingredients;
+        for (const auto& ingredient_entry : request->ingredients()) {
+            const auto& quantity_entry = ingredient_entry.quantity();
+            auto quantity = std::make_optional(Quantity{quantity_entry.amount(), static_cast<Unit>(quantity_entry.unit()), quantity_entry.exponent()});
+            auto ingredient = m_ingredient_repository->find_by_id(ingredient_entry.id());
+            if (!ingredient) {
+                return {grpc::StatusCode::ABORTED, "Invalid ingredient ID in recipe"};
+            }
+            ingredients.emplace_back(ingredient.value(), quantity);
+        }
+
+        std::vector<std::string> steps(request->steps().size());
+        std::copy(request->steps().begin(), request->steps().end(), steps.begin());
+
+        m_recipe_repository->add(Recipe{request->id(), std::string(request->name()), static_cast<unsigned>(request->servings()), ingredients, steps});
+        return grpc::Status::OK;
+    }
+
     grpc::Status erase_ingredient(grpc::ServerContext* context, const EraseIngredientRequest* request, EraseIngredientResponse*) override {
         m_ingredient_repository->erase(request->id());
         return grpc::Status::OK;
