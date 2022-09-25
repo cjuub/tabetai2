@@ -54,9 +54,11 @@ class _RecipesViewWidgetState extends State<RecipesViewWidget>
                       context,
                       MaterialPageRoute(
                           builder: (BuildContext context) => RecipeView(
-                              recipeData: _recipes[index],
-                              ingredientsData: _ingredients,
-                              backendClient: widget.backendClient)));
+                                recipeData: _recipes[index],
+                                ingredientsData: _ingredients,
+                                backendClient: widget.backendClient,
+                                units: _units,
+                              )));
                 },
               ));
         },
@@ -85,11 +87,14 @@ class _RecipesViewWidgetState extends State<RecipesViewWidget>
                                   MaterialPageRoute(
                                       builder: (BuildContext context) =>
                                           EditRecipeViewWidget(
-                                              title: controller.text,
-                                              backendClient:
-                                                  widget.backendClient,
-                                              ingredientsData: _ingredients,
-                                              units: _units)));
+                                            title: controller.text,
+                                            backendClient: widget.backendClient,
+                                            ingredientsData: _ingredients,
+                                            units: _units,
+                                            recipeIngredientsData: [],
+                                            steps: [],
+                                            recipeId: "",
+                                          )));
                               setState(() {});
                             },
                           )),

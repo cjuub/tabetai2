@@ -5,6 +5,7 @@ service Tabetai2 {
     rpc list_recipes(ListRecipesRequest) returns (stream Recipe) {}
     rpc add_ingredient(AddIngredientRequest) returns (AddIngredientResponse) {}
     rpc add_recipe(AddRecipeRequest) returns (AddRecipeResponse) {}
+    rpc update_recipe(UpdateRecipeRequest) returns (UpdateRecipeResponse) {}
     rpc erase_ingredient(EraseIngredientRequest) returns (EraseIngredientResponse) {}
     rpc erase_recipe(EraseRecipeRequest) returns (EraseRecipeResponse) {}
 
@@ -77,9 +78,19 @@ message AddRecipeRequest {
     repeated string steps = 4;
 }
 
+message UpdateRecipeRequest {
+    uint64 id = 1;
+    string name = 2;
+    uint32 servings = 3;
+    repeated RecipeIngredientEntry ingredients = 4;
+    repeated string steps = 5;
+}
+
 message AddRecipeResponse {
     uint64 recipe_id = 1;
 }
+
+message UpdateRecipeResponse {}
 
 message EraseRecipeRequest {
     uint64 id = 1;
