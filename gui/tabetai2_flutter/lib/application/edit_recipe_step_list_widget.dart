@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class NewRecipeStepListWidget extends StatefulWidget {
+class EditRecipeStepListWidget extends StatefulWidget {
   final List<String> steps;
 
-  const NewRecipeStepListWidget({required this.steps, Key? key})
+  const EditRecipeStepListWidget({required this.steps, Key? key})
       : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _NewRecipeStepListState();
+  State<StatefulWidget> createState() => _EditRecipeStepListState();
 }
 
-class _NewRecipeStepListState extends State<NewRecipeStepListWidget> {
+class _EditRecipeStepListState extends State<EditRecipeStepListWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -18,7 +18,7 @@ class _NewRecipeStepListState extends State<NewRecipeStepListWidget> {
           shrinkWrap: true,
           itemCount: widget.steps.length,
           itemBuilder: (BuildContext context, int index) {
-            return NewRecipeStepWidget(
+            return EditRecipeStepWidget(
                 steps: widget.steps,
                 stepIndex: index,
                 stepString: widget.steps[index]);
@@ -40,13 +40,13 @@ class _NewRecipeStepListState extends State<NewRecipeStepListWidget> {
   }
 }
 
-class NewRecipeStepWidget extends StatelessWidget {
+class EditRecipeStepWidget extends StatelessWidget {
   final List<String> steps;
   final int stepIndex;
   final String stepString;
   late final TextEditingController _controller;
 
-  NewRecipeStepWidget(
+  EditRecipeStepWidget(
       {required this.steps,
       required this.stepIndex,
       required this.stepString,
