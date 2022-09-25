@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:tabetai2_flutter/backend/backend_client.dart';
 
 import 'package:tabetai2_flutter/backend/backend_data.dart';
-import 'new_recipe_ingredient_list_widget.dart';
-import 'new_recipe_step_list_widget.dart';
+import 'edit_recipe_ingredient_list_widget.dart';
+import 'edit_recipe_step_list_widget.dart';
 
-class NewRecipeViewWidget extends StatefulWidget {
+class EditRecipeViewWidget extends StatefulWidget {
   final String title;
   final BackendClient backendClient;
   final List<IngredientData> ingredientsData;
   final List<String> units;
 
-  const NewRecipeViewWidget(
+  const EditRecipeViewWidget(
       {Key? key,
       required this.title,
       required this.backendClient,
@@ -20,10 +20,10 @@ class NewRecipeViewWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _NewRecipeViewState();
+  State<StatefulWidget> createState() => _EditRecipeViewState();
 }
 
-class _NewRecipeViewState extends State<NewRecipeViewWidget> {
+class _EditRecipeViewState extends State<EditRecipeViewWidget> {
   List<RecipeIngredientData> recipeIngredientsData = [];
   List<String> steps = [];
 
@@ -42,13 +42,13 @@ class _NewRecipeViewState extends State<NewRecipeViewWidget> {
               const Padding(padding: EdgeInsets.only(left: 20)),
               Expanded(
                   flex: 3,
-                  child: NewRecipeIngredientListWidget(
+                  child: EditRecipeIngredientListWidget(
                       ingredientsData: widget.ingredientsData,
                       recipeIngredientsData: recipeIngredientsData,
                       units: widget.units)),
               const VerticalDivider(),
               const Padding(padding: EdgeInsets.only(left: 70)),
-              Expanded(flex: 7, child: NewRecipeStepListWidget(steps: steps)),
+              Expanded(flex: 7, child: EditRecipeStepListWidget(steps: steps)),
             ],
           ),
           floatingActionButton: FloatingActionButton(onPressed: () {

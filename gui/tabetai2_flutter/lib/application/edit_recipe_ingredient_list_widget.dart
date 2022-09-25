@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tabetai2_flutter/backend/backend_data.dart';
 
-class NewRecipeIngredientListWidget extends StatefulWidget {
+class EditRecipeIngredientListWidget extends StatefulWidget {
   final Map<String, IngredientData> ingredientsDataMap = {};
   final List<IngredientData> ingredientsData;
   final List<RecipeIngredientData> recipeIngredientsData;
   final List<String> units;
 
-  NewRecipeIngredientListWidget(
+  EditRecipeIngredientListWidget(
       {required this.ingredientsData,
       required this.recipeIngredientsData,
       required this.units,
@@ -20,11 +20,11 @@ class NewRecipeIngredientListWidget extends StatefulWidget {
   }
 
   @override
-  State<StatefulWidget> createState() => _NewRecipeIngredientListWidgetState();
+  State<StatefulWidget> createState() => _EditRecipeIngredientListWidgetState();
 }
 
-class _NewRecipeIngredientListWidgetState
-    extends State<NewRecipeIngredientListWidget> {
+class _EditRecipeIngredientListWidgetState
+    extends State<EditRecipeIngredientListWidget> {
   int _servings = 4;
   late final String defaultIngredientId;
   late final String defaultUnit;

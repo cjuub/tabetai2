@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tabetai2_flutter/application/new_recipe_view_widget.dart';
+import 'package:tabetai2_flutter/application/edit_recipe_view_widget.dart';
 import 'package:tabetai2_flutter/application/recipe_view.dart';
 import 'package:tabetai2_flutter/backend/backend_client.dart';
 import 'package:tabetai2_flutter/backend/backend_data.dart';
@@ -84,7 +84,7 @@ class _RecipesViewWidgetState extends State<RecipesViewWidget>
                                   context,
                                   MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          NewRecipeViewWidget(
+                                          EditRecipeViewWidget(
                                               title: controller.text,
                                               backendClient:
                                                   widget.backendClient,
