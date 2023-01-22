@@ -1,8 +1,8 @@
 project(tabetai_application_server)
 
 add_library(${PROJECT_NAME}
-        include/application_server/server_factory.h
-        src/server_factory.cpp
+    include/application_server/server_factory.h
+    src/server_factory.cpp
 )
 add_library(tabetai::application_server ALIAS ${PROJECT_NAME})
 

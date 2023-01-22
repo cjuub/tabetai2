@@ -44,7 +44,8 @@ class BackendCommunicator {
       print('Caught error: $e');
     }
 
-    ingredients.sort((IngredientData a, IngredientData b) => a.name.compareTo(b.name));
+    ingredients
+        .sort((IngredientData a, IngredientData b) => a.name.compareTo(b.name));
     return ingredients;
   }
 
@@ -151,6 +152,83 @@ class BackendCommunicator {
       units.add(unit.toString());
     }
     return units;
+  }
+
+  bool addSchedule(DateTime startDate, List<ScheduleDayData> scheduleDays) {
+    var request = AddScheduleRequest();
+    request.startDate =
+        "${startDate.year.toString()}-${startDate.month.toString().padLeft(2, "0")}-${startDate.day.toString().padLeft(2, "0")}";
+
+    for (ScheduleDayData dayData in scheduleDays) {
+      ScheduleDay scheduleDay = ScheduleDay();
+      for (MealData mealData in dayData.meals) {
+        Meal meal = Meal();
+        meal.servings = mealData.servings;
+        meal.recipeId = Int64.parseInt(mealData.recipeId);
+        scheduleDay.meals.add(meal);
+      }
+
+      request.days.add(scheduleDay);
+    }
+
+    stub.add_schedule(request);
+    return true;
+  }
+
+  bool updateSchedule(
+      String id, DateTime startDate, List<ScheduleDayData> scheduleDays) {
+    var request = UpdateScheduleRequest();
+    request.id = Int64.parseInt(id);
+    request.startDate =
+        "${startDate.year.toString()}-${startDate.month.toString().padLeft(2, "0")}-${startDate.day.toString().padLeft(2, "0")}";
+
+    for (ScheduleDayData dayData in scheduleDays) {
+      ScheduleDay scheduleDay = ScheduleDay();
+      for (MealData mealData in dayData.meals) {
+        Meal meal = Meal();
+        meal.servings = mealData.servings;
+        meal.recipeId = Int64.parseInt(mealData.recipeId);
+        scheduleDay.meals.add(meal);
+      }
+
+      request.days.add(scheduleDay);
+    }
+
+    stub.update_schedule(request);
+    return true;
+  }
+
+  bool eraseSchedule(String id) {
+    var request = EraseScheduleRequest();
+    request.id = Int64.parseInt(id);
+    stub.erase_schedule(request);
+    return true;
+  }
+
+  Future<List<ScheduleData>> getSchedules() async {
+    List<ScheduleData> schedules = [];
+
+    try {
+      await for (Schedule schedule
+          in stub.list_schedules(ListSchedulesRequest())) {
+        List<ScheduleDayData> scheduleDayData = [];
+        for (ScheduleDay scheduleDay in schedule.days) {
+          List<MealData> mealData = [];
+          for (Meal meal in scheduleDay.meals) {
+            mealData
+                .add(MealData(meal.recipeId.toStringUnsigned(), meal.servings));
+          }
+          scheduleDayData.add(ScheduleDayData(mealData));
+        }
+        schedules.add(ScheduleData(schedule.id.toStringUnsigned(),
+            DateTime.parse(schedule.startDate), scheduleDayData));
+      }
+    } catch (e) {
+      print('Caught error: $e');
+    }
+
+    schedules.sort((ScheduleData a, ScheduleData b) => a.id.compareTo(b.id));
+    return schedules;
   }
 
   Stream<bool> subscribe() async* {

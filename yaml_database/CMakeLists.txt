@@ -4,9 +4,11 @@ add_library(${PROJECT_NAME}
     include/yaml_database/yaml_database.hpp
     include/yaml_database/yaml_ingredient_database.h
     include/yaml_database/yaml_recipe_database.h
+    include/yaml_database/yaml_schedule_database.h
 
     src/yaml_ingredient_database.cpp
     src/yaml_recipe_database.cpp
+    src/yaml_schedule_database.cpp
 )
 add_library(tabetai::yaml_database ALIAS ${PROJECT_NAME})
 
@@ -35,5 +37,6 @@ target_link_libraries(${PROJECT_NAME}
         tabetai::database
         tabetai::ingredient
         tabetai::recipe
+        tabetai::schedule
         tabetai::warning
 )
