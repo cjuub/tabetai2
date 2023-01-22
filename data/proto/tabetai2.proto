@@ -2,12 +2,18 @@ syntax = "proto3";
 
 service Tabetai2 {
     rpc list_ingredients(ListIngredientsRequest) returns (stream Ingredient) {}
-    rpc list_recipes(ListRecipesRequest) returns (stream Recipe) {}
     rpc add_ingredient(AddIngredientRequest) returns (AddIngredientResponse) {}
+    rpc erase_ingredient(EraseIngredientRequest) returns (EraseIngredientResponse) {}
+
+    rpc list_recipes(ListRecipesRequest) returns (stream Recipe) {}
     rpc add_recipe(AddRecipeRequest) returns (AddRecipeResponse) {}
     rpc update_recipe(UpdateRecipeRequest) returns (UpdateRecipeResponse) {}
-    rpc erase_ingredient(EraseIngredientRequest) returns (EraseIngredientResponse) {}
     rpc erase_recipe(EraseRecipeRequest) returns (EraseRecipeResponse) {}
+
+    rpc list_schedules(ListSchedulesRequest) returns (stream Schedule) {}
+    rpc add_schedule(AddScheduleRequest) returns (AddScheduleResponse) {}
+    rpc update_schedule(UpdateScheduleRequest) returns (UpdateScheduleResponse) {}
+    rpc erase_schedule(EraseScheduleRequest) returns (EraseScheduleResponse) {}
 
     rpc subscribe(SubscriptionRequest) returns (stream SubscriptionResponse) {}
 }
@@ -97,3 +103,43 @@ message EraseRecipeRequest {
 }
 
 message EraseRecipeResponse {}
+
+message Meal {
+    uint64 recipe_id = 1;
+    uint32 servings = 2;
+}
+
+message ScheduleDay {
+    repeated Meal meals = 1;
+}
+
+message Schedule {
+    uint64 id = 1;
+    string start_date = 2;
+    repeated ScheduleDay days = 3;
+}
+
+message AddScheduleRequest {
+    string start_date = 1;
+    repeated ScheduleDay days = 2;
+}
+
+message AddScheduleResponse {
+    uint64 schedule_id = 1;
+}
+
+message ListSchedulesRequest {}
+
+message UpdateScheduleRequest {
+    uint64 id = 1;
+    string start_date = 2;
+    repeated ScheduleDay days = 3;
+}
+
+message UpdateScheduleResponse {}
+
+message EraseScheduleRequest {
+    uint64 id = 1;
+}
+
+message EraseScheduleResponse {}

@@ -1,12 +1,18 @@
-project(tabetai_server)
+project(tabetai_schedule)
 
 add_library(${PROJECT_NAME}
-    include/server/server.h
-    include/server/server_factory.h
-    src/impl/server.h
-    src/impl/server.cpp
+    include/schedule/schedule.h
+    include/schedule/schedule_repository.h
+    include/schedule/schedule_day.h
+    include/schedule/meal.h
+
+    src/schedule.cpp
+    src/schedule_repository.cpp
+    src/schedule_day.cpp
+    src/meal.cpp
 )
-add_library(tabetai::server ALIAS ${PROJECT_NAME})
+
+add_library(tabetai::schedule ALIAS ${PROJECT_NAME})
 
 target_compile_features(${PROJECT_NAME}
     PRIVATE
@@ -23,16 +29,14 @@ set_target_properties(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME}
     PUBLIC
         include
-        src
 )
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
-        tabetai::communicator
-        tabetai::data_publisher
-    PRIVATE
-        tabetai::ingredient
         tabetai::recipe
-        tabetai::schedule
+        tabetai::repository
+    PRIVATE
         tabetai::warning
 )
+
+add_subdirectory(test)

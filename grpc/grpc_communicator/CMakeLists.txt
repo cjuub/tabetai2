@@ -29,5 +29,6 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE
         tabetai::ingredient
         tabetai::recipe
+        tabetai::schedule
         tabetai::grpc_proto
 )

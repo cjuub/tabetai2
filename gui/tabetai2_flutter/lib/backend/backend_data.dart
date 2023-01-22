@@ -29,3 +29,24 @@ class RecipeData {
 
   RecipeData(this.id, this.name, this.servings, this.ingredients, this.steps);
 }
+
+class MealData {
+  final String recipeId;
+  final int servings;
+
+  MealData(this.recipeId, this.servings);
+}
+
+class ScheduleDayData {
+  final List<MealData> meals;
+
+  ScheduleDayData(this.meals);
+}
+
+class ScheduleData {
+  final String id;
+  final DateTime startDate;
+  final List<ScheduleDayData> days;
+
+  ScheduleData(this.id, this.startDate, this.days);
+}

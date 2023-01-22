@@ -4,6 +4,7 @@
 #include <grpc_communicator/grpc_communicator.h>
 #include <yaml_database/yaml_ingredient_database.h>
 #include <yaml_database/yaml_recipe_database.h>
+#include <yaml_database/yaml_schedule_database.h>
 
 #include <impl/server.h>
 
@@ -16,6 +17,7 @@ using namespace core::data_publisher;
 using namespace core::ingredient;
 using namespace core::recipe;
 using namespace core::repository;
+using namespace core::schedule;
 using namespace core::server;
 using namespace core::util;
 using namespace grpc_communicator;
@@ -31,9 +33,16 @@ std::unique_ptr<Server> ServerFactory::create() const {
     auto recipe_database = std::make_unique<YamlRecipeDatabase>("db_recipe.yaml", "recipes", ingredient_repository);
     auto recipe_repository = std::make_shared<RecipeRepository>(std::move(recipe_database));
 
-    auto communicator = std::make_unique<GrpcCommunicator>(ingredient_repository, recipe_repository, id_generator);
+    auto schedule_database = std::make_unique<YamlScheduleDatabase>("db_schedule.yaml", "schedules", recipe_repository);
+    auto schedule_repository = std::make_shared<ScheduleRepository>(std::move(schedule_database));
 
-    return std::make_unique<core::server::impl::Server>(std::move(communicator), ingredient_repository, recipe_repository);
+    for (auto& schedule : schedule_repository->find_all()) {
+        schedule.id();
+    }
+
+    auto communicator = std::make_unique<GrpcCommunicator>(ingredient_repository, recipe_repository, schedule_repository, id_generator);
+
+    return std::make_unique<core::server::impl::Server>(std::move(communicator), ingredient_repository, recipe_repository, schedule_repository);
 }
 
 }

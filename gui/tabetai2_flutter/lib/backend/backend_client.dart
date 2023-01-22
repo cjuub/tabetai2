@@ -11,6 +11,7 @@ class BackendClient {
   late final Map<String, List<TopicSubscriber>> _subscribers = {
     "com.tabetai2.ingredients": [],
     "com.tabetai2.recipes": [],
+    "com.tabetai2.schedules": [],
     "com.tabetai2.units": []
   };
   late final _topicDataFunctions = {};
@@ -21,6 +22,8 @@ class BackendClient {
         _backendCommunicator.getIngredients;
     _topicDataFunctions["com.tabetai2.recipes"] =
         _backendCommunicator.getRecipes;
+    _topicDataFunctions["com.tabetai2.schedules"] =
+        _backendCommunicator.getSchedules;
     _topicDataFunctions["com.tabetai2.units"] = _backendCommunicator.getUnits;
     _backendSubscription = _backendCommunicator.subscribe();
   }
@@ -46,12 +49,21 @@ class BackendClient {
 
   bool updateRecipe(String id, String name, int servings,
       List<RecipeIngredientData> recipeIngredients, List<String> steps) {
-    return _backendCommunicator.updateRecipe(id,
-        name, servings, recipeIngredients, steps);
+    return _backendCommunicator.updateRecipe(
+        id, name, servings, recipeIngredients, steps);
   }
 
   bool removeRecipe(String id) {
     return _backendCommunicator.eraseRecipe(id);
+  }
+
+  bool addSchedule(DateTime startDate, List<ScheduleDayData> scheduleDays) {
+    return _backendCommunicator.addSchedule(startDate, scheduleDays);
+  }
+
+  bool updateSchedule(
+      String id, DateTime startDate, List<ScheduleDayData> scheduleDays) {
+    return _backendCommunicator.updateSchedule(id, startDate, scheduleDays);
   }
 
   void _sendInitialData(TopicSubscriber subscriber, String topic) async {

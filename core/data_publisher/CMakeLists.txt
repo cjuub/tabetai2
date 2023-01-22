@@ -18,6 +18,7 @@ target_link_libraries(${PROJECT_NAME}
         tabetai::ingredient
         tabetai::recipe
         tabetai::repository
+        tabetai::schedule
         tabetai::util
         tabetai::warning
 )
