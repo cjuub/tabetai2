@@ -7,9 +7,13 @@ class RecipeIngredientListWidget extends StatefulWidget {
   final RecipeData recipeData;
   final Map<String, IngredientData> ingredientsDataMap = {};
   final Map<String, RecipeIngredientData> recipeIngredientsDataMap = {};
+  final int initialServings;
 
   RecipeIngredientListWidget(
-      {required this.recipeData, required ingredientsData, Key? key})
+      {required this.recipeData,
+      required ingredientsData,
+      required this.initialServings,
+      Key? key})
       : super(key: key) {
     for (IngredientData ingredientData in ingredientsData) {
       ingredientsDataMap[ingredientData.id] = ingredientData;
@@ -30,7 +34,7 @@ class _RecipeIngredientListWidgetState
   @override
   void initState() {
     super.initState();
-    _servings = widget.recipeData.servings;
+    _servings = widget.initialServings;
   }
 
   @override
