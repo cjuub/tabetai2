@@ -11,12 +11,14 @@ class RecipeView extends StatefulWidget {
   final List<IngredientData> ingredientsData;
   final BackendClient backendClient;
   final List<String> units;
+  final int initialServings;
 
   const RecipeView(
       {required this.recipeData,
       required this.ingredientsData,
       required this.backendClient,
       required this.units,
+      required this.initialServings,
       Key? key})
       : super(key: key);
 
@@ -87,7 +89,8 @@ class _RecipeViewState extends State<RecipeView> {
               flex: 3,
               child: RecipeIngredientListWidget(
                   recipeData: widget.recipeData,
-                  ingredientsData: widget.ingredientsData)),
+                  ingredientsData: widget.ingredientsData,
+                  initialServings: widget.initialServings)),
           const VerticalDivider(),
           const Padding(padding: EdgeInsets.only(left: 70)),
           Expanded(

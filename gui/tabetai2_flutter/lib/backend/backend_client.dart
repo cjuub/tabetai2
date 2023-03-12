@@ -28,9 +28,9 @@ class BackendClient {
     _backendSubscription = _backendCommunicator.subscribe();
   }
 
-  void subscribe(TopicSubscriber subscriber, String topic) {
+  dynamic subscribe(TopicSubscriber subscriber, String topic) {
     _subscribers[topic]?.add(subscriber);
-    _sendInitialData(subscriber, topic);
+    return _getInitialData(subscriber, topic);
   }
 
   void unsubscribe(TopicSubscriber subscriber, String topic) {
@@ -66,9 +66,12 @@ class BackendClient {
     return _backendCommunicator.updateSchedule(id, startDate, scheduleDays);
   }
 
-  void _sendInitialData(TopicSubscriber subscriber, String topic) async {
-    var data = await _topicDataFunctions[topic]();
-    subscriber.onTopicUpdated(topic, data);
+  bool removeSchedule(String id) {
+    return _backendCommunicator.eraseSchedule(id);
+  }
+
+  dynamic _getInitialData(TopicSubscriber subscriber, String topic) async {
+    return await _topicDataFunctions[topic]();
   }
 
   void handleSubscription() async {

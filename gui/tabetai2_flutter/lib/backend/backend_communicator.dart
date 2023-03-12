@@ -227,7 +227,8 @@ class BackendCommunicator {
       print('Caught error: $e');
     }
 
-    schedules.sort((ScheduleData a, ScheduleData b) => a.id.compareTo(b.id));
+    schedules.sort(
+        (ScheduleData a, ScheduleData b) => b.startDate.compareTo(a.startDate));
     return schedules;
   }
 

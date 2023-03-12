@@ -20,11 +20,18 @@ class _RecipesViewWidgetState extends State<RecipesViewWidget>
   List<IngredientData> _ingredients = [];
   List<String> _units = [];
 
+  void init() async {
+    _recipes =
+        await widget.backendClient.subscribe(this, "com.tabetai2.recipes");
+    _ingredients =
+        await widget.backendClient.subscribe(this, "com.tabetai2.ingredients");
+    _units = await widget.backendClient.subscribe(this, "com.tabetai2.units");
+    setState(() {});
+  }
+
   @override
   void initState() {
-    widget.backendClient.subscribe(this, "com.tabetai2.recipes");
-    widget.backendClient.subscribe(this, "com.tabetai2.ingredients");
-    widget.backendClient.subscribe(this, "com.tabetai2.units");
+    init();
     super.initState();
   }
 
@@ -58,6 +65,7 @@ class _RecipesViewWidgetState extends State<RecipesViewWidget>
                                 ingredientsData: _ingredients,
                                 backendClient: widget.backendClient,
                                 units: _units,
+                                initialServings: _recipes[index].servings,
                               )));
                 },
               ));

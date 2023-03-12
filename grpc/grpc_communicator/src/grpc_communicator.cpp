@@ -177,6 +177,11 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status erase_schedule(grpc::ServerContext* context, const EraseScheduleRequest* request, EraseScheduleResponse*) override {
+        m_schedule_repository->erase(request->id());
+        return grpc::Status::OK;
+    }
+
     grpc::Status subscribe(grpc::ServerContext* context, const SubscriptionRequest* request, grpc::ServerWriter<SubscriptionResponse>* writer) override {
         auto status = grpc::Status::OK;
         m_subscribers.push_back(writer);

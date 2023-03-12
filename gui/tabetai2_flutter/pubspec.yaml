@@ -38,6 +38,7 @@ dependencies:
   grpc: ^3.0.2
   protobuf: ^2.0.1
   global_configuration: ^2.0.0-nullsafety.1
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:
