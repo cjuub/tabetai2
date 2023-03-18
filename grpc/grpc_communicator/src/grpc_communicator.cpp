@@ -167,6 +167,24 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status update_schedule(grpc::ServerContext* context, const UpdateScheduleRequest* request, UpdateScheduleResponse* schedule_id) override {
+        Schedule schedule{request->id(), request->start_date()};
+        for (const auto& day_entry : request->days()) {
+            ScheduleDay day;
+            for (const auto& meal_entry : day_entry.meals()) {
+                auto recipe = m_recipe_repository->find_by_id(meal_entry.recipe_id());
+                if (!recipe) {
+                    return {grpc::StatusCode::ABORTED, "Invalid recipe ID in schedule"};
+                }
+                day.add_meal({recipe.value(), meal_entry.servings()});
+            }
+            schedule.add_day(day);
+        }
+
+        m_schedule_repository->add(schedule);
+        return grpc::Status::OK;
+    }
+
     grpc::Status erase_ingredient(grpc::ServerContext* context, const EraseIngredientRequest* request, EraseIngredientResponse*) override {
         m_ingredient_repository->erase(request->id());
         return grpc::Status::OK;

@@ -176,6 +176,9 @@ class _SchedulesViewWidgetState extends State<SchedulesViewWidget>
                       backendClient: widget.backendClient,
                       scheduleId: "",
                       scheduleDays: [],
+                      recipesData: _recipes,
+                      ingredientsData: _ingredients,
+                      units: _units,
                     )));
       }),
     );
