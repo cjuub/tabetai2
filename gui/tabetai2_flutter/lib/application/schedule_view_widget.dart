@@ -94,6 +94,9 @@ class _ScheduleViewState extends State<ScheduleView> {
                               scheduleId: widget.scheduleData.id,
                               startDate: widget.scheduleData.startDate,
                               scheduleDays: widget.scheduleData.days,
+                              recipesData: widget.recipesData,
+                              ingredientsData: widget.ingredientsData,
+                              units: widget.units,
                             )));
                 setState(() {});
               }
@@ -109,19 +112,20 @@ class _ScheduleViewState extends State<ScheduleView> {
           itemCount: widget.scheduleData.days.length,
           itemBuilder: (BuildContext context, int index) {
             return Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                    height: 150,
+                Flexible(
+                    fit: FlexFit.loose,
                     child: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         const Padding(padding: EdgeInsets.only(left: 40)),
-                        Container(
+                        SizedBox(
                             width: 150,
                             child: Text(
                               _dayString(index),
                               textScaleFactor: 1.5,
                             )),
-                        const VerticalDivider(),
                         ScheduleMealsListWidget(
                           mealsData: widget.scheduleData.days[index].meals,
                           recipesData: widget.recipesData,
@@ -131,7 +135,7 @@ class _ScheduleViewState extends State<ScheduleView> {
                         )
                       ],
                     )),
-                Divider(),
+                const Divider(),
               ],
             );
           },

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:tabetai2_flutter/application/recipe_view.dart';
 import 'package:tabetai2_flutter/backend/backend_client.dart';
@@ -28,8 +26,10 @@ class ScheduleMealsListWidget extends StatefulWidget {
 class _ScheduleMealsListWidgetState extends State<ScheduleMealsListWidget> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Flexible(
+        fit: FlexFit.loose,
         child: ListView.builder(
+            shrinkWrap: true,
             itemCount: widget.mealsData.length,
             itemBuilder: (BuildContext context, int index) {
               String mealRecipeId = widget.mealsData[index].recipeId;
@@ -57,39 +57,5 @@ class _ScheduleMealsListWidgetState extends State<ScheduleMealsListWidget> {
                     const Padding(padding: EdgeInsets.only(top: 15)),
                   ]));
             }));
-  }
-}
-
-class RecipeIngredientWidget extends StatelessWidget {
-  final IngredientData ingredientData;
-  final RecipeIngredientData recipeIngredientData;
-  final int recipeServings;
-  final int userServings;
-
-  const RecipeIngredientWidget(
-      {required this.ingredientData,
-      required this.recipeIngredientData,
-      required this.recipeServings,
-      required this.userServings,
-      Key? key})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    String ingredientName = ingredientData.name;
-    RecipeIngredientQuantityData quantity = recipeIngredientData.quantity;
-    double amount =
-        (quantity.amount * pow(10, quantity.exponent) / recipeServings) *
-            userServings;
-    String amountStr = amount.toString() + " " + quantity.unit;
-    return Row(children: [
-      Text(ingredientName, textScaleFactor: 1.1),
-      const Padding(padding: EdgeInsets.only(bottom: 30)),
-      Expanded(
-          child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(amountStr, textScaleFactor: 1.1))),
-      const Padding(padding: EdgeInsets.only(right: 10)),
-    ]);
   }
 }
