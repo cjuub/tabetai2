@@ -1,5 +1,8 @@
+.cache
 .idea
+CMakeUserPresets.json
 cmake-build-*
+build
 db_*.yaml
 docker/build
 tabetai1
