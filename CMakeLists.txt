@@ -1,6 +1,8 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.26)
 
 project(tabetai2)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
 option(TABETAI2_USE_CONAN "Use Conan instead of FetchContent to download 3rd-party dependencies" OFF)
 

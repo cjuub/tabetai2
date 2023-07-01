@@ -1,6 +1,6 @@
 name: CI
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 jobs:
   ci:
@@ -33,7 +33,7 @@ jobs:
           python-version: 3.8
       - name: Install
         run: |
-          python -m pip install cmake==3.22.1 conan==1.57.0 --upgrade
+          python -m pip install cmake==3.26.4 conan==2.0.6 --upgrade
           conan remote add conancenter https://center.conan.io --force
           sudo apt update
           if [ "${{ matrix.compiler }}" = "gcc" ]; then
@@ -51,7 +51,9 @@ jobs:
           echo "${{ github.workspace }}/flutter/bin" >> $GITHUB_PATH
       - name: Build
         run: |
-          cmake -S . -B build ${{ matrix.cmake-args }} -DCMAKE_BUILD_TYPE=Debug -DTABETAI2_USE_CONAN=TRUE
+          conan profile detect
+          conan install . --output-folder=build --build=missing -s build_type=Debug
+          cmake -S . -B build ${{ matrix.cmake-args }} -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DTABETAI2_USE_CONAN=TRUE
           cmake --build build --config Debug
       - name: Test
         run: (cd build && ctest)
