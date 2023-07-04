@@ -7,7 +7,7 @@ get_filename_component(tabetai2_proto "${CMAKE_SOURCE_DIR}/data/proto/tabetai2.p
 get_filename_component(tabetai2_proto_path "${tabetai2_proto}" PATH)
 
 set(DART "$ENV{FLUTTER_DART_BIN}")
-set(GRPC_DART_PLUGIN "$ENV{HOME}/.pub-cache/bin/protoc-gen-dart")
+set(GRPC_DART_PLUGIN "$ENV{GRPC_DART_PLUGIN}")
 add_custom_command(
     OUTPUT
         ${GRPC_DART_PLUGIN}

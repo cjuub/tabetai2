@@ -1,0 +1,86 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "Debug",
+      "displayName": "Debug",
+      "description": "Debug Build",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/Debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": {
+          "type": "STRING",
+          "value": "Debug"
+        },
+        "TABETAI2_USE_CONAN": {
+          "type": "BOOL",
+          "value": "ON"
+        }
+      },
+      "environment": {
+        "FLUTTER_DART_BIN": "$env{FLUTTER_HOME}/bin/dart",
+        "GRPC_DART_PLUGIN": "$env{HOME}/.pub-cache/bin/protoc-gen-dart"
+      }
+    },
+    {
+      "name": "Release",
+      "displayName": "Release",
+      "description": "Release Build",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/Release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": {
+          "type": "STRING",
+          "value": "Release"
+        },
+        "TABETAI2_USE_CONAN": {
+          "type": "BOOL",
+          "value": "ON"
+        }
+      },
+      "environment": {
+        "FLUTTER_DART_BIN": "$env{FLUTTER_HOME}/bin/dart",
+        "GRPC_DART_PLUGIN": "$env{HOME}/.pub-cache/bin/protoc-gen-dart"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "Debug",
+      "configurePreset": "Debug"
+    },
+    {
+      "name": "Release",
+      "configurePreset": "Release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "Debug",
+      "configurePreset": "Debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": true
+      }
+    },
+    {
+      "name": "Release",
+      "configurePreset": "Release",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": true
+      }
+    }
+  ]
+}
