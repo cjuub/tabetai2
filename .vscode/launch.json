@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "cppdbg",
+      "request": "launch",
+      "name": "application",
+      "args": "",
+      "program": "${workspaceFolder}/build/Debug/application/application",
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "setupCommands": [
+        {
+          "text": "-enable-pretty-printing",
+          "description": "enable pretty printing",
+          "ignoreFailures": false
+        }
+      ]
+    }
+  ]
+}
