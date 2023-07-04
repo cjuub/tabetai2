@@ -21,6 +21,8 @@ add_subdirectory(third_party/catch2) # Header-only, no dependencies.
 
 add_subdirectory(warning)
 
+enable_testing()
+
 add_subdirectory(core/communicator)
 add_subdirectory(core/data_publisher)
 add_subdirectory(core/database)
@@ -41,4 +43,3 @@ add_subdirectory(application)
 
 add_subdirectory(gui)
 
-enable_testing()

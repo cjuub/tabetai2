@@ -46,14 +46,16 @@ jobs:
             echo "CXX=clang++-${{ matrix.version }}" >> $GITHUB_ENV
           fi
 
+          sudo apt install ninja-build
+
           git clone --depth=1 https://github.com/flutter/flutter.git
-          echo "FLUTTER_DART_BIN=${{ github.workspace }}/flutter/bin/dart" >> $GITHUB_ENV
+          echo "FLUTTER_HOME=${{ github.workspace }}/flutter" >> $GITHUB_ENV
           echo "${{ github.workspace }}/flutter/bin" >> $GITHUB_PATH
       - name: Build
         run: |
           conan profile detect
-          conan install . --output-folder=build --build=missing -s build_type=Debug
-          cmake -S . -B build ${{ matrix.cmake-args }} -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DTABETAI2_USE_CONAN=TRUE
-          cmake --build build --config Debug
+          cmake --preset Debug
+          cmake --build --preset Debug
       - name: Test
-        run: (cd build && ctest)
+        run: |
+          ctest --preset Debug
