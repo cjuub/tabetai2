@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   grpc: ^3.0.2
-  protobuf: ^2.0.1
+  protobuf: ^3.0.0
   global_configuration: ^2.0.0-nullsafety.1
   intl: ^0.18.0
 
