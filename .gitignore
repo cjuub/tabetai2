@@ -1,6 +1,5 @@
 .cache
 .idea
-CMakeUserPresets.json
 cmake-build-*
 build
 db_*.yaml
