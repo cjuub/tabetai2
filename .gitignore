@@ -1,6 +1,7 @@
 .cache
 .idea
 cmake-build-*
+compile_commands.json
 build
 db_*.yaml
 docker/build
