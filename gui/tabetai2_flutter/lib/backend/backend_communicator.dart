@@ -165,6 +165,8 @@ class BackendCommunicator {
         Meal meal = Meal();
         meal.servings = mealData.servings;
         meal.recipeId = Int64.parseInt(mealData.recipeId);
+        meal.isLeftovers = mealData.isLeftovers;
+        meal.comment = mealData.comment;
         scheduleDay.meals.add(meal);
       }
 
@@ -188,6 +190,8 @@ class BackendCommunicator {
         Meal meal = Meal();
         meal.servings = mealData.servings;
         meal.recipeId = Int64.parseInt(mealData.recipeId);
+        meal.isLeftovers = mealData.isLeftovers;
+        meal.comment = mealData.comment;
         scheduleDay.meals.add(meal);
       }
 
@@ -215,8 +219,8 @@ class BackendCommunicator {
         for (ScheduleDay scheduleDay in schedule.days) {
           List<MealData> mealData = [];
           for (Meal meal in scheduleDay.meals) {
-            mealData
-                .add(MealData(meal.recipeId.toStringUnsigned(), meal.servings));
+            mealData.add(MealData(meal.recipeId.toStringUnsigned(),
+                meal.servings, meal.isLeftovers, meal.comment));
           }
           scheduleDayData.add(ScheduleDayData(mealData));
         }

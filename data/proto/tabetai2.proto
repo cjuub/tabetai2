@@ -107,6 +107,8 @@ message EraseRecipeResponse {}
 message Meal {
     uint64 recipe_id = 1;
     uint32 servings = 2;
+    bool is_leftovers = 3;
+    string comment = 4;
 }
 
 message ScheduleDay {

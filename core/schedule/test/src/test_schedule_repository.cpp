@@ -29,9 +29,9 @@ TEST_CASE("ScheduleRepository") {
             {"boil"}};
     recipe_repository.add(boiled_fish);
 
-    const auto meal1 = Meal{boiled_fish, 2};
-    const auto meal2 = Meal{boiled_fish, 4};
-    const auto meal3 = Meal{boiled_fish, 6};
+    const auto meal1 = Meal{boiled_fish, 2, false, ""};
+    const auto meal2 = Meal{boiled_fish, 4, false, ""};
+    const auto meal3 = Meal{boiled_fish, 6, false, ""};
 
     auto week1 = Schedule{23, "1970-01-01"};
     auto week1_day1 = ScheduleDay{};

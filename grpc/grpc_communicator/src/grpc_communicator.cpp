@@ -81,6 +81,8 @@ public:
                     auto meal_entry = day_entry->add_meals();
                     meal_entry->set_recipe_id(meal.recipe().id());
                     meal_entry->set_servings(meal.servings());
+                    meal_entry->set_is_leftovers(meal.is_leftovers());
+                    meal_entry->set_comment(meal.comment());
                 }
             }
             writer->Write(schedule_entry);
@@ -134,7 +136,7 @@ public:
                 if (!recipe) {
                     return {grpc::StatusCode::ABORTED, "Invalid recipe ID in schedule"};
                 }
-                day.add_meal({recipe.value(), meal_entry.servings()});
+                day.add_meal({recipe.value(), meal_entry.servings(), meal_entry.is_leftovers(), meal_entry.comment()});
             }
             schedule.add_day(day);
         }
@@ -176,7 +178,7 @@ public:
                 if (!recipe) {
                     return {grpc::StatusCode::ABORTED, "Invalid recipe ID in schedule"};
                 }
-                day.add_meal({recipe.value(), meal_entry.servings()});
+                day.add_meal({recipe.value(), meal_entry.servings(), meal_entry.is_leftovers(), meal_entry.comment()});
             }
             schedule.add_day(day);
         }

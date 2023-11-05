@@ -51,6 +51,8 @@ class _EditScheduleMealsListWidgetState
                           context: context,
                           builder: (BuildContext context) {
                             int _servings = 4;
+                            bool _isLeftovers = false;
+                            String _comment = "";
                             return StatefulBuilder(
                                 builder: (BuildContext context, setState2) {
                               return SimpleDialog(
@@ -67,6 +69,25 @@ class _EditScheduleMealsListWidgetState
                                         setState2(
                                             () => {_servings = value.round()});
                                       }),
+                                  CheckboxListTile(
+                                      value: _isLeftovers,
+                                      title: const Text(
+                                        "Leftovers:",
+                                        textAlign: TextAlign.right,
+                                      ),
+                                      onChanged: (checkBoxValue) {
+                                        setState2(() =>
+                                            {_isLeftovers = checkBoxValue!});
+                                      }),
+                                  TextField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintText: 'Enter comment...',
+                                    ),
+                                    onChanged: (text) {
+                                      setState2(() => {_comment = text});
+                                    },
+                                  ),
                                   Container(
                                       width: double.minPositive + 1000,
                                       child: Column(children: [
@@ -93,7 +114,9 @@ class _EditScheduleMealsListWidgetState
                                                                 .recipesData[
                                                                     recipeIndex]
                                                                 .id,
-                                                            _servings);
+                                                            _servings,
+                                                            _isLeftovers,
+                                                            _comment);
                                                   });
                                                   Navigator.pop(context);
                                                 },
@@ -111,6 +134,10 @@ class _EditScheduleMealsListWidgetState
                       Text(mealRecipeData.name, textScaleFactor: 2.0),
                       Text("Servings: ${widget.mealsData[index].servings}",
                           textScaleFactor: 1.0),
+                      Text("Leftovers: ${widget.mealsData[index].isLeftovers}",
+                          textScaleFactor: 1.0),
+                      Text("Comment: ${widget.mealsData[index].comment}",
+                          textScaleFactor: 1.0),
                       const Padding(padding: EdgeInsets.only(top: 15)),
                     ]));
               }),
@@ -123,7 +150,8 @@ class _EditScheduleMealsListWidgetState
             TextButton(
                 onPressed: () => {
                       setState(() {
-                        widget.mealsData.add(MealData(defaultRecipeId, 4));
+                        widget.mealsData
+                            .add(MealData(defaultRecipeId, 4, false, ""));
                       })
                     },
                 child: const Text("+", textScaleFactor: 3.0)),

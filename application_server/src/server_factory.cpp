@@ -36,10 +36,6 @@ std::unique_ptr<Server> ServerFactory::create() const {
     auto schedule_database = std::make_unique<YamlScheduleDatabase>("db_schedule.yaml", "schedules", recipe_repository);
     auto schedule_repository = std::make_shared<ScheduleRepository>(std::move(schedule_database));
 
-    for (auto& schedule : schedule_repository->find_all()) {
-        schedule.id();
-    }
-
     auto communicator = std::make_unique<GrpcCommunicator>(ingredient_repository, recipe_repository, schedule_repository, id_generator);
 
     return std::make_unique<core::server::impl::Server>(std::move(communicator), ingredient_repository, recipe_repository, schedule_repository);

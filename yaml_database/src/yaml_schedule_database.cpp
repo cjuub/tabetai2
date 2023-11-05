@@ -28,7 +28,9 @@ Schedule YamlScheduleDatabase::from_yaml(YAML::Node entry) const {
             }
 
             auto servings = meal_entry["servings"].as<unsigned>();
-            Meal meal{recipe.value(), servings};
+            auto is_leftovers = meal_entry["is_leftovers"].as<bool>();
+            auto comment = meal_entry["comment"].as<std::string>();
+            Meal meal{recipe.value(), servings, is_leftovers, comment};
             day.add_meal(meal);
         }
 
@@ -49,6 +51,8 @@ YAML::Node YamlScheduleDatabase::to_yaml(const Schedule& schedule) const {
         for (const auto& meal : day.meals()) {
             entry["days"][day_index][meal_index]["recipe"] = meal.recipe().id();
             entry["days"][day_index][meal_index]["servings"] = meal.servings();
+            entry["days"][day_index][meal_index]["is_leftovers"] = meal.is_leftovers();
+            entry["days"][day_index][meal_index]["comment"] = meal.comment();
             ++meal_index;
         }
 

@@ -54,6 +54,10 @@ class _ScheduleMealsListWidgetState extends State<ScheduleMealsListWidget> {
                     Text(mealRecipeData.name, textScaleFactor: 2.0),
                     Text("Servings: ${widget.mealsData[index].servings}",
                         textScaleFactor: 1.0),
+                    Text("Leftovers: ${widget.mealsData[index].isLeftovers}",
+                        textScaleFactor: 1.0),
+                    Text("Comment: ${widget.mealsData[index].comment}",
+                        textScaleFactor: 1.0),
                     const Padding(padding: EdgeInsets.only(top: 15)),
                   ]));
             }));

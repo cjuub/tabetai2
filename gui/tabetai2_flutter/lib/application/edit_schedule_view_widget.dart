@@ -38,7 +38,8 @@ class _EditScheduleViewState extends State<EditScheduleViewWidget> {
     defaultRecipeId = widget.recipesData[0].id;
 
     if (widget.scheduleDays.isEmpty) {
-      widget.scheduleDays.add(ScheduleDayData([MealData(defaultRecipeId, 4)]));
+      widget.scheduleDays
+          .add(ScheduleDayData([MealData(defaultRecipeId, 4, false, "")]));
     }
   }
 
@@ -105,8 +106,8 @@ class _EditScheduleViewState extends State<EditScheduleViewWidget> {
               TextButton(
                   onPressed: () => {
                         setState(() {
-                          widget.scheduleDays.add(
-                              ScheduleDayData([MealData(defaultRecipeId, 4)]));
+                          widget.scheduleDays.add(ScheduleDayData(
+                              [MealData(defaultRecipeId, 4, false, "")]));
                         })
                       },
                   child: const Text("+", textScaleFactor: 3.0)),

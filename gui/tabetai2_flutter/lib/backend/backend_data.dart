@@ -33,8 +33,10 @@ class RecipeData {
 class MealData {
   final String recipeId;
   final int servings;
+  final bool isLeftovers;
+  final String comment;
 
-  MealData(this.recipeId, this.servings);
+  MealData(this.recipeId, this.servings, this.isLeftovers, this.comment);
 }
 
 class ScheduleDayData {
