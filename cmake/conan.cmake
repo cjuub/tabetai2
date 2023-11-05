@@ -14,7 +14,6 @@ target_compile_definitions(yaml-cpp
             _SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;
         >
 )
-add_library(yaml-cpp::yaml-cpp ALIAS yaml-cpp)
 
 find_package(gRPC REQUIRED)
 add_library(grpc::grpc++ ALIAS gRPC::grpc++)
