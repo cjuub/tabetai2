@@ -175,7 +175,7 @@ class _SchedulesViewWidgetState extends State<SchedulesViewWidget>
                       startDate: selectedDate,
                       backendClient: widget.backendClient,
                       scheduleId: "",
-                      scheduleDays: const [],
+                      scheduleDays: [],
                       recipesData: _recipes,
                       ingredientsData: _ingredients,
                       units: _units,

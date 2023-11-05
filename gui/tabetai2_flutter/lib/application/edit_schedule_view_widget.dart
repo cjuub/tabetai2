@@ -99,7 +99,7 @@ class _EditScheduleViewState extends State<EditScheduleViewWidget> {
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               TextButton(
                   onPressed: () => {
-                        setState(() => widget.scheduleDays.removeLast())
+                        setState(() => {widget.scheduleDays.removeLast()})
                       },
                   child: const Text("-", textScaleFactor: 3.0)),
               TextButton(

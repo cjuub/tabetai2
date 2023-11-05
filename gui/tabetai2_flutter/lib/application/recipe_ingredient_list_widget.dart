@@ -48,7 +48,7 @@ class _RecipeIngredientListWidgetState
           max: 8,
           label: _servings.toString(),
           onChanged: (double value) {
-            setState(() => _servings = value.round());
+            setState(() => {_servings = value.round()});
           }),
       const Padding(padding: EdgeInsets.only(top: 10)),
       Expanded(
