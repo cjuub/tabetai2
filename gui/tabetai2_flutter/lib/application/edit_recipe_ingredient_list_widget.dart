@@ -55,7 +55,7 @@ class _EditRecipeIngredientListWidgetState
           max: 8,
           label: _servings.toString(),
           onChanged: (double value) {
-            setState(() => {_servings = value.round()});
+            setState(() => _servings = value.round());
           }),
       const Padding(padding: EdgeInsets.only(top: 10)),
       ListView.builder(
@@ -78,7 +78,7 @@ class _EditRecipeIngredientListWidgetState
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         TextButton(
             onPressed: () => {
-                  setState(() => {widget.recipeIngredientsData.removeLast()})
+                  setState(() => widget.recipeIngredientsData.removeLast())
                 },
             child: const Text("-", textScaleFactor: 3.0)),
         TextButton(

@@ -9,14 +9,14 @@ class EditScheduleMealsListWidget extends StatefulWidget {
   final List<String> units;
   final BackendClient backendClient;
 
-  EditScheduleMealsListWidget(
+  const EditScheduleMealsListWidget(
       {required this.mealsData,
       required this.recipesData,
       required this.ingredientsData,
       required this.units,
       required this.backendClient,
       Key? key})
-      : super(key: key) {}
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _EditScheduleMealsListWidgetState();
@@ -65,9 +65,9 @@ class _EditScheduleMealsListWidgetState
                                       label: _servings.toString(),
                                       onChanged: (double value) {
                                         setState2(
-                                            () => {_servings = value.round()});
+                                            () => _servings = value.round());
                                       }),
-                                  Container(
+                                  SizedBox(
                                       width: double.minPositive + 1000,
                                       child: Column(children: [
                                         ListView.builder(
@@ -117,7 +117,7 @@ class _EditScheduleMealsListWidgetState
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             TextButton(
                 onPressed: () => {
-                      setState(() => {widget.mealsData.removeLast()})
+                      setState(() => widget.mealsData.removeLast())
                     },
                 child: const Text("-", textScaleFactor: 3.0)),
             TextButton(

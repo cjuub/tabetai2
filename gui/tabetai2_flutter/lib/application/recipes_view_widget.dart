@@ -99,8 +99,8 @@ class _RecipesViewWidgetState extends State<RecipesViewWidget>
                                             backendClient: widget.backendClient,
                                             ingredientsData: _ingredients,
                                             units: _units,
-                                            recipeIngredientsData: [],
-                                            steps: [],
+                                            recipeIngredientsData: const [],
+                                            steps: const [],
                                             recipeId: "",
                                           )));
                               setState(() {});
