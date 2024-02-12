@@ -4,11 +4,13 @@ add_library(${PROJECT_NAME}
     include/schedule/schedule.h
     include/schedule/schedule_repository.h
     include/schedule/schedule_day.h
+    include/schedule/schedule_summary.h
     include/schedule/meal.h
 
     src/schedule.cpp
     src/schedule_repository.cpp
     src/schedule_day.cpp
+    src/schedule_summary.cpp
     src/meal.cpp
 )
 

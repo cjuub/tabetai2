@@ -1,5 +1,6 @@
 #pragma once
 
+#include "schedule/schedule_summary.h"
 #include <schedule/schedule_day.h>
 #include <database/database.h>
 
@@ -19,6 +20,8 @@ public:
     std::string start_date() const;
 
     std::vector<ScheduleDay> days() const;
+
+    ScheduleSummary summary() const;
 
     bool operator<(const Schedule &r) const {
         return m_id < r.m_id;

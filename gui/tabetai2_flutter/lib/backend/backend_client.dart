@@ -70,6 +70,10 @@ class BackendClient {
     return _backendCommunicator.eraseSchedule(id);
   }
 
+  Future<ScheduleSummaryData> scheduleSummary(String id) {
+    return _backendCommunicator.scheduleSummary(id);
+  }
+
   dynamic _getInitialData(TopicSubscriber subscriber, String topic) async {
     return await _topicDataFunctions[topic]();
   }

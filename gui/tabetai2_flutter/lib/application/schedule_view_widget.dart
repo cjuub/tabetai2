@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tabetai2_flutter/application/edit_schedule_view_widget.dart';
 import 'package:tabetai2_flutter/application/schedule_meals_list_widget.dart';
+import 'package:tabetai2_flutter/application/schedule_summary_view_widget.dart';
 import 'package:tabetai2_flutter/backend/backend_client.dart';
 import 'package:tabetai2_flutter/backend/backend_data.dart';
 
@@ -99,9 +100,20 @@ class _ScheduleViewState extends State<ScheduleView> {
                               units: widget.units,
                             )));
                 setState(() {});
+              } else if (choice == "Summary") {
+                ScheduleSummaryData summary = await widget.backendClient
+                    .scheduleSummary(widget.scheduleData.id);
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => ScheduleSummaryView(
+                              summary: summary,
+                              ingredientsData: widget.ingredientsData,
+                              units: widget.units,
+                            )));
               }
             }, itemBuilder: (BuildContext context) {
-              return {"Edit", "Delete"}.map((String choice) {
+              return {"Edit", "Delete", "Summary"}.map((String choice) {
                 return PopupMenuItem<String>(
                     value: choice, child: Text(choice));
               }).toList();

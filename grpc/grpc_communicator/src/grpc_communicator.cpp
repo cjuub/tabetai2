@@ -10,6 +10,7 @@
 #include <grpcpp/server_builder.h>
 
 #include "tabetai2.grpc.pb.h"
+#include "tabetai2.pb.h"
 
 namespace tabetai2::grpc_communicator {
 
@@ -199,6 +200,30 @@ public:
 
     grpc::Status erase_schedule(grpc::ServerContext* context, const EraseScheduleRequest* request, EraseScheduleResponse*) override {
         m_schedule_repository->erase(request->id());
+        return grpc::Status::OK;
+    }
+
+    grpc::Status schedule_summary(grpc::ServerContext* context, const ScheduleSummaryRequest* request, ScheduleSummaryResponse* response) override {
+        auto schedule = m_schedule_repository->find_by_id(request->id());
+        if (!schedule) {
+            return {grpc::StatusCode::ABORTED, "Invalid schedule ID"};
+        }
+
+        ::ScheduleSummaryResponse summary;
+        for (const auto& ingredient_quantity_pair : schedule->summary().ingredients()) {
+            auto ingredient = ingredient_quantity_pair.first;
+
+            auto ingredient_entry = response->add_ingredients();
+            ingredient_entry->set_id(ingredient.id());
+
+            auto quantities = ingredient_quantity_pair.second;
+            for (const auto& quantity : quantities) {
+                auto quantity_entry = ingredient_entry->add_quantities();
+                quantity_entry->set_amount(quantity->amount());
+                quantity_entry->set_unit(static_cast<::Unit>(quantity->unit()));
+                quantity_entry->set_exponent(quantity->exponent());
+            }
+        }
         return grpc::Status::OK;
     }
 

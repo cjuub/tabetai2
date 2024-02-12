@@ -236,6 +236,23 @@ class BackendCommunicator {
     return schedules;
   }
 
+  Future<ScheduleSummaryData> scheduleSummary(String id) async {
+    var request = ScheduleSummaryRequest();
+    request.id = Int64.parseInt(id);
+    var scheduleSummary = await stub.schedule_summary(request);
+    List<ScheduleSummaryIngredientData> ingredients = [];
+    for (ScheduleSummaryIngredientEntry entry in scheduleSummary.ingredients) {
+      List<RecipeIngredientQuantityData> quantitiesData = [];
+      for (Quantity quantity in entry.quantities) {
+        quantitiesData.add(RecipeIngredientQuantityData(
+            quantity.amount, quantity.unit.toString(), quantity.exponent));
+      }
+      ingredients.add(ScheduleSummaryIngredientData(
+          entry.id.toStringUnsigned(), quantitiesData));
+    }
+    return ScheduleSummaryData(ingredients);
+  }
+
   Stream<bool> subscribe() async* {
     await for (var resp in stub.subscribe(SubscriptionRequest())) {
       yield resp.serverChanged;

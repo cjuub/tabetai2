@@ -52,3 +52,16 @@ class ScheduleData {
 
   ScheduleData(this.id, this.startDate, this.days);
 }
+
+class ScheduleSummaryIngredientData {
+  final String id;
+  final List<RecipeIngredientQuantityData> quantities;
+
+  ScheduleSummaryIngredientData(this.id, this.quantities);
+}
+
+class ScheduleSummaryData {
+  final List<ScheduleSummaryIngredientData> ingredients;
+
+  ScheduleSummaryData(this.ingredients);
+}
