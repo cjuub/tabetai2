@@ -8,18 +8,16 @@ namespace tabetai2::core::recipe {
 
 class Quantity {
 public:
-    Quantity(unsigned amount, Unit unit, int exponent);
+    Quantity(double amount, Unit unit);
 
-    unsigned amount() const;
+    double amount() const;
     Unit unit() const;
-    int exponent() const;
 
     bool operator==(const Quantity& q) const = default;
 
 private:
-    unsigned m_amount;
+    double m_amount;
     Unit m_unit;
-    int m_exponent;
 };
 
 }

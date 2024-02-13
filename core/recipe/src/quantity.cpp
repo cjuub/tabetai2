@@ -2,23 +2,18 @@
 
 namespace tabetai2::core::recipe {
 
-Quantity::Quantity(unsigned amount, Unit unit, int exponent)
+Quantity::Quantity(double amount, Unit unit)
 : m_amount{amount},
-  m_unit{unit},
-  m_exponent{exponent} {
+  m_unit{unit} {
 
 }
 
-unsigned Quantity::amount() const {
+double Quantity::amount() const {
     return m_amount;
 }
 
 Unit Quantity::unit() const {
     return m_unit;
-}
-
-int Quantity::exponent() const {
-    return m_exponent;
 }
 
 }

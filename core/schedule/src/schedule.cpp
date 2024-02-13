@@ -56,7 +56,7 @@ ScheduleSummary Schedule::summary() const {
                 auto key = std::to_string(recipe_ingredient.first.id());
                 if (recipe_ingredient.second.has_value() && recipe_ingredient.second->amount() != 0) {
                     amount = ((recipe_ingredient.second->amount() / recipe_servings) * meal.servings());
-                    ing.second = Quantity(amount, recipe_ingredient.second->unit(), recipe_ingredient.second->exponent());
+                    ing.second = Quantity(amount, recipe_ingredient.second->unit());
                 }
 
                 auto entry = mapper.find(key);
