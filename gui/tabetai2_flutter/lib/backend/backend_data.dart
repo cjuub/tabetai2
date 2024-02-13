@@ -6,11 +6,10 @@ class IngredientData {
 }
 
 class RecipeIngredientQuantityData {
-  final int amount;
+  final double amount;
   final String unit;
-  final int exponent;
 
-  RecipeIngredientQuantityData(this.amount, this.unit, this.exponent);
+  RecipeIngredientQuantityData(this.amount, this.unit);
 }
 
 class RecipeIngredientData {

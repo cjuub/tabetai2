@@ -36,8 +36,8 @@ class ScheduleSummaryView extends StatelessWidget {
                 String amountStr = "";
                 for (RecipeIngredientQuantityData quantity
                     in summary.ingredients[index].quantities) {
-                  num amount = quantity.amount * pow(10, quantity.exponent);
-                  amountStr += amount.toString() + " " + quantity.unit + " + ";
+                  amountStr +=
+                      quantity.amount.toString() + " " + quantity.unit + " + ";
                 }
                 if (amountStr.isNotEmpty) {
                   amountStr = amountStr.substring(0, amountStr.length - 3);

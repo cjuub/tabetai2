@@ -27,10 +27,9 @@ Recipe YamlRecipeDatabase::from_yaml(YAML::Node entry) const {
         }
 
         auto ingredient_data = ingredient_entry.second;
-        auto amount = ingredient_data["amount"].as<unsigned>();
+        auto amount = ingredient_data["amount"].as<double>();
         auto unit = static_cast<Unit>(ingredient_data["unit"].as<int>());
-        auto exponent = ingredient_data["exponent"].as<int>();
-        ingredients.emplace_back(*ingredient, Quantity(amount, unit, exponent));
+        ingredients.emplace_back(*ingredient, Quantity(amount, unit));
     }
 
     return Recipe{entry["id"].as<Id>(),
@@ -49,7 +48,6 @@ YAML::Node YamlRecipeDatabase::to_yaml(const Recipe& recipe) const {
     for (const auto& ingredient : recipe.ingredients()) {
         entry["ingredients"][ingredient.first.id()]["amount"] = ingredient.second->amount();
         entry["ingredients"][ingredient.first.id()]["unit"] = static_cast<int>(ingredient.second->unit());
-        entry["ingredients"][ingredient.first.id()]["exponent"] = ingredient.second->exponent();
     }
 
     entry["steps"] = recipe.steps();

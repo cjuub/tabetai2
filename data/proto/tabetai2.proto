@@ -60,9 +60,8 @@ enum Unit {
 }
 
 message Quantity {
-    uint32 amount = 1;
+    double amount = 1;
     Unit unit = 2;
-    int32 exponent = 3;
 }
 
 message RecipeIngredientEntry {

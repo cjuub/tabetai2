@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tabetai2_flutter/backend/backend_data.dart';
@@ -39,8 +37,8 @@ class _EditRecipeIngredientListWidgetState
     defaultUnit = widget.units[0];
 
     if (widget.recipeIngredientsData.isEmpty) {
-      widget.recipeIngredientsData.add(RecipeIngredientData(defaultIngredientId,
-          RecipeIngredientQuantityData(0, defaultUnit, 0)));
+      widget.recipeIngredientsData.add(RecipeIngredientData(
+          defaultIngredientId, RecipeIngredientQuantityData(0, defaultUnit)));
     }
   }
 
@@ -85,7 +83,7 @@ class _EditRecipeIngredientListWidgetState
             onPressed: () => {
                   setState(() {
                     RecipeIngredientQuantityData quantity =
-                        RecipeIngredientQuantityData(1, widget.units[0], 0);
+                        RecipeIngredientQuantityData(1, widget.units[0]);
                     widget.recipeIngredientsData.add(
                         RecipeIngredientData(defaultIngredientId, quantity));
                   })
@@ -140,9 +138,8 @@ class _RecipeIngredientState extends State<RecipeIngredientWidget> {
       _controller = TextEditingController(text: "");
     } else {
       selectedIngredientId = widget.recipeIngredientData.id;
-      int amount = widget.recipeIngredientData.quantity.amount;
-      int exponent = widget.recipeIngredientData.quantity.exponent;
-      selectedAmount = "${amount * pow(10, exponent)}";
+      double amount = widget.recipeIngredientData.quantity.amount;
+      selectedAmount = "$amount";
       selectedUnit = widget.recipeIngredientData.quantity.unit;
       _controller = TextEditingController(text: selectedAmount);
       setRecipeIngredient();
@@ -150,19 +147,10 @@ class _RecipeIngredientState extends State<RecipeIngredientWidget> {
   }
 
   void setRecipeIngredient() {
-    int amount = 0;
-    int exponent = 0;
-    List<String> amountSplit = selectedAmount.split(".");
-    if (amountSplit.length > 1) {
-      amount = int.parse(amountSplit[0] + amountSplit[1]);
-      exponent = -amountSplit[1].length;
-    } else {
-      amount = int.parse(amountSplit[0]);
-    }
-
+    double amount = double.parse(selectedAmount);
     widget.recipeIngredientsData[widget.index] = RecipeIngredientData(
         selectedIngredientId,
-        RecipeIngredientQuantityData(amount, selectedUnit, exponent));
+        RecipeIngredientQuantityData(amount, selectedUnit));
   }
 
   @override

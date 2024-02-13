@@ -67,7 +67,6 @@ class BackendCommunicator {
       Quantity quantity = Quantity();
       quantity.amount = recipeIngredient.quantity.amount;
       quantity.unit = unitMapper[recipeIngredient.quantity.unit]!;
-      quantity.exponent = recipeIngredient.quantity.exponent;
       recipeIngredientEntry.quantity = quantity;
 
       request.ingredients.add(recipeIngredientEntry);
@@ -100,7 +99,6 @@ class BackendCommunicator {
       Quantity quantity = Quantity();
       quantity.amount = recipeIngredient.quantity.amount;
       quantity.unit = unitMapper[recipeIngredient.quantity.unit]!;
-      quantity.exponent = recipeIngredient.quantity.exponent;
       recipeIngredientEntry.quantity = quantity;
 
       request.ingredients.add(recipeIngredientEntry);
@@ -130,8 +128,7 @@ class BackendCommunicator {
         for (RecipeIngredientEntry recipeIngredient in recipe.ingredients) {
           var quantityData = RecipeIngredientQuantityData(
               recipeIngredient.quantity.amount,
-              recipeIngredient.quantity.unit.toString(),
-              recipeIngredient.quantity.exponent);
+              recipeIngredient.quantity.unit.toString());
           ingredientsData.add(RecipeIngredientData(
               recipeIngredient.id.toStringUnsigned(), quantityData));
         }
@@ -245,7 +242,7 @@ class BackendCommunicator {
       List<RecipeIngredientQuantityData> quantitiesData = [];
       for (Quantity quantity in entry.quantities) {
         quantitiesData.add(RecipeIngredientQuantityData(
-            quantity.amount, quantity.unit.toString(), quantity.exponent));
+            quantity.amount, quantity.unit.toString()));
       }
       ingredients.add(ScheduleSummaryIngredientData(
           entry.id.toStringUnsigned(), quantitiesData));

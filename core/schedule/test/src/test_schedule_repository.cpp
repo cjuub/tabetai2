@@ -24,8 +24,8 @@ TEST_CASE("ScheduleRepository") {
             13,
             "boiled fish",
             1,
-            {{fish, Quantity{1, Unit::PCS, 0}},
-             {water, Quantity{5, Unit::DL, 0}}},
+            {{fish, Quantity{1, Unit::PCS}},
+             {water, Quantity{5, Unit::DL}}},
             {"boil"}};
     recipe_repository.add(boiled_fish);
 
