@@ -1,9 +1,8 @@
-#include "recipe/recipe_repository.h"
+#include <catch2/catch.hpp>
 
 #include "database/in_memory_database.hpp"
 #include "ingredient/ingredient.h"
-
-#include <catch2/catch.hpp>
+#include "recipe/recipe_repository.h"
 
 using namespace tabetai2::core::database;
 using namespace tabetai2::core::ingredient;
@@ -17,47 +16,28 @@ TEST_CASE("RecipeRepository") {
     const auto potato = Ingredient{2, "fish"};
     const auto hedgehog = Ingredient{5, "fish"};
     const auto water = Ingredient{42, "water"};
-    const auto boiled_fish = Recipe{
-        13,
-        "boiled fish",
-        1,
-        {{fish, Quantity{1, Unit::PCS}},
-         {water, Quantity{5, Unit::DL}}},
-        {"boil"}};
-    const auto boiled_potato = Recipe{
-        14,
-        "boiled potato",
-        2,
-        {{potato, Quantity{2, Unit::PCS}},
-         {water, Quantity{4, Unit::L}}},
-        {"boil"}};
-    const auto boiled_hedgehog = Recipe{
-        17,
-        "boiled hedgehog",
-        1,
-        {{hedgehog, Quantity{1, Unit::PCS}},
-         {water, Quantity{4, Unit::L}}},
-        {"boil"}};
-    const auto hedgehog_with_potato = Recipe{
-        15,
-        "hedgehog with potato",
-        2,
-        {{hedgehog, Quantity{1, Unit::PCS}},
-         {potato, Quantity{1, Unit::PCS}}},
-        {"feed potato to hedgehog"}};
+    const auto boiled_fish =
+        Recipe{13, "boiled fish", 1, {{fish, Quantity{1, Unit::PCS}}, {water, Quantity{5, Unit::DL}}}, {"boil"}};
+    const auto boiled_potato =
+        Recipe{14, "boiled potato", 2, {{potato, Quantity{2, Unit::PCS}}, {water, Quantity{4, Unit::L}}}, {"boil"}};
+    const auto boiled_hedgehog =
+        Recipe{17, "boiled hedgehog", 1, {{hedgehog, Quantity{1, Unit::PCS}}, {water, Quantity{4, Unit::L}}}, {"boil"}};
+    const auto hedgehog_with_potato = Recipe{15,
+                                             "hedgehog with potato",
+                                             2,
+                                             {{hedgehog, Quantity{1, Unit::PCS}}, {potato, Quantity{1, Unit::PCS}}},
+                                             {"feed potato to hedgehog"}};
     r.add(boiled_fish);
     r.add(boiled_potato);
     r.add(boiled_hedgehog);
     r.add(hedgehog_with_potato);
 
     SECTION("add") {
-        auto potato_with_potato = Recipe{
-            19,
-            "potato_with_potato",
-            2,
-            {{potato, Quantity{1, Unit::PCS}},
-             {potato, Quantity{1, Unit::PCS}}},
-            {"stack potatoes"}};
+        auto potato_with_potato = Recipe{19,
+                                         "potato_with_potato",
+                                         2,
+                                         {{potato, Quantity{1, Unit::PCS}}, {potato, Quantity{1, Unit::PCS}}},
+                                         {"stack potatoes"}};
         REQUIRE(r.find_by_id(19).has_value() == false);
         auto count = r.find_all().size();
         r.add(potato_with_potato);
@@ -97,4 +77,4 @@ TEST_CASE("RecipeRepository") {
     }
 }
 
-}
+}  // namespace

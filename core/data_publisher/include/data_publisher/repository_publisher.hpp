@@ -1,19 +1,19 @@
 #pragma once
 
-#include "publisher.h"
-
-#include <repository/repository.hpp>
 #include <util/observer.h>
 
 #include <memory>
+#include <repository/repository.hpp>
+
+#include "publisher.h"
 
 namespace tabetai2::core::data_publisher {
 
-template<class T>
+template <class T>
 class RepositoryPublisher : public Publisher, public util::Observer {
 public:
     explicit RepositoryPublisher(const std::shared_ptr<repository::Repository<T>> &repository) :
-            m_repository(repository) {
+    m_repository(repository) {
         m_repository->add_observer(this);
     }
 
@@ -29,4 +29,4 @@ private:
     }
 };
 
-}
+}  // namespace tabetai2::core::data_publisher

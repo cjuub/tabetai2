@@ -24,4 +24,4 @@ private:
     std::string m_name;
 };
 
-}
+}  // namespace tabetai2::core::ingredient

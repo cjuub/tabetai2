@@ -1,8 +1,9 @@
 #pragma once
 
-#include <yaml_database/yaml_database.hpp>
 #include <ingredient/ingredient_repository.h>
 #include <recipe/recipe.h>
+
+#include <yaml_database/yaml_database.hpp>
 
 namespace tabetai2::yaml_database {
 
@@ -20,4 +21,4 @@ private:
     std::shared_ptr<core::ingredient::IngredientRepository> m_ingredient_repository;
 };
 
-}
+}  // namespace tabetai2::yaml_database

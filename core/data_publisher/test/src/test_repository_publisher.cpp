@@ -1,9 +1,8 @@
-#include "data_publisher/repository_publisher.hpp"
+#include <catch2/catch.hpp>
 
+#include "data_publisher/repository_publisher.hpp"
 #include "database/in_memory_database.hpp"
 #include "ingredient/ingredient_repository.h"
-
-#include <catch2/catch.hpp>
 
 using namespace tabetai2::core::data_publisher;
 using namespace tabetai2::core::database;
@@ -25,4 +24,4 @@ TEST_CASE("RepositoryPublisher") {
     }
 }
 
-}
+}  // namespace

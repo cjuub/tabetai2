@@ -1,7 +1,8 @@
 #pragma once
 
-#include <yaml_database/yaml_database.hpp>
 #include <ingredient/ingredient.h>
+
+#include <yaml_database/yaml_database.hpp>
 
 namespace tabetai2::yaml_database {
 
@@ -14,4 +15,4 @@ public:
     YAML::Node to_yaml(const core::ingredient::Ingredient& ingredient) const override;
 };
 
-}
+}  // namespace tabetai2::yaml_database

@@ -11,14 +11,12 @@ Recipe::Recipe(Id id,
                std::string name,
                unsigned servings,
                std::vector<std::pair<Ingredient, std::optional<Quantity>>> ingredients,
-               std::vector<std::string> steps)
-: m_id{id},
-  m_name{std::move(name)},
-  m_servings{servings},
-  m_ingredients{std::move(ingredients)},
-  m_steps{std::move(steps)} {
-
-}
+               std::vector<std::string> steps) :
+m_id{id},
+m_name{std::move(name)},
+m_servings{servings},
+m_ingredients{std::move(ingredients)},
+m_steps{std::move(steps)} {}
 
 Id Recipe::id() const {
     return m_id;
@@ -40,4 +38,4 @@ std::vector<std::string> Recipe::steps() const {
     return m_steps;
 }
 
-}
+}  // namespace tabetai2::core::recipe

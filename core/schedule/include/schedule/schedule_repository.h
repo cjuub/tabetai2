@@ -1,11 +1,10 @@
 #pragma once
 
+#include <memory>
+#include <optional>
 #include <repository/repository.hpp>
 
 #include "schedule.h"
-
-#include <memory>
-#include <optional>
 
 namespace tabetai2::core::schedule {
 
@@ -16,4 +15,4 @@ public:
     std::optional<Schedule> find_by_id(database::Id id) const;
 };
 
-}
+}  // namespace tabetai2::core::schedule

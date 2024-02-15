@@ -9,4 +9,4 @@ public:
     virtual ~Observable() = default;
 };
 
-}
+}  // namespace tabetai2::core::util

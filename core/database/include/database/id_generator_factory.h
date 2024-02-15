@@ -11,4 +11,4 @@ public:
     static std::shared_ptr<IdGenerator> create();
 };
 
-}
+}  // namespace tabetai2::core::database

@@ -1,13 +1,12 @@
 #include <grpc_communicator/grpc_communicator.h>
-
-#include <string>
-#include <utility>
-#include <thread>
-#include <chrono>
-
 #include <grpcpp/security/server_credentials.h>
 #include <grpcpp/server.h>
 #include <grpcpp/server_builder.h>
+
+#include <chrono>
+#include <string>
+#include <thread>
+#include <utility>
 
 #include "tabetai2.grpc.pb.h"
 #include "tabetai2.pb.h"
@@ -25,18 +24,20 @@ public:
     explicit Tabetai2Impl(std::shared_ptr<IngredientRepository> ingredient_repository,
                           std::shared_ptr<RecipeRepository> recipe_repository,
                           std::shared_ptr<ScheduleRepository> schedule_repository,
-                          std::shared_ptr<IdGenerator> id_generator)
-    : m_ingredient_repository{std::move(ingredient_repository)},
-      m_recipe_repository{std::move(recipe_repository)},
-      m_schedule_repository{std::move(schedule_repository)},
-      m_id_generator{std::move(id_generator)} {
+                          std::shared_ptr<IdGenerator> id_generator) :
+    m_ingredient_repository{std::move(ingredient_repository)},
+    m_recipe_repository{std::move(recipe_repository)},
+    m_schedule_repository{std::move(schedule_repository)},
+    m_id_generator{std::move(id_generator)} {
         m_ingredient_repository->add_observer(this);
         m_recipe_repository->add_observer(this);
         m_schedule_repository->add_observer(this);
     };
 
-    grpc::Status list_ingredients(grpc::ServerContext* context, const ListIngredientsRequest* request, grpc::ServerWriter<::Ingredient>* writer) override {
-        for (const auto& ingredient : m_ingredient_repository->find_all()) {
+    grpc::Status list_ingredients(grpc::ServerContext *context,
+                                  const ListIngredientsRequest *request,
+                                  grpc::ServerWriter<::Ingredient> *writer) override {
+        for (const auto &ingredient : m_ingredient_repository->find_all()) {
             ::Ingredient ingredient_entry;
             ingredient_entry.set_id(ingredient.id());
             ingredient_entry.set_name(ingredient.name());
@@ -45,13 +46,15 @@ public:
         return grpc::Status::OK;
     }
 
-    grpc::Status list_recipes(grpc::ServerContext* context, const ListRecipesRequest* request, grpc::ServerWriter<::Recipe>* writer) override {
-        for (const auto& recipe : m_recipe_repository->find_all()) {
+    grpc::Status list_recipes(grpc::ServerContext *context,
+                              const ListRecipesRequest *request,
+                              grpc::ServerWriter<::Recipe> *writer) override {
+        for (const auto &recipe : m_recipe_repository->find_all()) {
             ::Recipe recipe_entry;
             recipe_entry.set_id(recipe.id());
             recipe_entry.set_name(recipe.name());
             recipe_entry.set_servings(recipe.servings());
-            for (const auto& recipe_ingredient : recipe.ingredients()) {
+            for (const auto &recipe_ingredient : recipe.ingredients()) {
                 auto ingredient = recipe_ingredient.first;
                 auto quantity = recipe_ingredient.second;
 
@@ -61,23 +64,24 @@ public:
                 quantity_entry->set_amount(quantity->amount());
                 quantity_entry->set_unit(static_cast<::Unit>(quantity->unit()));
             }
-            for (const auto& recipe_step : recipe.steps()) {
+            for (const auto &recipe_step : recipe.steps()) {
                 recipe_entry.add_steps(recipe_step);
-
             }
             writer->Write(recipe_entry);
         }
         return grpc::Status::OK;
     }
 
-    grpc::Status list_schedules(grpc::ServerContext* context, const ListSchedulesRequest* request, grpc::ServerWriter<::Schedule>* writer) override {
-        for (const auto& schedule : m_schedule_repository->find_all()) {
+    grpc::Status list_schedules(grpc::ServerContext *context,
+                                const ListSchedulesRequest *request,
+                                grpc::ServerWriter<::Schedule> *writer) override {
+        for (const auto &schedule : m_schedule_repository->find_all()) {
             ::Schedule schedule_entry;
             schedule_entry.set_id(schedule.id());
             schedule_entry.set_start_date(schedule.start_date());
-            for (const auto& day : schedule.days()) {
+            for (const auto &day : schedule.days()) {
                 auto day_entry = schedule_entry.add_days();
-                for (const auto& meal : day.meals()) {
+                for (const auto &meal : day.meals()) {
                     auto meal_entry = day_entry->add_meals();
                     meal_entry->set_recipe_id(meal.recipe().id());
                     meal_entry->set_servings(meal.servings());
@@ -90,7 +94,9 @@ public:
         return grpc::Status::OK;
     }
 
-    grpc::Status add_ingredient(grpc::ServerContext* context, const AddIngredientRequest* request, AddIngredientResponse* ingredient_id) override {
+    grpc::Status add_ingredient(grpc::ServerContext *context,
+                                const AddIngredientRequest *request,
+                                AddIngredientResponse *ingredient_id) override {
         if (request->name().empty()) {
             return grpc::Status::CANCELLED;
         }
@@ -101,15 +107,18 @@ public:
         return grpc::Status::OK;
     }
 
-    grpc::Status add_recipe(grpc::ServerContext* context, const AddRecipeRequest* request, AddRecipeResponse* recipe_id) override {
+    grpc::Status add_recipe(grpc::ServerContext *context,
+                            const AddRecipeRequest *request,
+                            AddRecipeResponse *recipe_id) override {
         if (request->name().empty()) {
             return grpc::Status::CANCELLED;
         }
 
         std::vector<std::pair<Ingredient, std::optional<Quantity>>> ingredients;
-        for (const auto& ingredient_entry : request->ingredients()) {
-            const auto& quantity_entry = ingredient_entry.quantity();
-            auto quantity = std::make_optional(Quantity{quantity_entry.amount(), static_cast<Unit>(quantity_entry.unit())});
+        for (const auto &ingredient_entry : request->ingredients()) {
+            const auto &quantity_entry = ingredient_entry.quantity();
+            auto quantity =
+                std::make_optional(Quantity{quantity_entry.amount(), static_cast<Unit>(quantity_entry.unit())});
             auto ingredient = m_ingredient_repository->find_by_id(ingredient_entry.id());
             if (!ingredient) {
                 return {grpc::StatusCode::ABORTED, "Invalid ingredient ID in recipe"};
@@ -121,17 +130,20 @@ public:
         std::copy(request->steps().begin(), request->steps().end(), steps.begin());
 
         auto id = m_id_generator->generate();
-        m_recipe_repository->add(Recipe{id, std::string(request->name()), static_cast<unsigned>(request->servings()), ingredients, steps});
+        m_recipe_repository->add(
+            Recipe{id, std::string(request->name()), static_cast<unsigned>(request->servings()), ingredients, steps});
         recipe_id->set_recipe_id(id);
         return grpc::Status::OK;
     }
 
-    grpc::Status add_schedule(grpc::ServerContext* context, const AddScheduleRequest* request, AddScheduleResponse* schedule_id) override {
+    grpc::Status add_schedule(grpc::ServerContext *context,
+                              const AddScheduleRequest *request,
+                              AddScheduleResponse *schedule_id) override {
         auto id = m_id_generator->generate();
         Schedule schedule{id, request->start_date()};
-        for (const auto& day_entry : request->days()) {
+        for (const auto &day_entry : request->days()) {
             ScheduleDay day;
-            for (const auto& meal_entry : day_entry.meals()) {
+            for (const auto &meal_entry : day_entry.meals()) {
                 auto recipe = m_recipe_repository->find_by_id(meal_entry.recipe_id());
                 if (!recipe) {
                     return {grpc::StatusCode::ABORTED, "Invalid recipe ID in schedule"};
@@ -146,15 +158,18 @@ public:
         return grpc::Status::OK;
     }
 
-    grpc::Status update_recipe(grpc::ServerContext* context, const UpdateRecipeRequest* request, UpdateRecipeResponse* recipe_id) override {
+    grpc::Status update_recipe(grpc::ServerContext *context,
+                               const UpdateRecipeRequest *request,
+                               UpdateRecipeResponse *recipe_id) override {
         if (request->name().empty()) {
             return grpc::Status::CANCELLED;
         }
 
         std::vector<std::pair<Ingredient, std::optional<Quantity>>> ingredients;
-        for (const auto& ingredient_entry : request->ingredients()) {
-            const auto& quantity_entry = ingredient_entry.quantity();
-            auto quantity = std::make_optional(Quantity{quantity_entry.amount(), static_cast<Unit>(quantity_entry.unit())});
+        for (const auto &ingredient_entry : request->ingredients()) {
+            const auto &quantity_entry = ingredient_entry.quantity();
+            auto quantity =
+                std::make_optional(Quantity{quantity_entry.amount(), static_cast<Unit>(quantity_entry.unit())});
             auto ingredient = m_ingredient_repository->find_by_id(ingredient_entry.id());
             if (!ingredient) {
                 return {grpc::StatusCode::ABORTED, "Invalid ingredient ID in recipe"};
@@ -165,15 +180,21 @@ public:
         std::vector<std::string> steps(request->steps().size());
         std::copy(request->steps().begin(), request->steps().end(), steps.begin());
 
-        m_recipe_repository->add(Recipe{request->id(), std::string(request->name()), static_cast<unsigned>(request->servings()), ingredients, steps});
+        m_recipe_repository->add(Recipe{request->id(),
+                                        std::string(request->name()),
+                                        static_cast<unsigned>(request->servings()),
+                                        ingredients,
+                                        steps});
         return grpc::Status::OK;
     }
 
-    grpc::Status update_schedule(grpc::ServerContext* context, const UpdateScheduleRequest* request, UpdateScheduleResponse* schedule_id) override {
+    grpc::Status update_schedule(grpc::ServerContext *context,
+                                 const UpdateScheduleRequest *request,
+                                 UpdateScheduleResponse *schedule_id) override {
         Schedule schedule{request->id(), request->start_date()};
-        for (const auto& day_entry : request->days()) {
+        for (const auto &day_entry : request->days()) {
             ScheduleDay day;
-            for (const auto& meal_entry : day_entry.meals()) {
+            for (const auto &meal_entry : day_entry.meals()) {
                 auto recipe = m_recipe_repository->find_by_id(meal_entry.recipe_id());
                 if (!recipe) {
                     return {grpc::StatusCode::ABORTED, "Invalid recipe ID in schedule"};
@@ -187,36 +208,44 @@ public:
         return grpc::Status::OK;
     }
 
-    grpc::Status erase_ingredient(grpc::ServerContext* context, const EraseIngredientRequest* request, EraseIngredientResponse*) override {
+    grpc::Status erase_ingredient(grpc::ServerContext *context,
+                                  const EraseIngredientRequest *request,
+                                  EraseIngredientResponse *) override {
         m_ingredient_repository->erase(request->id());
         return grpc::Status::OK;
     }
 
-    grpc::Status erase_recipe(grpc::ServerContext* context, const EraseRecipeRequest* request, EraseRecipeResponse*) override {
+    grpc::Status erase_recipe(grpc::ServerContext *context,
+                              const EraseRecipeRequest *request,
+                              EraseRecipeResponse *) override {
         m_recipe_repository->erase(request->id());
         return grpc::Status::OK;
     }
 
-    grpc::Status erase_schedule(grpc::ServerContext* context, const EraseScheduleRequest* request, EraseScheduleResponse*) override {
+    grpc::Status erase_schedule(grpc::ServerContext *context,
+                                const EraseScheduleRequest *request,
+                                EraseScheduleResponse *) override {
         m_schedule_repository->erase(request->id());
         return grpc::Status::OK;
     }
 
-    grpc::Status schedule_summary(grpc::ServerContext* context, const ScheduleSummaryRequest* request, ScheduleSummaryResponse* response) override {
+    grpc::Status schedule_summary(grpc::ServerContext *context,
+                                  const ScheduleSummaryRequest *request,
+                                  ScheduleSummaryResponse *response) override {
         auto schedule = m_schedule_repository->find_by_id(request->id());
         if (!schedule) {
             return {grpc::StatusCode::ABORTED, "Invalid schedule ID"};
         }
 
         ::ScheduleSummaryResponse summary;
-        for (const auto& ingredient_quantity_pair : schedule->summary().ingredients()) {
+        for (const auto &ingredient_quantity_pair : schedule->summary().ingredients()) {
             auto ingredient = ingredient_quantity_pair.first;
 
             auto ingredient_entry = response->add_ingredients();
             ingredient_entry->set_id(ingredient.id());
 
             auto quantities = ingredient_quantity_pair.second;
-            for (const auto& quantity : quantities) {
+            for (const auto &quantity : quantities) {
                 auto quantity_entry = ingredient_entry->add_quantities();
                 quantity_entry->set_amount(quantity->amount());
                 quantity_entry->set_unit(static_cast<::Unit>(quantity->unit()));
@@ -225,7 +254,9 @@ public:
         return grpc::Status::OK;
     }
 
-    grpc::Status subscribe(grpc::ServerContext* context, const SubscriptionRequest* request, grpc::ServerWriter<SubscriptionResponse>* writer) override {
+    grpc::Status subscribe(grpc::ServerContext *context,
+                           const SubscriptionRequest *request,
+                           grpc::ServerWriter<SubscriptionResponse> *writer) override {
         auto status = grpc::Status::OK;
         m_subscribers.push_back(writer);
         while (true) {
@@ -233,8 +264,11 @@ public:
                 auto response = SubscriptionResponse();
                 response.set_server_changed(false);
                 if (!writer->Write(response)) {
-                    m_subscribers.erase(std::remove(m_subscribers.begin(), m_subscribers.end(), writer), m_subscribers.end());
-                    std::cout << "grpc: Connection with client lost, stopping subscription" << std::endl;
+                    m_subscribers.erase(std::remove(m_subscribers.begin(), m_subscribers.end(), writer),
+                                        m_subscribers.end());
+                    std::cout << "grpc: Connection with client lost, stopping "
+                                 "subscription"
+                              << std::endl;
                     status = grpc::Status::CANCELLED;
                     break;
                 }
@@ -251,7 +285,7 @@ public:
     void notify() override {
         auto response = SubscriptionResponse();
         response.set_server_changed(true);
-        for (auto& subscriber : m_subscribers) {
+        for (auto &subscriber : m_subscribers) {
             subscriber->Write(response);
         }
     }
@@ -262,19 +296,17 @@ private:
     std::shared_ptr<ScheduleRepository> m_schedule_repository;
     std::shared_ptr<IdGenerator> m_id_generator;
 
-    std::vector<grpc::ServerWriter<SubscriptionResponse>*> m_subscribers;
+    std::vector<grpc::ServerWriter<SubscriptionResponse> *> m_subscribers;
 };
 
 GrpcCommunicator::GrpcCommunicator(std::shared_ptr<IngredientRepository> ingredient_repository,
                                    std::shared_ptr<RecipeRepository> recipe_repository,
                                    std::shared_ptr<ScheduleRepository> schedule_repository,
-                                   std::shared_ptr<IdGenerator> id_generator)
-: m_ingredient_repository{std::move(ingredient_repository)},
-  m_recipe_repository{std::move(recipe_repository)},
-  m_schedule_repository{std::move(schedule_repository)},
-  m_id_generator{std::move(id_generator)} {
-
-}
+                                   std::shared_ptr<IdGenerator> id_generator) :
+m_ingredient_repository{std::move(ingredient_repository)},
+m_recipe_repository{std::move(recipe_repository)},
+m_schedule_repository{std::move(schedule_repository)},
+m_id_generator{std::move(id_generator)} {}
 
 void GrpcCommunicator::run() {
     std::string server_address("0.0.0.0:50051");
@@ -288,4 +320,4 @@ void GrpcCommunicator::run() {
     server->Wait();
 }
 
-}
+}  // namespace tabetai2::grpc_communicator

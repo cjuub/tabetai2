@@ -1,15 +1,14 @@
 #pragma once
 
-#include "database.h"
-
-#include <range/v3/view/map.hpp>
 #include <range/v3/range/conversion.hpp>
-
+#include <range/v3/view/map.hpp>
 #include <unordered_map>
+
+#include "database.h"
 
 namespace tabetai2::core::database {
 
-template<class T>
+template <class T>
 class InMemoryDatabase : public Database<T> {
 public:
     void add(T t) override {
@@ -32,4 +31,4 @@ private:
     std::unordered_map<Id, T> m_database;
 };
 
-}
+}  // namespace tabetai2::core::database

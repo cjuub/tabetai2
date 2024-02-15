@@ -19,4 +19,4 @@ private:
     std::vector<util::Observer*> m_observers;
 };
 
-}
+}  // namespace tabetai2::core::util::impl

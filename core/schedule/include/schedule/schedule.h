@@ -1,13 +1,13 @@
 #pragma once
 
-#include "schedule/schedule_summary.h"
-#include <schedule/schedule_day.h>
 #include <database/database.h>
+#include <schedule/schedule_day.h>
 
 #include <string>
 
-namespace tabetai2::core::schedule {
+#include "schedule/schedule_summary.h"
 
+namespace tabetai2::core::schedule {
 
 class Schedule {
 public:
@@ -23,7 +23,7 @@ public:
 
     ScheduleSummary summary() const;
 
-    bool operator<(const Schedule &r) const {
+    bool operator<(const Schedule& r) const {
         return m_id < r.m_id;
     }
 
@@ -37,4 +37,4 @@ private:
     std::vector<ScheduleDay> m_days;
 };
 
-}
+}  // namespace tabetai2::core::schedule

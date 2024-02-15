@@ -1,8 +1,8 @@
 #pragma once
 
-#include "unit.h"
-
 #include <string>
+
+#include "unit.h"
 
 namespace tabetai2::core::recipe {
 
@@ -20,4 +20,4 @@ private:
     Unit m_unit;
 };
 
-}
+}  // namespace tabetai2::core::recipe

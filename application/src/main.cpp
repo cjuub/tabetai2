@@ -2,7 +2,6 @@
 
 #include <iostream>
 
-
 using namespace tabetai2::application_server;
 
 int main() {
