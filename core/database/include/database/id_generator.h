@@ -11,4 +11,4 @@ public:
     virtual ~IdGenerator() = default;
 };
 
-}
+}  // namespace tabetai2::core::database

@@ -1,4 +1,5 @@
 #include <schedule/meal.h>
+
 #include <vector>
 
 namespace tabetai2::core::schedule {
@@ -15,4 +16,4 @@ private:
     std::vector<Meal> m_meals;
 };
 
-}
+}  // namespace tabetai2::core::schedule

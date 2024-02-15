@@ -1,7 +1,5 @@
 #pragma once
 
-#include "server/server.h"
-
 #include <communicator/communicator.h>
 #include <data_publisher/publisher.h>
 #include <ingredient/ingredient_repository.h>
@@ -9,6 +7,8 @@
 #include <schedule/schedule_repository.h>
 
 #include <memory>
+
+#include "server/server.h"
 
 namespace tabetai2::core::server::impl {
 
@@ -27,4 +27,4 @@ private:
     std::shared_ptr<schedule::ScheduleRepository> m_schedule_repository;
 };
 
-}
+}  // namespace tabetai2::core::server::impl

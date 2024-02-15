@@ -11,15 +11,13 @@ using namespace core::recipe;
 
 YamlRecipeDatabase::YamlRecipeDatabase(std::string database_file,
                                        std::string database_name,
-                                       std::shared_ptr<IngredientRepository> ingredient_repository)
-: YamlDatabase<core::recipe::Recipe>{std::move(database_file), std::move(database_name)},
-  m_ingredient_repository{std::move(ingredient_repository)} {
-
-}
+                                       std::shared_ptr<IngredientRepository> ingredient_repository) :
+YamlDatabase<core::recipe::Recipe>{std::move(database_file), std::move(database_name)},
+m_ingredient_repository{std::move(ingredient_repository)} {}
 
 Recipe YamlRecipeDatabase::from_yaml(YAML::Node entry) const {
     std::vector<std::pair<Ingredient, std::optional<Quantity>>> ingredients;
-    for (const auto& ingredient_entry : entry["ingredients"]) {
+    for (const auto &ingredient_entry : entry["ingredients"]) {
         auto id = ingredient_entry.first.as<Id>();
         auto ingredient = m_ingredient_repository->find_by_id(id);
         if (!ingredient) {
@@ -39,13 +37,13 @@ Recipe YamlRecipeDatabase::from_yaml(YAML::Node entry) const {
                   entry["steps"].as<std::vector<std::string>>()};
 }
 
-YAML::Node YamlRecipeDatabase::to_yaml(const Recipe& recipe) const {
+YAML::Node YamlRecipeDatabase::to_yaml(const Recipe &recipe) const {
     YAML::Node entry;
     entry["id"] = recipe.id();
     entry["name"] = recipe.name();
     entry["servings"] = recipe.servings();
 
-    for (const auto& ingredient : recipe.ingredients()) {
+    for (const auto &ingredient : recipe.ingredients()) {
         entry["ingredients"][ingredient.first.id()]["amount"] = ingredient.second->amount();
         entry["ingredients"][ingredient.first.id()]["unit"] = static_cast<int>(ingredient.second->unit());
     }
@@ -55,4 +53,4 @@ YAML::Node YamlRecipeDatabase::to_yaml(const Recipe& recipe) const {
     return entry;
 }
 
-}
+}  // namespace tabetai2::yaml_database

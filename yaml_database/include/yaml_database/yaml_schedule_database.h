@@ -2,6 +2,7 @@
 
 #include <recipe/recipe_repository.h>
 #include <schedule/schedule.h>
+
 #include <yaml_database/yaml_database.hpp>
 
 namespace tabetai2::yaml_database {
@@ -20,4 +21,4 @@ private:
     std::shared_ptr<core::recipe::RecipeRepository> m_recipe_repository;
 };
 
-}
+}  // namespace tabetai2::yaml_database

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "server/server.h"
-
 #include <data_publisher/repository_publisher_factory.h>
 
 #include <memory>
+
+#include "server/server.h"
 
 namespace tabetai2::core::server {
 
@@ -14,4 +14,4 @@ public:
     virtual ~ServerFactory() = default;
 };
 
-}
+}  // namespace tabetai2::core::server

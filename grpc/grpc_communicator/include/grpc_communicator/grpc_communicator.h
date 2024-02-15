@@ -23,4 +23,4 @@ private:
     std::shared_ptr<core::database::IdGenerator> m_id_generator;
 };
 
-}
+}  // namespace tabetai2::grpc_communicator

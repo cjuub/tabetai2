@@ -1,11 +1,10 @@
 #pragma once
 
+#include <memory>
+#include <optional>
 #include <repository/repository.hpp>
 
 #include "recipe.h"
-
-#include <memory>
-#include <optional>
 
 namespace tabetai2::core::recipe {
 
@@ -16,7 +15,7 @@ public:
     std::optional<Recipe> find_by_id(database::Id id) const;
     std::optional<Recipe> find_by_name(const std::string& name) const;
     std::optional<std::vector<Recipe>> find_by_ingredients(
-            const std::vector<ingredient::Ingredient>& ingredients) const;
+        const std::vector<ingredient::Ingredient>& ingredients) const;
 };
 
-}
+}  // namespace tabetai2::core::recipe

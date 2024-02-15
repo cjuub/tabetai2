@@ -1,11 +1,10 @@
 #pragma once
 
+#include <memory>
+#include <optional>
 #include <repository/repository.hpp>
 
 #include "ingredient.h"
-
-#include <memory>
-#include <optional>
 
 namespace tabetai2::core::ingredient {
 
@@ -17,4 +16,4 @@ public:
     std::optional<Ingredient> find_by_name(const std::string& name) const;
 };
 
-}
+}  // namespace tabetai2::core::ingredient

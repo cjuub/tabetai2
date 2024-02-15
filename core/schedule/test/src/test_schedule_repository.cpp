@@ -1,11 +1,11 @@
 #include <ingredient/ingredient.h>
 #include <recipe/recipe_repository.h>
-#include "schedule/schedule.h"
-#include "schedule/schedule_repository.h"
-
-#include "database/in_memory_database.hpp"
 
 #include <catch2/catch.hpp>
+
+#include "database/in_memory_database.hpp"
+#include "schedule/schedule.h"
+#include "schedule/schedule_repository.h"
 
 using namespace tabetai2::core::database;
 using namespace tabetai2::core::ingredient;
@@ -20,13 +20,8 @@ TEST_CASE("ScheduleRepository") {
     const auto potato = Ingredient{2, "fish"};
     const auto hedgehog = Ingredient{5, "fish"};
     const auto water = Ingredient{42, "water"};
-    const auto boiled_fish = Recipe{
-            13,
-            "boiled fish",
-            1,
-            {{fish, Quantity{1, Unit::PCS}},
-             {water, Quantity{5, Unit::DL}}},
-            {"boil"}};
+    const auto boiled_fish =
+        Recipe{13, "boiled fish", 1, {{fish, Quantity{1, Unit::PCS}}, {water, Quantity{5, Unit::DL}}}, {"boil"}};
     recipe_repository.add(boiled_fish);
 
     const auto meal1 = Meal{boiled_fish, 2, false, ""};
@@ -74,4 +69,4 @@ TEST_CASE("ScheduleRepository") {
     }
 }
 
-}
+}  // namespace

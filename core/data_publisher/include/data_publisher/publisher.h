@@ -9,4 +9,4 @@ public:
     virtual ~Publisher() = default;
 };
 
-}
+}  // namespace tabetai2::core::data_publisher

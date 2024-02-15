@@ -8,4 +8,4 @@ public:
     virtual void run() = 0;
 };
 
-}
+}  // namespace tabetai2::core::server

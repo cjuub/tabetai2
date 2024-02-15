@@ -10,4 +10,4 @@ std::vector<Meal> ScheduleDay::meals() const {
     return m_meals;
 }
 
-}
+}  // namespace tabetai2::core::schedule

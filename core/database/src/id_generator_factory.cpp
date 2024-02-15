@@ -8,4 +8,4 @@ std::shared_ptr<IdGenerator> IdGeneratorFactory::create() {
     return std::make_shared<impl::IdGenerator>();
 }
 
-}
+}  // namespace tabetai2::core::database

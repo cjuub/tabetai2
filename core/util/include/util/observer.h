@@ -7,4 +7,4 @@ public:
 
     virtual ~Observer() = default;
 };
-}
+}  // namespace tabetai2::core::util

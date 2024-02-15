@@ -8,4 +8,4 @@ public:
     virtual ~Communicator() = default;
 };
 
-}
+}  // namespace tabetai2::core::communicator

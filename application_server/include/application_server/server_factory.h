@@ -1,9 +1,8 @@
 #pragma once
 
-#include <server/server_factory.h>
-
 #include <data_publisher/publisher.h>
 #include <data_publisher/repository_publisher_factory.h>
+#include <server/server_factory.h>
 
 namespace tabetai2::application_server {
 
@@ -14,4 +13,4 @@ public:
     std::unique_ptr<core::server::Server> create() const override;
 };
 
-}
+}  // namespace tabetai2::application_server

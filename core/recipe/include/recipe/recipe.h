@@ -42,4 +42,4 @@ private:
     std::vector<std::string> m_steps;
 };
 
-}
+}  // namespace tabetai2::core::recipe

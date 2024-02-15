@@ -2,24 +2,21 @@
 
 #include <database/database.h>
 #include <database/id_generator.h>
-
-#include <range/v3/range/conversion.hpp>
-#include <range/v3/view/transform.hpp>
 #include <yaml-cpp/yaml.h>
 
 #include <filesystem>
 #include <fstream>
+#include <range/v3/range/conversion.hpp>
+#include <range/v3/view/transform.hpp>
 #include <string>
 
 namespace tabetai2::yaml_database {
 
-template<class T>
+template <class T>
 class YamlDatabase : public core::database::Database<T> {
 public:
-    explicit YamlDatabase(std::string database_file, std::string database_name)
-    : m_database_file{std::move(database_file)},
-      m_database_name{std::move(database_name)},
-      m_database() {
+    explicit YamlDatabase(std::string database_file, std::string database_name) :
+    m_database_file{std::move(database_file)}, m_database_name{std::move(database_name)}, m_database() {
         std::string current_version = "1.0";
         if (std::filesystem::exists(m_database_file)) {
             m_database = YAML::LoadFile(m_database_file);
@@ -59,7 +56,7 @@ public:
 protected:
     virtual T from_yaml(YAML::Node entry) const = 0;
 
-    virtual YAML::Node to_yaml(const T& t) const = 0;
+    virtual YAML::Node to_yaml(const T &t) const = 0;
 
 private:
     void commit_changes() {
@@ -76,4 +73,4 @@ private:
     YAML::Node m_database;
 };
 
-}
+}  // namespace tabetai2::yaml_database
