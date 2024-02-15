@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-
 #include "unit.h"
 
 namespace tabetai2::core::recipe {
