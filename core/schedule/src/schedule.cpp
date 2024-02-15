@@ -1,15 +1,12 @@
-#include <bits/ranges_algo.h>
 #include <schedule/schedule.h>
 
 #include <algorithm>
-#include <cmath>
 #include <map>
 #include <optional>
 #include <utility>
 
 #include "database/database.h"
 #include "ingredient/ingredient.h"
-#include "recipe/unit.h"
 #include "schedule/schedule_summary.h"
 
 namespace tabetai2::core::schedule {
