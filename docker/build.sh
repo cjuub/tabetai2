@@ -14,5 +14,3 @@ cp "${PROJECT_ROOT}/docker/Dockerfile" "${DOCKER_BUILD_DIR}/Dockerfile"
 cp "${BUILD_DIR}/application/application" "${DOCKER_BUILD_DIR}/tabetai2-server"
 
 (cd "${DOCKER_BUILD_DIR}" && docker build -t tabetai2-server:latest .)
-
-
