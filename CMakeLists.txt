@@ -42,4 +42,3 @@ add_subdirectory(application_server)
 add_subdirectory(application)
 
 add_subdirectory(gui)
-

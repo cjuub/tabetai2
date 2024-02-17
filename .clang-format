@@ -1,4 +1,10 @@
 ---
+Language: Json
+BasedOnStyle: Google
+---
+Language: Proto
+BasedOnStyle: Google
+---
 Language:        Cpp
 # BasedOnStyle:  Google
 AccessModifierOffset: -4
@@ -256,4 +262,3 @@ WhitespaceSensitiveMacros:
   - PP_STRINGIZE
   - STRINGIZE
 ...
-

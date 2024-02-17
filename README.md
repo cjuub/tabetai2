@@ -28,4 +28,3 @@ mkdir -p build/Debug
 cmake -B build/Debug -S . -DCMAKE_BUILD_TYPE=Debug
 cmake --build build/Debug -j32
 ```
-
