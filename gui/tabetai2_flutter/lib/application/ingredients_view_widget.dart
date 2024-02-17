@@ -3,8 +3,7 @@ import 'package:tabetai2_flutter/backend/backend_client.dart';
 import 'package:tabetai2_flutter/backend/backend_data.dart';
 
 class IngredientsViewWidget extends StatefulWidget {
-  const IngredientsViewWidget({Key? key, required this.backendClient})
-      : super(key: key);
+  const IngredientsViewWidget({Key? key, required this.backendClient}) : super(key: key);
 
   final BackendClient backendClient;
 
@@ -12,13 +11,11 @@ class IngredientsViewWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _IngredientsViewWidgetState();
 }
 
-class _IngredientsViewWidgetState extends State<IngredientsViewWidget>
-    implements TopicSubscriber {
+class _IngredientsViewWidgetState extends State<IngredientsViewWidget> implements TopicSubscriber {
   List<IngredientData> _ingredients = [];
 
   void init() async {
-    _ingredients =
-        await widget.backendClient.subscribe(this, "com.tabetai2.ingredients");
+    _ingredients = await widget.backendClient.subscribe(this, "com.tabetai2.ingredients");
     setState(() {});
   }
 
@@ -42,8 +39,7 @@ class _IngredientsViewWidgetState extends State<IngredientsViewWidget>
           itemCount: _ingredients.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.grey)),
+                decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
                 height: 50,
                 child: Center(child: Text(_ingredients[index].name)));
           }).build(context),
@@ -63,8 +59,7 @@ class _IngredientsViewWidgetState extends State<IngredientsViewWidget>
                           suffixIcon: IconButton(
                             icon: const Icon(Icons.send),
                             onPressed: () {
-                              widget.backendClient
-                                  .addIngredient(controller.text);
+                              widget.backendClient.addIngredient(controller.text);
                               Navigator.pop(context);
                             },
                           )),

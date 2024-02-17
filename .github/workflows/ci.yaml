@@ -32,11 +32,17 @@ jobs:
             - uses: actions/setup-python@v2
               with:
                   python-version: '3.10'
-            - name: Install pre-commit
-              run: pip install pre-commit==3.6.0
+            - name: Install CI tools
+              run: |
+                  pip install pre-commit==3.6.0
+
+                  # Install dart from flutter
+                  git clone --depth=1 -b 3.16.9 https://github.com/flutter/flutter.git
+                  echo "FLUTTER_HOME=${{ github.workspace }}/flutter" >> $GITHUB_ENV
+                  echo "${{ github.workspace }}/flutter/bin" >> $GITHUB_PATH
             - name: Run pre-commit
               run: pre-commit run --all-files
-            - name: Install
+            - name: Install C++ dependencies
               run: |
                   python -m pip install cmake==3.27.7 conan==2.0.13 --upgrade
                   conan remote add conancenter https://center.conan.io --force
@@ -52,10 +58,6 @@ jobs:
                   fi
 
                   sudo apt install ninja-build
-
-                  git clone --depth=1 https://github.com/flutter/flutter.git
-                  echo "FLUTTER_HOME=${{ github.workspace }}/flutter" >> $GITHUB_ENV
-                  echo "${{ github.workspace }}/flutter/bin" >> $GITHUB_PATH
             - name: Build
               run: |
                   conan profile detect

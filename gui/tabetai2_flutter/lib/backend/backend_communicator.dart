@@ -16,11 +16,9 @@ class BackendCommunicator {
   BackendCommunicator() {
     String host = GlobalConfiguration().getValue("host");
     if (kIsWeb) {
-      channel = GrpcChannelFactory.create(
-          host, GlobalConfiguration().getValue("grpc_http_port"));
+      channel = GrpcChannelFactory.create(host, GlobalConfiguration().getValue("grpc_http_port"));
     } else {
-      channel = GrpcChannelFactory.create(
-          host, GlobalConfiguration().getValue("grpc_port"));
+      channel = GrpcChannelFactory.create(host, GlobalConfiguration().getValue("grpc_port"));
     }
     stub = Tabetai2Client(channel);
   }
@@ -35,22 +33,18 @@ class BackendCommunicator {
   Future<List<IngredientData>> getIngredients() async {
     List<IngredientData> ingredients = [];
     try {
-      await for (var ingredient
-          in stub.list_ingredients(ListIngredientsRequest())) {
-        ingredients.add(
-            IngredientData(ingredient.id.toStringUnsigned(), ingredient.name));
+      await for (var ingredient in stub.list_ingredients(ListIngredientsRequest())) {
+        ingredients.add(IngredientData(ingredient.id.toStringUnsigned(), ingredient.name));
       }
     } catch (e) {
       print('Caught error: $e');
     }
 
-    ingredients
-        .sort((IngredientData a, IngredientData b) => a.name.compareTo(b.name));
+    ingredients.sort((IngredientData a, IngredientData b) => a.name.compareTo(b.name));
     return ingredients;
   }
 
-  bool addRecipe(String name, int servings,
-      List<RecipeIngredientData> recipeIngredients, List<String> steps) {
+  bool addRecipe(String name, int servings, List<RecipeIngredientData> recipeIngredients, List<String> steps) {
     var request = AddRecipeRequest();
     request.name = name;
     request.servings = servings;
@@ -80,8 +74,8 @@ class BackendCommunicator {
     return true;
   }
 
-  bool updateRecipe(String id, String name, int servings,
-      List<RecipeIngredientData> recipeIngredients, List<String> steps) {
+  bool updateRecipe(
+      String id, String name, int servings, List<RecipeIngredientData> recipeIngredients, List<String> steps) {
     var request = UpdateRecipeRequest();
     request.id = Int64.parseInt(id);
     request.name = name;
@@ -126,14 +120,12 @@ class BackendCommunicator {
       await for (Recipe recipe in stub.list_recipes(ListRecipesRequest())) {
         List<RecipeIngredientData> ingredientsData = [];
         for (RecipeIngredientEntry recipeIngredient in recipe.ingredients) {
-          var quantityData = RecipeIngredientQuantityData(
-              recipeIngredient.quantity.amount,
-              recipeIngredient.quantity.unit.toString());
-          ingredientsData.add(RecipeIngredientData(
-              recipeIngredient.id.toStringUnsigned(), quantityData));
+          var quantityData =
+              RecipeIngredientQuantityData(recipeIngredient.quantity.amount, recipeIngredient.quantity.unit.toString());
+          ingredientsData.add(RecipeIngredientData(recipeIngredient.id.toStringUnsigned(), quantityData));
         }
-        recipes.add(RecipeData(recipe.id.toStringUnsigned(), recipe.name,
-            recipe.servings, ingredientsData, recipe.steps));
+        recipes
+            .add(RecipeData(recipe.id.toStringUnsigned(), recipe.name, recipe.servings, ingredientsData, recipe.steps));
       }
     } catch (e) {
       print('Caught error: $e');
@@ -174,8 +166,7 @@ class BackendCommunicator {
     return true;
   }
 
-  bool updateSchedule(
-      String id, DateTime startDate, List<ScheduleDayData> scheduleDays) {
+  bool updateSchedule(String id, DateTime startDate, List<ScheduleDayData> scheduleDays) {
     var request = UpdateScheduleRequest();
     request.id = Int64.parseInt(id);
     request.startDate =
@@ -210,26 +201,23 @@ class BackendCommunicator {
     List<ScheduleData> schedules = [];
 
     try {
-      await for (Schedule schedule
-          in stub.list_schedules(ListSchedulesRequest())) {
+      await for (Schedule schedule in stub.list_schedules(ListSchedulesRequest())) {
         List<ScheduleDayData> scheduleDayData = [];
         for (ScheduleDay scheduleDay in schedule.days) {
           List<MealData> mealData = [];
           for (Meal meal in scheduleDay.meals) {
-            mealData.add(MealData(meal.recipeId.toStringUnsigned(),
-                meal.servings, meal.isLeftovers, meal.comment));
+            mealData.add(MealData(meal.recipeId.toStringUnsigned(), meal.servings, meal.isLeftovers, meal.comment));
           }
           scheduleDayData.add(ScheduleDayData(mealData));
         }
-        schedules.add(ScheduleData(schedule.id.toStringUnsigned(),
-            DateTime.parse(schedule.startDate), scheduleDayData));
+        schedules
+            .add(ScheduleData(schedule.id.toStringUnsigned(), DateTime.parse(schedule.startDate), scheduleDayData));
       }
     } catch (e) {
       print('Caught error: $e');
     }
 
-    schedules.sort(
-        (ScheduleData a, ScheduleData b) => b.startDate.compareTo(a.startDate));
+    schedules.sort((ScheduleData a, ScheduleData b) => b.startDate.compareTo(a.startDate));
     return schedules;
   }
 
@@ -241,11 +229,9 @@ class BackendCommunicator {
     for (ScheduleSummaryIngredientEntry entry in scheduleSummary.ingredients) {
       List<RecipeIngredientQuantityData> quantitiesData = [];
       for (Quantity quantity in entry.quantities) {
-        quantitiesData.add(RecipeIngredientQuantityData(
-            quantity.amount, quantity.unit.toString()));
+        quantitiesData.add(RecipeIngredientQuantityData(quantity.amount, quantity.unit.toString()));
       }
-      ingredients.add(ScheduleSummaryIngredientData(
-          entry.id.toStringUnsigned(), quantitiesData));
+      ingredients.add(ScheduleSummaryIngredientData(entry.id.toStringUnsigned(), quantitiesData));
     }
     return ScheduleSummaryData(ingredients);
   }

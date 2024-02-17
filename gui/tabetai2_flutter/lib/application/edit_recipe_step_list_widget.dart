@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class EditRecipeStepListWidget extends StatefulWidget {
   final List<String> steps;
 
-  const EditRecipeStepListWidget({required this.steps, Key? key})
-      : super(key: key);
+  const EditRecipeStepListWidget({required this.steps, Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _EditRecipeStepListState();
@@ -18,10 +17,7 @@ class _EditRecipeStepListState extends State<EditRecipeStepListWidget> {
           shrinkWrap: true,
           itemCount: widget.steps.length,
           itemBuilder: (BuildContext context, int index) {
-            return EditRecipeStepWidget(
-                steps: widget.steps,
-                stepIndex: index,
-                stepString: widget.steps[index]);
+            return EditRecipeStepWidget(steps: widget.steps, stepIndex: index, stepString: widget.steps[index]);
           }),
       const Padding(padding: EdgeInsets.only(top: 20)),
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -46,11 +42,7 @@ class EditRecipeStepWidget extends StatelessWidget {
   final String stepString;
   late final TextEditingController _controller;
 
-  EditRecipeStepWidget(
-      {required this.steps,
-      required this.stepIndex,
-      required this.stepString,
-      Key? key})
+  EditRecipeStepWidget({required this.steps, required this.stepIndex, required this.stepString, Key? key})
       : super(key: key) {
     _controller = TextEditingController(text: stepString);
   }
@@ -60,16 +52,12 @@ class EditRecipeStepWidget extends StatelessWidget {
     return Column(children: [
       const Padding(padding: EdgeInsets.only(bottom: 30)),
       Row(children: [
-        Text("${stepIndex + 1}.",
-            textScaleFactor: 1.3, style: const TextStyle(color: Colors.grey)),
+        Text("${stepIndex + 1}.", textScaleFactor: 1.3, style: const TextStyle(color: Colors.grey)),
         const Padding(
           padding: EdgeInsets.only(right: 50),
         ),
         Flexible(
-            child: TextField(
-                controller: _controller,
-                maxLines: null,
-                onChanged: (text) => {steps[stepIndex] = text})),
+            child: TextField(controller: _controller, maxLines: null, onChanged: (text) => {steps[stepIndex] = text})),
         const Padding(
           padding: EdgeInsets.only(right: 100),
         ),

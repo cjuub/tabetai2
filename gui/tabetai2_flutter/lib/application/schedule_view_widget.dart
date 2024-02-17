@@ -47,8 +47,7 @@ class _ScheduleViewState extends State<ScheduleView> {
 
   String _dayString(int day) {
     DateTime dStart = widget.scheduleData.startDate;
-    DateTime dCurr =
-        DateTime(dStart.year, dStart.month, dStart.day, dStart.hour);
+    DateTime dCurr = DateTime(dStart.year, dStart.month, dStart.day, dStart.hour);
     dCurr = dCurr.add(Duration(days: day));
     return DateFormat("EEEE").format(dCurr);
   }
@@ -66,8 +65,7 @@ class _ScheduleViewState extends State<ScheduleView> {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: const Text("Confirm Deletion"),
-                        content: const Text(
-                            "This will permanently delete the schedule!"),
+                        content: const Text("This will permanently delete the schedule!"),
                         actions: [
                           TextButton(
                               onPressed: () {
@@ -76,8 +74,7 @@ class _ScheduleViewState extends State<ScheduleView> {
                               child: const Text("Cancel")),
                           TextButton(
                               onPressed: () {
-                                widget.backendClient
-                                    .removeSchedule(widget.scheduleData.id);
+                                widget.backendClient.removeSchedule(widget.scheduleData.id);
                                 Navigator.pop(context);
                                 Navigator.pop(context);
                               },
@@ -89,8 +86,7 @@ class _ScheduleViewState extends State<ScheduleView> {
                 await Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            EditScheduleViewWidget(
+                        builder: (BuildContext context) => EditScheduleViewWidget(
                               backendClient: widget.backendClient,
                               scheduleId: widget.scheduleData.id,
                               startDate: widget.scheduleData.startDate,
@@ -101,8 +97,7 @@ class _ScheduleViewState extends State<ScheduleView> {
                             )));
                 setState(() {});
               } else if (choice == "Summary") {
-                ScheduleSummaryData summary = await widget.backendClient
-                    .scheduleSummary(widget.scheduleData.id);
+                ScheduleSummaryData summary = await widget.backendClient.scheduleSummary(widget.scheduleData.id);
                 await Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -114,8 +109,7 @@ class _ScheduleViewState extends State<ScheduleView> {
               }
             }, itemBuilder: (BuildContext context) {
               return {"Edit", "Delete", "Summary"}.map((String choice) {
-                return PopupMenuItem<String>(
-                    value: choice, child: Text(choice));
+                return PopupMenuItem<String>(value: choice, child: Text(choice));
               }).toList();
             }),
           ],

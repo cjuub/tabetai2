@@ -18,12 +18,9 @@ class BackendClient {
   late final Stream<bool> _backendSubscription;
 
   BackendClient(this._backendCommunicator) {
-    _topicDataFunctions["com.tabetai2.ingredients"] =
-        _backendCommunicator.getIngredients;
-    _topicDataFunctions["com.tabetai2.recipes"] =
-        _backendCommunicator.getRecipes;
-    _topicDataFunctions["com.tabetai2.schedules"] =
-        _backendCommunicator.getSchedules;
+    _topicDataFunctions["com.tabetai2.ingredients"] = _backendCommunicator.getIngredients;
+    _topicDataFunctions["com.tabetai2.recipes"] = _backendCommunicator.getRecipes;
+    _topicDataFunctions["com.tabetai2.schedules"] = _backendCommunicator.getSchedules;
     _topicDataFunctions["com.tabetai2.units"] = _backendCommunicator.getUnits;
     _backendSubscription = _backendCommunicator.subscribe();
   }
@@ -41,16 +38,13 @@ class BackendClient {
     return _backendCommunicator.addIngredient(name);
   }
 
-  bool addRecipe(String name, int servings,
-      List<RecipeIngredientData> recipeIngredients, List<String> steps) {
-    return _backendCommunicator.addRecipe(
-        name, servings, recipeIngredients, steps);
+  bool addRecipe(String name, int servings, List<RecipeIngredientData> recipeIngredients, List<String> steps) {
+    return _backendCommunicator.addRecipe(name, servings, recipeIngredients, steps);
   }
 
-  bool updateRecipe(String id, String name, int servings,
-      List<RecipeIngredientData> recipeIngredients, List<String> steps) {
-    return _backendCommunicator.updateRecipe(
-        id, name, servings, recipeIngredients, steps);
+  bool updateRecipe(
+      String id, String name, int servings, List<RecipeIngredientData> recipeIngredients, List<String> steps) {
+    return _backendCommunicator.updateRecipe(id, name, servings, recipeIngredients, steps);
   }
 
   bool removeRecipe(String id) {
@@ -61,8 +55,7 @@ class BackendClient {
     return _backendCommunicator.addSchedule(startDate, scheduleDays);
   }
 
-  bool updateSchedule(
-      String id, DateTime startDate, List<ScheduleDayData> scheduleDays) {
+  bool updateSchedule(String id, DateTime startDate, List<ScheduleDayData> scheduleDays) {
     return _backendCommunicator.updateSchedule(id, startDate, scheduleDays);
   }
 

@@ -43,22 +43,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         currentIndex: _currentViewIndex,
         onTap: (value) => _setView(value),
         items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home"
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag),
-              label: "Ingredients"
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.restaurant_menu),
-              label: "Recipes"
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.date_range),
-              label: "Schedules"
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: "Ingredients"),
+          BottomNavigationBarItem(icon: Icon(Icons.restaurant_menu), label: "Recipes"),
+          BottomNavigationBarItem(icon: Icon(Icons.date_range), label: "Schedules"),
         ],
       ),
     );
