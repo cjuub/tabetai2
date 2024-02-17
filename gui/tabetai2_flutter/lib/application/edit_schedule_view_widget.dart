@@ -38,8 +38,7 @@ class _EditScheduleViewState extends State<EditScheduleViewWidget> {
     defaultRecipeId = widget.recipesData[0].id;
 
     if (widget.scheduleDays.isEmpty) {
-      widget.scheduleDays
-          .add(ScheduleDayData([MealData(defaultRecipeId, 4, false, "")]));
+      widget.scheduleDays.add(ScheduleDayData([MealData(defaultRecipeId, 4, false, "")]));
     }
   }
 
@@ -47,15 +46,13 @@ class _EditScheduleViewState extends State<EditScheduleViewWidget> {
     if (widget.scheduleId.isEmpty) {
       widget.backendClient.addSchedule(widget.startDate, widget.scheduleDays);
     } else {
-      widget.backendClient.updateSchedule(
-          widget.scheduleId, widget.startDate, widget.scheduleDays);
+      widget.backendClient.updateSchedule(widget.scheduleId, widget.startDate, widget.scheduleDays);
     }
   }
 
   String _dayString(int day) {
     DateTime dStart = widget.startDate;
-    DateTime dCurr =
-        DateTime(dStart.year, dStart.month, dStart.day, dStart.hour);
+    DateTime dCurr = DateTime(dStart.year, dStart.month, dStart.day, dStart.hour);
     dCurr = dCurr.add(Duration(days: day));
     return DateFormat("EEEE").format(dCurr);
   }
@@ -106,8 +103,7 @@ class _EditScheduleViewState extends State<EditScheduleViewWidget> {
               TextButton(
                   onPressed: () => {
                         setState(() {
-                          widget.scheduleDays.add(ScheduleDayData(
-                              [MealData(defaultRecipeId, 4, false, "")]));
+                          widget.scheduleDays.add(ScheduleDayData([MealData(defaultRecipeId, 4, false, "")]));
                         })
                       },
                   child: const Text("+", textScaleFactor: 3.0)),
@@ -119,8 +115,7 @@ class _EditScheduleViewState extends State<EditScheduleViewWidget> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: const Text("Confirm Complete"),
-                    content:
-                        const Text("Is the schedule ready for publication?"),
+                    content: const Text("Is the schedule ready for publication?"),
                     actions: [
                       TextButton(
                           onPressed: () {

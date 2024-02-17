@@ -9,10 +9,7 @@ class ScheduleSummaryView extends StatelessWidget {
   final List<String> units;
   final Map<String, IngredientData> ingredientsDataMap = {};
 
-  ScheduleSummaryView(
-      {required this.summary,
-      required this.ingredientsData,
-      required this.units}) {
+  ScheduleSummaryView({required this.summary, required this.ingredientsData, required this.units}) {
     for (IngredientData ingredientData in ingredientsData) {
       ingredientsDataMap[ingredientData.id] = ingredientData;
     }
@@ -30,14 +27,11 @@ class ScheduleSummaryView extends StatelessWidget {
               shrinkWrap: true,
               itemCount: summary.ingredients.length,
               itemBuilder: (BuildContext context, int index) {
-                IngredientData ingredientData =
-                    ingredientsDataMap[summary.ingredients[index].id]!;
+                IngredientData ingredientData = ingredientsDataMap[summary.ingredients[index].id]!;
 
                 String amountStr = "";
-                for (RecipeIngredientQuantityData quantity
-                    in summary.ingredients[index].quantities) {
-                  amountStr +=
-                      quantity.amount.toString() + " " + quantity.unit + " + ";
+                for (RecipeIngredientQuantityData quantity in summary.ingredients[index].quantities) {
+                  amountStr += quantity.amount.toString() + " " + quantity.unit + " + ";
                 }
                 if (amountStr.isNotEmpty) {
                   amountStr = amountStr.substring(0, amountStr.length - 3);

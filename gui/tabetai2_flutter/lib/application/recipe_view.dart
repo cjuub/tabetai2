@@ -40,8 +40,7 @@ class _RecipeViewState extends State<RecipeView> {
                   builder: (BuildContext context) {
                     return AlertDialog(
                       title: const Text("Confirm Deletion"),
-                      content: const Text(
-                          "This will permanently delete the recipe!"),
+                      content: const Text("This will permanently delete the recipe!"),
                       actions: [
                         TextButton(
                             onPressed: () {
@@ -50,8 +49,7 @@ class _RecipeViewState extends State<RecipeView> {
                             child: const Text("Cancel")),
                         TextButton(
                             onPressed: () {
-                              widget.backendClient
-                                  .removeRecipe(widget.recipeData.id);
+                              widget.backendClient.removeRecipe(widget.recipeData.id);
                               Navigator.pop(context);
                               Navigator.pop(context);
                             },
@@ -68,8 +66,7 @@ class _RecipeViewState extends State<RecipeView> {
                             backendClient: widget.backendClient,
                             ingredientsData: widget.ingredientsData,
                             units: widget.units,
-                            recipeIngredientsData:
-                                widget.recipeData.ingredients,
+                            recipeIngredientsData: widget.recipeData.ingredients,
                             steps: widget.recipeData.steps,
                             recipeId: widget.recipeData.id,
                           )));
@@ -93,9 +90,7 @@ class _RecipeViewState extends State<RecipeView> {
                   initialServings: widget.initialServings)),
           const VerticalDivider(),
           const Padding(padding: EdgeInsets.only(left: 70)),
-          Expanded(
-              flex: 7,
-              child: RecipeStepListWidget(recipeData: widget.recipeData)),
+          Expanded(flex: 7, child: RecipeStepListWidget(recipeData: widget.recipeData)),
         ],
       ),
     );

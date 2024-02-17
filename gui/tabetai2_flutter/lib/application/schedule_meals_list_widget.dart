@@ -33,8 +33,7 @@ class _ScheduleMealsListWidgetState extends State<ScheduleMealsListWidget> {
             itemCount: widget.mealsData.length,
             itemBuilder: (BuildContext context, int index) {
               String mealRecipeId = widget.mealsData[index].recipeId;
-              RecipeData mealRecipeData = widget.recipesData
-                  .firstWhere((recipeData) => recipeData.id == mealRecipeId);
+              RecipeData mealRecipeData = widget.recipesData.firstWhere((recipeData) => recipeData.id == mealRecipeId);
               return InkWell(
                   onTap: () {
                     Navigator.push(
@@ -45,19 +44,15 @@ class _ScheduleMealsListWidgetState extends State<ScheduleMealsListWidget> {
                                   recipeData: mealRecipeData,
                                   ingredientsData: widget.ingredientsData,
                                   units: widget.units,
-                                  initialServings:
-                                      widget.mealsData[index].servings,
+                                  initialServings: widget.mealsData[index].servings,
                                 )));
                   },
                   child: Column(children: [
                     const Padding(padding: EdgeInsets.only(top: 15)),
                     Text(mealRecipeData.name, textScaleFactor: 2.0),
-                    Text("Servings: ${widget.mealsData[index].servings}",
-                        textScaleFactor: 1.0),
-                    Text("Leftovers: ${widget.mealsData[index].isLeftovers}",
-                        textScaleFactor: 1.0),
-                    Text("Comment: ${widget.mealsData[index].comment}",
-                        textScaleFactor: 1.0),
+                    Text("Servings: ${widget.mealsData[index].servings}", textScaleFactor: 1.0),
+                    Text("Leftovers: ${widget.mealsData[index].isLeftovers}", textScaleFactor: 1.0),
+                    Text("Comment: ${widget.mealsData[index].comment}", textScaleFactor: 1.0),
                     const Padding(padding: EdgeInsets.only(top: 15)),
                   ]));
             }));

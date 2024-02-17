@@ -32,13 +32,9 @@ class EditRecipeViewWidget extends StatefulWidget {
 class _EditRecipeViewState extends State<EditRecipeViewWidget> {
   void addRecipe() {
     if (widget.recipeId.isEmpty) {
-      widget.backendClient
-          .addRecipe(
-          widget.title, 4, widget.recipeIngredientsData, widget.steps);
+      widget.backendClient.addRecipe(widget.title, 4, widget.recipeIngredientsData, widget.steps);
     } else {
-      widget.backendClient
-          .updateRecipe(
-          widget.recipeId, widget.title, 4, widget.recipeIngredientsData, widget.steps);
+      widget.backendClient.updateRecipe(widget.recipeId, widget.title, 4, widget.recipeIngredientsData, widget.steps);
     }
   }
 
@@ -58,9 +54,7 @@ class _EditRecipeViewState extends State<EditRecipeViewWidget> {
                       units: widget.units)),
               const VerticalDivider(),
               const Padding(padding: EdgeInsets.only(left: 70)),
-              Expanded(
-                  flex: 7,
-                  child: EditRecipeStepListWidget(steps: widget.steps)),
+              Expanded(flex: 7, child: EditRecipeStepListWidget(steps: widget.steps)),
             ],
           ),
           floatingActionButton: FloatingActionButton(onPressed: () {

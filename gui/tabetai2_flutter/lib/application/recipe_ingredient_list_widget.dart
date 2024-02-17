@@ -10,10 +10,7 @@ class RecipeIngredientListWidget extends StatefulWidget {
   final int initialServings;
 
   RecipeIngredientListWidget(
-      {required this.recipeData,
-      required ingredientsData,
-      required this.initialServings,
-      Key? key})
+      {required this.recipeData, required ingredientsData, required this.initialServings, Key? key})
       : super(key: key) {
     for (IngredientData ingredientData in ingredientsData) {
       ingredientsDataMap[ingredientData.id] = ingredientData;
@@ -27,8 +24,7 @@ class RecipeIngredientListWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _RecipeIngredientListWidgetState();
 }
 
-class _RecipeIngredientListWidgetState
-    extends State<RecipeIngredientListWidget> {
+class _RecipeIngredientListWidgetState extends State<RecipeIngredientListWidget> {
   int _servings = 4;
 
   @override
@@ -58,8 +54,7 @@ class _RecipeIngredientListWidgetState
                 String ingredientId = widget.recipeData.ingredients[index].id;
                 return RecipeIngredientWidget(
                     ingredientData: widget.ingredientsDataMap[ingredientId]!,
-                    recipeIngredientData:
-                        widget.recipeIngredientsDataMap[ingredientId]!,
+                    recipeIngredientData: widget.recipeIngredientsDataMap[ingredientId]!,
                     recipeServings: widget.recipeData.servings,
                     userServings: _servings);
               }))
@@ -90,10 +85,7 @@ class RecipeIngredientWidget extends StatelessWidget {
     return Row(children: [
       Text(ingredientName, textScaleFactor: 1.1),
       const Padding(padding: EdgeInsets.only(bottom: 30)),
-      Expanded(
-          child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(amountStr, textScaleFactor: 1.1))),
+      Expanded(child: Align(alignment: Alignment.centerRight, child: Text(amountStr, textScaleFactor: 1.1))),
       const Padding(padding: EdgeInsets.only(right: 10)),
     ]);
   }

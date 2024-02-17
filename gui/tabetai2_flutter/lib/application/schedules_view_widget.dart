@@ -6,8 +6,7 @@ import 'package:tabetai2_flutter/backend/backend_client.dart';
 import 'package:tabetai2_flutter/backend/backend_data.dart';
 
 class SchedulesViewWidget extends StatefulWidget {
-  const SchedulesViewWidget({Key? key, required this.backendClient})
-      : super(key: key);
+  const SchedulesViewWidget({Key? key, required this.backendClient}) : super(key: key);
 
   final BackendClient backendClient;
 
@@ -15,20 +14,16 @@ class SchedulesViewWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _SchedulesViewWidgetState();
 }
 
-class _SchedulesViewWidgetState extends State<SchedulesViewWidget>
-    implements TopicSubscriber {
+class _SchedulesViewWidgetState extends State<SchedulesViewWidget> implements TopicSubscriber {
   List<ScheduleData> _schedules = [];
   List<RecipeData> _recipes = [];
   List<IngredientData> _ingredients = [];
   List<String> _units = [];
 
   void init() async {
-    _schedules =
-        await widget.backendClient.subscribe(this, "com.tabetai2.schedules");
-    _recipes =
-        await widget.backendClient.subscribe(this, "com.tabetai2.recipes");
-    _ingredients =
-        await widget.backendClient.subscribe(this, "com.tabetai2.ingredients");
+    _schedules = await widget.backendClient.subscribe(this, "com.tabetai2.schedules");
+    _recipes = await widget.backendClient.subscribe(this, "com.tabetai2.recipes");
+    _ingredients = await widget.backendClient.subscribe(this, "com.tabetai2.ingredients");
     _units = await widget.backendClient.subscribe(this, "com.tabetai2.units");
     setState(() {});
   }
@@ -73,8 +68,7 @@ class _SchedulesViewWidgetState extends State<SchedulesViewWidget>
     String str =
         "${dStart.year.toString()}-${dStart.month.toString().padLeft(2, "0")}-${dStart.day.toString().padLeft(2, "0")}";
     str += " - ";
-    str +=
-        "${dEnd.year.toString()}-${dEnd.month.toString().padLeft(2, "0")}-${dEnd.day.toString().padLeft(2, "0")}";
+    str += "${dEnd.year.toString()}-${dEnd.month.toString().padLeft(2, "0")}-${dEnd.day.toString().padLeft(2, "0")}";
     return str;
   }
 
@@ -84,13 +78,11 @@ class _SchedulesViewWidgetState extends State<SchedulesViewWidget>
     }
     DateTime dStart = _schedules[index].startDate;
     String str = "";
-    DateTime dCurr =
-        DateTime(dStart.year, dStart.month, dStart.day, dStart.hour);
+    DateTime dCurr = DateTime(dStart.year, dStart.month, dStart.day, dStart.hour);
     for (ScheduleDayData day in _schedules[index].days) {
       str += DateFormat("EEEE").format(dCurr) + ": ";
       for (MealData meal in day.meals) {
-        RecipeData mealRecipeData =
-            _recipes.firstWhere((recipe) => recipe.id == meal.recipeId);
+        RecipeData mealRecipeData = _recipes.firstWhere((recipe) => recipe.id == meal.recipeId);
         str += "${mealRecipeData.name}, ";
       }
       str = str.substring(0, str.length - 2);
@@ -103,10 +95,8 @@ class _SchedulesViewWidgetState extends State<SchedulesViewWidget>
   @override
   Widget build(BuildContext context) {
     DateTime selectedDate = DateTime.now();
-    DateTime firstDate =
-        DateTime(selectedDate.year, selectedDate.month, selectedDate.day - 7);
-    DateTime lastDate =
-        DateTime(selectedDate.year, selectedDate.month + 1, selectedDate.day);
+    DateTime firstDate = DateTime(selectedDate.year, selectedDate.month, selectedDate.day - 7);
+    DateTime lastDate = DateTime(selectedDate.year, selectedDate.month + 1, selectedDate.day);
     return Scaffold(
       body: ListView.builder(
           itemCount: _schedules.length,
@@ -129,8 +119,7 @@ class _SchedulesViewWidgetState extends State<SchedulesViewWidget>
                       Expanded(
                           flex: 20,
                           child: Container(
-                            constraints: const BoxConstraints(
-                                minHeight: 150, maxHeight: double.infinity),
+                            constraints: const BoxConstraints(minHeight: 150, maxHeight: double.infinity),
                             child: Column(children: [
                               const Padding(
                                 padding: EdgeInsets.only(top: 40),
@@ -148,16 +137,14 @@ class _SchedulesViewWidgetState extends State<SchedulesViewWidget>
                       Expanded(
                           flex: 80,
                           child: Container(
-                            constraints: const BoxConstraints(
-                                minHeight: 150, maxHeight: double.infinity),
+                            constraints: const BoxConstraints(minHeight: 150, maxHeight: double.infinity),
                             child: Text(
                               _mealsString(index),
                               textScaleFactor: 1.2,
                             ),
                           ))
                     ]),
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.grey)),
+                    decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
                   ))
             ]);
           }),

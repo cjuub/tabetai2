@@ -5,8 +5,7 @@ import 'package:tabetai2_flutter/backend/backend_client.dart';
 import 'package:tabetai2_flutter/backend/backend_data.dart';
 
 class RecipesViewWidget extends StatefulWidget {
-  const RecipesViewWidget({Key? key, required this.backendClient})
-      : super(key: key);
+  const RecipesViewWidget({Key? key, required this.backendClient}) : super(key: key);
 
   final BackendClient backendClient;
 
@@ -14,17 +13,14 @@ class RecipesViewWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _RecipesViewWidgetState();
 }
 
-class _RecipesViewWidgetState extends State<RecipesViewWidget>
-    implements TopicSubscriber {
+class _RecipesViewWidgetState extends State<RecipesViewWidget> implements TopicSubscriber {
   List<RecipeData> _recipes = [];
   List<IngredientData> _ingredients = [];
   List<String> _units = [];
 
   void init() async {
-    _recipes =
-        await widget.backendClient.subscribe(this, "com.tabetai2.recipes");
-    _ingredients =
-        await widget.backendClient.subscribe(this, "com.tabetai2.ingredients");
+    _recipes = await widget.backendClient.subscribe(this, "com.tabetai2.recipes");
+    _ingredients = await widget.backendClient.subscribe(this, "com.tabetai2.ingredients");
     _units = await widget.backendClient.subscribe(this, "com.tabetai2.units");
     setState(() {});
   }
@@ -70,8 +66,7 @@ class _RecipesViewWidgetState extends State<RecipesViewWidget>
                 },
               ));
         },
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 10, crossAxisSpacing: 10),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 10, crossAxisSpacing: 10),
       ).build(context),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -93,8 +88,7 @@ class _RecipesViewWidgetState extends State<RecipesViewWidget>
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          EditRecipeViewWidget(
+                                      builder: (BuildContext context) => EditRecipeViewWidget(
                                             title: controller.text,
                                             backendClient: widget.backendClient,
                                             ingredientsData: _ingredients,

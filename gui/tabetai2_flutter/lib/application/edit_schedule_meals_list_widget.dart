@@ -22,8 +22,7 @@ class EditScheduleMealsListWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _EditScheduleMealsListWidgetState();
 }
 
-class _EditScheduleMealsListWidgetState
-    extends State<EditScheduleMealsListWidget> {
+class _EditScheduleMealsListWidgetState extends State<EditScheduleMealsListWidget> {
   late final String defaultRecipeId;
 
   @override
@@ -43,8 +42,8 @@ class _EditScheduleMealsListWidgetState
               itemCount: widget.mealsData.length,
               itemBuilder: (BuildContext context, int index) {
                 String mealRecipeId = widget.mealsData[index].recipeId;
-                RecipeData mealRecipeData = widget.recipesData
-                    .firstWhere((recipeData) => recipeData.id == mealRecipeId);
+                RecipeData mealRecipeData =
+                    widget.recipesData.firstWhere((recipeData) => recipeData.id == mealRecipeId);
                 return InkWell(
                     onTap: () {
                       showDialog(
@@ -53,11 +52,9 @@ class _EditScheduleMealsListWidgetState
                             int _servings = 4;
                             bool _isLeftovers = false;
                             String _comment = "";
-                            return StatefulBuilder(
-                                builder: (BuildContext context, setState2) {
+                            return StatefulBuilder(builder: (BuildContext context, setState2) {
                               return SimpleDialog(
-                                title: const Text("Select a Meal",
-                                    textAlign: TextAlign.center),
+                                title: const Text("Select a Meal", textAlign: TextAlign.center),
                                 children: [
                                   Slider(
                                       value: _servings.toDouble(),
@@ -66,8 +63,7 @@ class _EditScheduleMealsListWidgetState
                                       max: 8,
                                       label: _servings.toString(),
                                       onChanged: (double value) {
-                                        setState2(
-                                            () => {_servings = value.round()});
+                                        setState2(() => {_servings = value.round()});
                                       }),
                                   CheckboxListTile(
                                       value: _isLeftovers,
@@ -76,8 +72,7 @@ class _EditScheduleMealsListWidgetState
                                         textAlign: TextAlign.right,
                                       ),
                                       onChanged: (checkBoxValue) {
-                                        setState2(() =>
-                                            {_isLeftovers = checkBoxValue!});
+                                        setState2(() => {_isLeftovers = checkBoxValue!});
                                       }),
                                   TextField(
                                     decoration: InputDecoration(
@@ -93,30 +88,18 @@ class _EditScheduleMealsListWidgetState
                                       child: Column(children: [
                                         ListView.builder(
                                             shrinkWrap: true,
-                                            itemCount:
-                                                widget.recipesData.length,
-                                            itemBuilder: (BuildContext context,
-                                                int recipeIndex) {
+                                            itemCount: widget.recipesData.length,
+                                            itemBuilder: (BuildContext context, int recipeIndex) {
                                               return InkWell(
-                                                child: Text(
-                                                    widget
-                                                        .recipesData[
-                                                            recipeIndex]
-                                                        .name,
-                                                    textScaleFactor: 2.0,
-                                                    textAlign:
-                                                        TextAlign.center),
+                                                child: Text(widget.recipesData[recipeIndex].name,
+                                                    textScaleFactor: 2.0, textAlign: TextAlign.center),
                                                 onTap: () {
                                                   setState(() {
-                                                    widget.mealsData[index] =
-                                                        MealData(
-                                                            widget
-                                                                .recipesData[
-                                                                    recipeIndex]
-                                                                .id,
-                                                            _servings,
-                                                            _isLeftovers,
-                                                            _comment);
+                                                    widget.mealsData[index] = MealData(
+                                                        widget.recipesData[recipeIndex].id,
+                                                        _servings,
+                                                        _isLeftovers,
+                                                        _comment);
                                                   });
                                                   Navigator.pop(context);
                                                 },
@@ -132,12 +115,9 @@ class _EditScheduleMealsListWidgetState
                     child: Column(children: [
                       const Padding(padding: EdgeInsets.only(top: 15)),
                       Text(mealRecipeData.name, textScaleFactor: 2.0),
-                      Text("Servings: ${widget.mealsData[index].servings}",
-                          textScaleFactor: 1.0),
-                      Text("Leftovers: ${widget.mealsData[index].isLeftovers}",
-                          textScaleFactor: 1.0),
-                      Text("Comment: ${widget.mealsData[index].comment}",
-                          textScaleFactor: 1.0),
+                      Text("Servings: ${widget.mealsData[index].servings}", textScaleFactor: 1.0),
+                      Text("Leftovers: ${widget.mealsData[index].isLeftovers}", textScaleFactor: 1.0),
+                      Text("Comment: ${widget.mealsData[index].comment}", textScaleFactor: 1.0),
                       const Padding(padding: EdgeInsets.only(top: 15)),
                     ]));
               }),
@@ -150,8 +130,7 @@ class _EditScheduleMealsListWidgetState
             TextButton(
                 onPressed: () => {
                       setState(() {
-                        widget.mealsData
-                            .add(MealData(defaultRecipeId, 4, false, ""));
+                        widget.mealsData.add(MealData(defaultRecipeId, 4, false, ""));
                       })
                     },
                 child: const Text("+", textScaleFactor: 3.0)),

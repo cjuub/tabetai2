@@ -9,10 +9,7 @@ class EditRecipeIngredientListWidget extends StatefulWidget {
   final List<String> units;
 
   EditRecipeIngredientListWidget(
-      {required this.ingredientsData,
-      required this.recipeIngredientsData,
-      required this.units,
-      Key? key})
+      {required this.ingredientsData, required this.recipeIngredientsData, required this.units, Key? key})
       : super(key: key) {
     for (IngredientData ingredientData in ingredientsData) {
       ingredientsDataMap[ingredientData.id] = ingredientData;
@@ -23,8 +20,7 @@ class EditRecipeIngredientListWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _EditRecipeIngredientListWidgetState();
 }
 
-class _EditRecipeIngredientListWidgetState
-    extends State<EditRecipeIngredientListWidget> {
+class _EditRecipeIngredientListWidgetState extends State<EditRecipeIngredientListWidget> {
   int _servings = 4;
   late final String defaultIngredientId;
   late final String defaultUnit;
@@ -37,8 +33,8 @@ class _EditRecipeIngredientListWidgetState
     defaultUnit = widget.units[0];
 
     if (widget.recipeIngredientsData.isEmpty) {
-      widget.recipeIngredientsData.add(RecipeIngredientData(
-          defaultIngredientId, RecipeIngredientQuantityData(0, defaultUnit)));
+      widget.recipeIngredientsData
+          .add(RecipeIngredientData(defaultIngredientId, RecipeIngredientQuantityData(0, defaultUnit)));
     }
   }
 
@@ -82,10 +78,8 @@ class _EditRecipeIngredientListWidgetState
         TextButton(
             onPressed: () => {
                   setState(() {
-                    RecipeIngredientQuantityData quantity =
-                        RecipeIngredientQuantityData(1, widget.units[0]);
-                    widget.recipeIngredientsData.add(
-                        RecipeIngredientData(defaultIngredientId, quantity));
+                    RecipeIngredientQuantityData quantity = RecipeIngredientQuantityData(1, widget.units[0]);
+                    widget.recipeIngredientsData.add(RecipeIngredientData(defaultIngredientId, quantity));
                   })
                 },
             child: const Text("+", textScaleFactor: 3.0)),
@@ -148,9 +142,8 @@ class _RecipeIngredientState extends State<RecipeIngredientWidget> {
 
   void setRecipeIngredient() {
     double amount = double.parse(selectedAmount);
-    widget.recipeIngredientsData[widget.index] = RecipeIngredientData(
-        selectedIngredientId,
-        RecipeIngredientQuantityData(amount, selectedUnit));
+    widget.recipeIngredientsData[widget.index] =
+        RecipeIngredientData(selectedIngredientId, RecipeIngredientQuantityData(amount, selectedUnit));
   }
 
   @override
@@ -160,8 +153,7 @@ class _RecipeIngredientState extends State<RecipeIngredientWidget> {
       DropdownButton<String>(
           value: selectedIngredientId,
           items: widget.ingredientsDataMap.keys.map((String id) {
-            return DropdownMenuItem<String>(
-                value: id, child: Text(widget.ingredientsDataMap[id]!.name));
+            return DropdownMenuItem<String>(value: id, child: Text(widget.ingredientsDataMap[id]!.name));
           }).toList(),
           onChanged: (String? val) {
             setState(() {
@@ -172,9 +164,7 @@ class _RecipeIngredientState extends State<RecipeIngredientWidget> {
       const Padding(padding: EdgeInsets.only(right: 10)),
       Expanded(
           child: TextField(
-              inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r"[0-9.]"))
-          ],
+              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r"[0-9.]"))],
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
               controller: _controller,
@@ -190,8 +180,7 @@ class _RecipeIngredientState extends State<RecipeIngredientWidget> {
               child: DropdownButton<String>(
                   value: selectedUnit,
                   items: widget.units.map((String unit) {
-                    return DropdownMenuItem<String>(
-                        value: unit, child: Text(unit));
+                    return DropdownMenuItem<String>(value: unit, child: Text(unit));
                   }).toList(),
                   onChanged: (String? val) {
                     setState(() {
