@@ -16,10 +16,6 @@
         "CMAKE_BUILD_TYPE": {
           "type": "STRING",
           "value": "Debug"
-        },
-        "TABETAI2_USE_CONAN": {
-          "type": "BOOL",
-          "value": "ON"
         }
       },
       "environment": {
@@ -37,10 +33,6 @@
         "CMAKE_BUILD_TYPE": {
           "type": "STRING",
           "value": "Release"
-        },
-        "TABETAI2_USE_CONAN": {
-          "type": "BOOL",
-          "value": "ON"
         }
       },
       "environment": {
