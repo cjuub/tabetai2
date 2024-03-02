@@ -31,7 +31,6 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
-        range-v3::range-v3
         yaml-cpp::yaml-cpp
     PRIVATE
         tabetai::database
