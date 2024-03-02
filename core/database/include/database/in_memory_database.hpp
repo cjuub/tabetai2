@@ -1,7 +1,6 @@
 #pragma once
 
-#include <range/v3/range/conversion.hpp>
-#include <range/v3/view/map.hpp>
+#include <ranges>
 #include <unordered_map>
 
 #include "database.h"
@@ -24,7 +23,11 @@ public:
     }
 
     std::vector<T> get_all() const override {
-        return m_database | ranges::views::values | ranges::to<std::vector>();
+        std::vector<T> res;
+        for (const auto& e : m_database | std::ranges::views::values) {
+            res.push_back(e);
+        }
+        return res;
     }
 
 private:

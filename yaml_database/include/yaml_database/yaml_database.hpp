@@ -6,8 +6,6 @@
 
 #include <filesystem>
 #include <fstream>
-#include <range/v3/range/conversion.hpp>
-#include <range/v3/view/transform.hpp>
 #include <string>
 
 namespace tabetai2::yaml_database {
@@ -50,13 +48,17 @@ public:
 
     std::vector<T> get_all() const override {
         auto db = m_database[m_database_name];
-        return db | ranges::views::transform([&](auto y) { return from_yaml(y.second); }) | ranges::to<std::vector>();
+        std::vector<T> ts;
+        std::transform(
+            db.begin(), db.end(), std::back_inserter(ts), [&](const auto& entry) { return from_yaml(entry.second); });
+
+        return ts;
     }
 
 protected:
     virtual T from_yaml(YAML::Node entry) const = 0;
 
-    virtual YAML::Node to_yaml(const T &t) const = 0;
+    virtual YAML::Node to_yaml(const T& t) const = 0;
 
 private:
     void commit_changes() {

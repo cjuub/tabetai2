@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.26)
 
 project(tabetai2)
 
-add_subdirectory(third_party/range-v3)
 add_subdirectory(third_party/grpc)
 add_subdirectory(third_party/yaml_cpp)
 add_subdirectory(third_party/catch2)

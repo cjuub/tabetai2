@@ -35,7 +35,6 @@ target_link_libraries(${PROJECT_NAME}
         tabetai::ingredient
     PRIVATE
         tabetai::warning
-        range-v3::range-v3
 )
 
 add_subdirectory(test)

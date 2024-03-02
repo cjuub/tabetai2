@@ -30,5 +30,4 @@ target_link_libraries(${PROJECT_NAME}
         tabetai::repository
     PRIVATE
         tabetai::warning
-        range-v3::range-v3
 )
