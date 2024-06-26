@@ -17,21 +17,21 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    - name: ubuntu-22.04-gcc-13
-                      os: ubuntu-22.04
+                    - name: ubuntu-24.04-gcc-14
+                      os: ubuntu-24.04
                       compiler: gcc
-                      version: '13'
+                      version: '14'
 
-                    - name: ubuntu-22.04-clang-16
-                      os: ubuntu-22.04
+                    - name: ubuntu-24.04-clang-17
+                      os: ubuntu-24.04
                       compiler: clang
-                      version: '16'
+                      version: '17'
 
         steps:
-            - uses: actions/checkout@v2
-            - uses: actions/setup-python@v2
+            - uses: actions/checkout@v4
+            - uses: actions/setup-python@v5
               with:
-                  python-version: '3.10'
+                  python-version: '3.11'
             - name: Install CI tools
               run: |
                   pip install pre-commit==3.6.0
