@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tabetai2_flutter/backend/backend_data.dart';
 
 class ScheduleSummaryView extends StatelessWidget {
@@ -29,9 +28,10 @@ class ScheduleSummaryView extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 IngredientData ingredientData = ingredientsDataMap[summary.ingredients[index].id]!;
 
+                final amountFormatter = NumberFormat("#.##");
                 String amountStr = "";
                 for (RecipeIngredientQuantityData quantity in summary.ingredients[index].quantities) {
-                  amountStr += quantity.amount.toString() + " " + quantity.unit + " + ";
+                  amountStr += amountFormatter.format(quantity.amount) + " " + quantity.unit + " + ";
                 }
                 if (amountStr.isNotEmpty) {
                   amountStr = amountStr.substring(0, amountStr.length - 3);

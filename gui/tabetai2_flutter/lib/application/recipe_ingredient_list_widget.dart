@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tabetai2_flutter/backend/backend_data.dart';
 
 class RecipeIngredientListWidget extends StatefulWidget {
@@ -80,8 +81,9 @@ class RecipeIngredientWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String ingredientName = ingredientData.name;
     RecipeIngredientQuantityData quantity = recipeIngredientData.quantity;
-    double amount = (quantity.amount / recipeServings) * userServings;
-    String amountStr = amount.toString() + " " + quantity.unit;
+    final amountFormatter = NumberFormat("#.##");
+    String amount = amountFormatter.format((quantity.amount / recipeServings) * userServings);
+    String amountStr = amount + " " + quantity.unit;
     return Row(children: [
       Text(ingredientName, textScaleFactor: 1.1),
       const Padding(padding: EdgeInsets.only(bottom: 30)),
