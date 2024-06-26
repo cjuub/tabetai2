@@ -1,6 +1,7 @@
 #include <schedule/schedule.h>
 
 #include <algorithm>
+#include <iostream>
 #include <map>
 #include <optional>
 #include <utility>
@@ -44,7 +45,7 @@ ScheduleSummary Schedule::summary() const {
             auto recipe_ingredients = meal.recipe().ingredients();
             auto recipe_servings = meal.recipe().servings();
             for (const auto &recipe_ingredient : recipe_ingredients) {
-                unsigned amount = 0;
+                double amount = 0;
                 std::pair<ingredient::Ingredient, std::optional<recipe::Quantity>> ing =
                     std::make_pair(recipe_ingredient.first, std::nullopt);
                 auto key = std::to_string(recipe_ingredient.first.id());
