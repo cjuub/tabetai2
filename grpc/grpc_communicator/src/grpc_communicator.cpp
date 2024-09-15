@@ -2,12 +2,18 @@
 #include <grpcpp/security/server_credentials.h>
 #include <grpcpp/server.h>
 #include <grpcpp/server_builder.h>
+#include <schedule/external_recipe_meal.h>
+#include <schedule/leftovers_meal.h>
+#include <schedule/other_meal.h>
+#include <schedule/recipe_meal.h>
 
 #include <chrono>
+#include <memory>
 #include <string>
 #include <thread>
 #include <utility>
 
+#include "schedule/leftovers_meal.h"
 #include "tabetai2.grpc.pb.h"
 #include "tabetai2.pb.h"
 
@@ -82,11 +88,62 @@ public:
             for (const auto &day : schedule.days()) {
                 auto day_entry = schedule_entry.add_days();
                 for (const auto &meal : day.meals()) {
-                    auto meal_entry = day_entry->add_meals();
-                    meal_entry->set_recipe_id(meal.recipe().id());
-                    meal_entry->set_servings(meal.servings());
-                    meal_entry->set_is_leftovers(meal.is_leftovers());
-                    meal_entry->set_comment(meal.comment());
+                    auto schedule_day_meal_entry = day_entry->add_meals();
+                    switch (meal->type()) {
+                        case MealType::Recipe: {
+                            auto recipe_meal = dynamic_cast<const tabetai2::core::schedule::RecipeMeal &>(*meal);
+
+                            schedule_day_meal_entry->set_type(::MealType::RECIPE);
+
+                            auto recipe_meal_entry = schedule_day_meal_entry->mutable_recipe_meal();
+                            recipe_meal_entry->set_recipe_id(recipe_meal.recipe().id());
+
+                            auto meal_entry = recipe_meal_entry->mutable_meal();
+                            meal_entry->set_title(recipe_meal.title());
+                            meal_entry->set_servings(recipe_meal.servings());
+                            meal_entry->set_comment(recipe_meal.comment());
+                            break;
+                        }
+                        case MealType::ExternalRecipe: {
+                            auto external_recipe_meal =
+                                dynamic_cast<const tabetai2::core::schedule::ExternalRecipeMeal &>(*meal);
+
+                            schedule_day_meal_entry->set_type(::MealType::EXTERNAL_RECIPE);
+
+                            auto external_recipe_meal_entry = schedule_day_meal_entry->mutable_external_recipe_meal();
+                            external_recipe_meal_entry->set_url(external_recipe_meal.url());
+
+                            auto meal_entry = external_recipe_meal_entry->mutable_meal();
+                            meal_entry->set_title(external_recipe_meal.title());
+                            meal_entry->set_servings(external_recipe_meal.servings());
+                            meal_entry->set_comment(external_recipe_meal.comment());
+                            break;
+                        }
+                        case MealType::Leftovers: {
+                            auto leftovers_meal = dynamic_cast<const tabetai2::core::schedule::LeftoversMeal &>(*meal);
+
+                            schedule_day_meal_entry->set_type(::MealType::LEFTOVERS);
+
+                            auto leftovers_meal_entry = schedule_day_meal_entry->mutable_leftovers_meal();
+                            auto meal_entry = leftovers_meal_entry->mutable_meal();
+                            meal_entry->set_title(leftovers_meal.title());
+                            meal_entry->set_servings(leftovers_meal.servings());
+                            meal_entry->set_comment(leftovers_meal.comment());
+                            break;
+                        }
+                        case MealType::Other: {
+                            auto other_meal = dynamic_cast<const tabetai2::core::schedule::OtherMeal &>(*meal);
+
+                            schedule_day_meal_entry->set_type(::MealType::OTHER);
+
+                            auto other_meal_entry = schedule_day_meal_entry->mutable_other_meal();
+                            auto meal_entry = other_meal_entry->mutable_meal();
+                            meal_entry->set_title(other_meal.title());
+                            meal_entry->set_servings(other_meal.servings());
+                            meal_entry->set_comment(other_meal.comment());
+                            break;
+                        }
+                    }
                 }
             }
             writer->Write(schedule_entry);
@@ -142,18 +199,52 @@ public:
         auto id = m_id_generator->generate();
         Schedule schedule{id, request->start_date()};
         for (const auto &day_entry : request->days()) {
-            ScheduleDay day;
-            for (const auto &meal_entry : day_entry.meals()) {
-                auto recipe = m_recipe_repository->find_by_id(meal_entry.recipe_id());
-                if (!recipe) {
-                    return {grpc::StatusCode::ABORTED, "Invalid recipe ID in schedule"};
+            core::schedule::ScheduleDay day;
+            for (const auto &schedule_day_meal_entry : day_entry.meals()) {
+                switch (schedule_day_meal_entry.type()) {
+                    case ::MealType::RECIPE: {
+                        auto recipe_meal_entry = schedule_day_meal_entry.recipe_meal();
+                        auto recipe = m_recipe_repository->find_by_id(recipe_meal_entry.recipe_id());
+                        if (!recipe) {
+                            return {grpc::StatusCode::ABORTED, "Invalid recipe ID in schedule"};
+                        }
+                        day.add_meal(std::make_unique<core::schedule::RecipeMeal>(
+                            *recipe, recipe_meal_entry.meal().servings(), recipe_meal_entry.meal().comment()));
+                        break;
+                    }
+                    case ::MealType::EXTERNAL_RECIPE: {
+                        auto external_recipe_meal_entry = schedule_day_meal_entry.external_recipe_meal();
+                        day.add_meal(std::make_unique<core::schedule::ExternalRecipeMeal>(
+                            external_recipe_meal_entry.meal().title(),
+                            external_recipe_meal_entry.url(),
+                            external_recipe_meal_entry.meal().servings(),
+                            external_recipe_meal_entry.meal().comment()));
+                        break;
+                    }
+                    case ::MealType::LEFTOVERS: {
+                        auto leftovers_meal_entry = schedule_day_meal_entry.leftovers_meal();
+                        day.add_meal(
+                            std::make_unique<core::schedule::LeftoversMeal>(leftovers_meal_entry.meal().title(),
+                                                                            leftovers_meal_entry.meal().servings(),
+                                                                            leftovers_meal_entry.meal().comment()));
+                        break;
+                    }
+                    case ::MealType::OTHER: {
+                        auto external_recipe_meal_entry = schedule_day_meal_entry.other_meal();
+                        day.add_meal(std::make_unique<core::schedule::LeftoversMeal>(
+                            external_recipe_meal_entry.meal().title(),
+                            external_recipe_meal_entry.meal().servings(),
+                            external_recipe_meal_entry.meal().comment()));
+                        break;
+                    }
+                    default:
+                        return {grpc::StatusCode::ABORTED, "Invalid meal type in schedule"};
                 }
-                day.add_meal({recipe.value(), meal_entry.servings(), meal_entry.is_leftovers(), meal_entry.comment()});
             }
-            schedule.add_day(day);
+            schedule.add_day(std::move(day));
         }
 
-        m_schedule_repository->add(schedule);
+        m_schedule_repository->add(std::move(schedule));
         schedule_id->set_schedule_id(id);
         return grpc::Status::OK;
     }
@@ -193,18 +284,54 @@ public:
                                  UpdateScheduleResponse *schedule_id) override {
         Schedule schedule{request->id(), request->start_date()};
         for (const auto &day_entry : request->days()) {
-            ScheduleDay day;
+            core::schedule::ScheduleDay day;
             for (const auto &meal_entry : day_entry.meals()) {
-                auto recipe = m_recipe_repository->find_by_id(meal_entry.recipe_id());
-                if (!recipe) {
-                    return {grpc::StatusCode::ABORTED, "Invalid recipe ID in schedule"};
+                switch (meal_entry.type()) {
+                    case ::MealType::RECIPE: {
+                        auto recipe_meal_entry = meal_entry.recipe_meal();
+                        auto recipe = m_recipe_repository->find_by_id(recipe_meal_entry.recipe_id());
+                        if (!recipe) {
+                            return {grpc::StatusCode::ABORTED, "Invalid recipe ID in schedule"};
+                        }
+                        day.add_meal(std::make_unique<core::schedule::RecipeMeal>(
+                            *recipe, recipe_meal_entry.meal().servings(), recipe_meal_entry.meal().comment()));
+                    } break;
+                    case ::MealType::EXTERNAL_RECIPE: {
+                        auto external_recipe_meal_entry = meal_entry.external_recipe_meal();
+                        auto external_recipe_meal = std::make_unique<core::schedule::ExternalRecipeMeal>(
+                            external_recipe_meal_entry.meal().title(),
+                            external_recipe_meal_entry.url(),
+                            external_recipe_meal_entry.meal().servings(),
+                            external_recipe_meal_entry.meal().comment());
+                        day.add_meal(std::move(external_recipe_meal));
+                        break;
+                    }
+                    case ::MealType::LEFTOVERS: {
+                        auto leftovers_meal_entry = meal_entry.leftovers_meal();
+                        auto leftovers_meal =
+                            std::make_unique<core::schedule::LeftoversMeal>(leftovers_meal_entry.meal().title(),
+                                                                            leftovers_meal_entry.meal().servings(),
+                                                                            leftovers_meal_entry.meal().comment());
+                        day.add_meal(std::move(leftovers_meal));
+                        break;
+                    }
+                    case ::MealType::OTHER: {
+                        auto other_meal_entry = meal_entry.other_meal();
+                        auto other_meal =
+                            std::make_unique<core::schedule::OtherMeal>(other_meal_entry.meal().title(),
+                                                                        other_meal_entry.meal().servings(),
+                                                                        other_meal_entry.meal().comment());
+                        day.add_meal(std::move(other_meal));
+                        break;
+                    }
+                    default:
+                        return {grpc::StatusCode::ABORTED, "Invalid meal type in schedule"};
                 }
-                day.add_meal({recipe.value(), meal_entry.servings(), meal_entry.is_leftovers(), meal_entry.comment()});
             }
-            schedule.add_day(day);
+            schedule.add_day(std::move(day));
         }
 
-        m_schedule_repository->add(schedule);
+        m_schedule_repository->add(std::move(schedule));
         return grpc::Status::OK;
     }
 

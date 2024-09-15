@@ -5,6 +5,10 @@ add_library(${PROJECT_NAME}
     include/schedule/schedule_repository.h
     include/schedule/schedule_day.h
     include/schedule/schedule_summary.h
+    include/schedule/recipe_meal.h
+    include/schedule/external_recipe_meal.h
+    include/schedule/leftovers_meal.h
+    include/schedule/other_meal.h
     include/schedule/meal.h
 
     src/schedule.cpp
@@ -12,6 +16,10 @@ add_library(${PROJECT_NAME}
     src/schedule_day.cpp
     src/schedule_summary.cpp
     src/meal.cpp
+    src/recipe_meal.cpp
+    src/external_recipe_meal.cpp
+    src/leftovers_meal.cpp
+    src/other_meal.cpp
 )
 
 add_library(tabetai::schedule ALIAS ${PROJECT_NAME})

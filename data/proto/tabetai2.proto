@@ -107,14 +107,53 @@ message EraseRecipeRequest {
 message EraseRecipeResponse {}
 
 message Meal {
-  uint64 recipe_id = 1;
+  string title = 1;
   uint32 servings = 2;
-  bool is_leftovers = 3;
-  string comment = 4;
+  string comment = 3;
+}
+
+message RecipeMeal {
+  Meal meal = 1;
+  uint64 recipe_id = 2;
+}
+
+message ExternalRecipeMeal {
+  Meal meal = 1;
+  string url = 2;
+}
+
+message RecipeLeftoversMeal {
+  Meal meal = 1;
+  uint64 recipe_id = 2;
+}
+
+message LeftoversMeal {
+  Meal meal = 1;
+}
+
+message OtherMeal {
+  Meal meal = 1;
+}
+
+enum MealType {
+  RECIPE = 0;
+  EXTERNAL_RECIPE = 1;
+  LEFTOVERS = 2;
+  OTHER = 3;
+}
+
+message ScheduleDayMeal {
+  MealType type = 1;
+  oneof meal_type {
+    RecipeMeal recipe_meal = 2;
+    ExternalRecipeMeal external_recipe_meal = 3;
+    LeftoversMeal leftovers_meal = 4;
+    OtherMeal other_meal = 5;
+  }
 }
 
 message ScheduleDay {
-  repeated Meal meals = 1;
+  repeated ScheduleDayMeal meals = 1;
 }
 
 message Schedule {

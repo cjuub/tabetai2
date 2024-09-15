@@ -30,12 +30,31 @@ class RecipeData {
 }
 
 class MealData {
-  final String recipeId;
+  final String title;
   final int servings;
-  final bool isLeftovers;
   final String comment;
 
-  MealData(this.recipeId, this.servings, this.isLeftovers, this.comment);
+  MealData(this.title, this.servings, this.comment);
+}
+
+class RecipeMealData extends MealData {
+  final String recipeId;
+
+  RecipeMealData(String title, int servings, String comment, this.recipeId) : super(title, servings, comment);
+}
+
+class ExternalRecipeMealData extends MealData {
+  final String url;
+
+  ExternalRecipeMealData(String title, int servings, String comment, this.url) : super(title, servings, comment);
+}
+
+class LeftoversMealData extends MealData {
+  LeftoversMealData(String title, int servings, String comment) : super(title, servings, comment);
+}
+
+class OtherMealData extends MealData {
+  OtherMealData(String title, int servings, String comment) : super(title, servings, comment);
 }
 
 class ScheduleDayData {

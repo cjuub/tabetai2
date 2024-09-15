@@ -32,29 +32,70 @@ class _ScheduleMealsListWidgetState extends State<ScheduleMealsListWidget> {
             shrinkWrap: true,
             itemCount: widget.mealsData.length,
             itemBuilder: (BuildContext context, int index) {
-              String mealRecipeId = widget.mealsData[index].recipeId;
-              RecipeData mealRecipeData = widget.recipesData.firstWhere((recipeData) => recipeData.id == mealRecipeId);
-              return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => RecipeView(
-                                  backendClient: widget.backendClient,
-                                  recipeData: mealRecipeData,
-                                  ingredientsData: widget.ingredientsData,
-                                  units: widget.units,
-                                  initialServings: widget.mealsData[index].servings,
-                                )));
-                  },
-                  child: Column(children: [
-                    const Padding(padding: EdgeInsets.only(top: 15)),
-                    Text(mealRecipeData.name, textScaleFactor: 2.0),
-                    Text("Servings: ${widget.mealsData[index].servings}", textScaleFactor: 1.0),
-                    Text("Leftovers: ${widget.mealsData[index].isLeftovers}", textScaleFactor: 1.0),
-                    Text("Comment: ${widget.mealsData[index].comment}", textScaleFactor: 1.0),
-                    const Padding(padding: EdgeInsets.only(top: 15)),
-                  ]));
+              MealData mealData = widget.mealsData[index];
+              if (mealData is RecipeMealData) {
+                String mealRecipeId = mealData.recipeId;
+                RecipeData mealRecipeData =
+                    widget.recipesData.firstWhere((recipeData) => recipeData.id == mealRecipeId);
+                return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => RecipeView(
+                                    backendClient: widget.backendClient,
+                                    recipeData: mealRecipeData,
+                                    ingredientsData: widget.ingredientsData,
+                                    units: widget.units,
+                                    initialServings: widget.mealsData[index].servings,
+                                  )));
+                    },
+                    child: Column(children: [
+                      const Padding(padding: EdgeInsets.only(top: 15)),
+                      Text(mealData.title, textScaleFactor: 2.0),
+                      Text("Servings: ${mealData.servings}", textScaleFactor: 1.0),
+                      Text("Comment: ${mealData.comment}", textScaleFactor: 1.0),
+                      const Padding(padding: EdgeInsets.only(top: 15)),
+                    ]));
+              } else if (mealData is ExternalRecipeMealData) {
+                return InkWell(
+                    onTap: () {
+                      // open browser
+                    },
+                    child: Column(children: [
+                      const Padding(padding: EdgeInsets.only(top: 15)),
+                      Text(mealData.title, textScaleFactor: 2.0),
+                      Text("Servings: ${mealData.servings}", textScaleFactor: 1.0),
+                      Text("Comment: ${mealData.comment}", textScaleFactor: 1.0),
+                      const Padding(padding: EdgeInsets.only(top: 15)),
+                    ]));
+              } else if (mealData is LeftoversMealData) {
+                return InkWell(
+                    onTap: () {
+                      // ???
+                    },
+                    child: Column(children: [
+                      const Padding(padding: EdgeInsets.only(top: 15)),
+                      Text(mealData.title, textScaleFactor: 2.0),
+                      Text("Servings: ${mealData.servings}", textScaleFactor: 1.0),
+                      Text("Comment: ${mealData.comment}", textScaleFactor: 1.0),
+                      const Padding(padding: EdgeInsets.only(top: 15)),
+                    ]));
+              } else if (mealData is OtherMealData) {
+                return InkWell(
+                    onTap: () {
+                      // ???
+                    },
+                    child: Column(children: [
+                      const Padding(padding: EdgeInsets.only(top: 15)),
+                      Text(mealData.title, textScaleFactor: 2.0),
+                      Text("Servings: ${mealData.servings}", textScaleFactor: 1.0),
+                      Text("Comment: ${mealData.comment}", textScaleFactor: 1.0),
+                      const Padding(padding: EdgeInsets.only(top: 15)),
+                    ]));
+              } else {
+                return const Text("Unknown meal type");
+              }
             }));
   }
 }

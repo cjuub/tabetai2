@@ -8,6 +8,7 @@
 
 #include "database/database.h"
 #include "ingredient/ingredient.h"
+#include "schedule/recipe_meal.h"
 #include "schedule/schedule_summary.h"
 
 namespace tabetai2::core::schedule {
@@ -25,12 +26,12 @@ std::string Schedule::start_date() const {
     return m_start_date;
 }
 
-std::vector<ScheduleDay> Schedule::days() const {
+const std::vector<ScheduleDay> &Schedule::days() const {
     return m_days;
 }
 
-void Schedule::add_day(const ScheduleDay &day) {
-    m_days.push_back(day);
+void Schedule::add_day(ScheduleDay day) {
+    m_days.push_back(std::move(day));
 }
 
 ScheduleSummary Schedule::summary() const {
@@ -38,19 +39,21 @@ ScheduleSummary Schedule::summary() const {
     std::map<std::string, std::pair<ingredient::Ingredient, std::vector<std::optional<recipe::Quantity>>>> mapper;
     for (const auto &day : m_days) {
         for (const auto &meal : day.meals()) {
-            if (meal.is_leftovers()) {
+            if (meal->type() != MealType::Recipe) {
                 continue;
             }
 
-            auto recipe_ingredients = meal.recipe().ingredients();
-            auto recipe_servings = meal.recipe().servings();
+            auto &recipe_meal = dynamic_cast<const RecipeMeal &>(*meal);
+
+            auto recipe_ingredients = recipe_meal.recipe().ingredients();
+            auto recipe_servings = recipe_meal.recipe().servings();
             for (const auto &recipe_ingredient : recipe_ingredients) {
                 double amount = 0;
                 std::pair<ingredient::Ingredient, std::optional<recipe::Quantity>> ing =
                     std::make_pair(recipe_ingredient.first, std::nullopt);
                 auto key = std::to_string(recipe_ingredient.first.id());
                 if (recipe_ingredient.second.has_value() && recipe_ingredient.second->amount() != 0) {
-                    amount = ((recipe_ingredient.second->amount() / recipe_servings) * meal.servings());
+                    amount = ((recipe_ingredient.second->amount() / recipe_servings) * recipe_meal.servings());
                     ing.second = Quantity(amount, recipe_ingredient.second->unit());
                 }
 

@@ -24,11 +24,13 @@ class EditScheduleMealsListWidget extends StatefulWidget {
 
 class _EditScheduleMealsListWidgetState extends State<EditScheduleMealsListWidget> {
   late final String defaultRecipeId;
+  late final String defaultRecipeName;
 
   @override
   void initState() {
     super.initState();
 
+    defaultRecipeName = widget.recipesData[0].name;
     defaultRecipeId = widget.recipesData[0].id;
   }
 
@@ -41,9 +43,7 @@ class _EditScheduleMealsListWidgetState extends State<EditScheduleMealsListWidge
               shrinkWrap: true,
               itemCount: widget.mealsData.length,
               itemBuilder: (BuildContext context, int index) {
-                String mealRecipeId = widget.mealsData[index].recipeId;
-                RecipeData mealRecipeData =
-                    widget.recipesData.firstWhere((recipeData) => recipeData.id == mealRecipeId);
+                MealData mealData = widget.mealsData[index];
                 return InkWell(
                     onTap: () {
                       showDialog(
@@ -95,11 +95,11 @@ class _EditScheduleMealsListWidgetState extends State<EditScheduleMealsListWidge
                                                     textScaleFactor: 2.0, textAlign: TextAlign.center),
                                                 onTap: () {
                                                   setState(() {
-                                                    widget.mealsData[index] = MealData(
-                                                        widget.recipesData[recipeIndex].id,
+                                                    widget.mealsData[index] = RecipeMealData(
+                                                        widget.recipesData[recipeIndex].name,
                                                         _servings,
-                                                        _isLeftovers,
-                                                        _comment);
+                                                        _comment,
+                                                        widget.recipesData[recipeIndex].id);
                                                   });
                                                   Navigator.pop(context);
                                                 },
@@ -114,9 +114,8 @@ class _EditScheduleMealsListWidgetState extends State<EditScheduleMealsListWidge
                     },
                     child: Column(children: [
                       const Padding(padding: EdgeInsets.only(top: 15)),
-                      Text(mealRecipeData.name, textScaleFactor: 2.0),
+                      Text(mealData.title, textScaleFactor: 2.0),
                       Text("Servings: ${widget.mealsData[index].servings}", textScaleFactor: 1.0),
-                      Text("Leftovers: ${widget.mealsData[index].isLeftovers}", textScaleFactor: 1.0),
                       Text("Comment: ${widget.mealsData[index].comment}", textScaleFactor: 1.0),
                       const Padding(padding: EdgeInsets.only(top: 15)),
                     ]));
@@ -130,7 +129,7 @@ class _EditScheduleMealsListWidgetState extends State<EditScheduleMealsListWidge
             TextButton(
                 onPressed: () => {
                       setState(() {
-                        widget.mealsData.add(MealData(defaultRecipeId, 4, false, ""));
+                        widget.mealsData.add(RecipeMealData(defaultRecipeName, 4, "", defaultRecipeId));
                       })
                     },
                 child: const Text("+", textScaleFactor: 3.0)),

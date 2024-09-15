@@ -1,23 +1,29 @@
-#include <recipe/recipe.h>
+#pragma once
+
+#include <string>
+
+#include "schedule/meal_type.h"
 
 namespace tabetai2::core::schedule {
 
 class Meal {
 public:
-    Meal(recipe::Recipe recipe, unsigned servings, bool is_leftovers, std::string comment);
+    Meal(MealType type, std::string title, unsigned servings, std::string comment);
 
-    recipe::Recipe recipe() const;
+    MealType type() const;
+
+    std::string title() const;
 
     unsigned servings() const;
 
-    bool is_leftovers() const;
-
     std::string comment() const;
 
+    virtual ~Meal() = default;
+
 private:
-    recipe::Recipe m_recipe;
+    MealType m_type;
+    std::string m_title;
     unsigned m_servings;
-    bool m_is_leftovers;
     std::string m_comment;
 };
 

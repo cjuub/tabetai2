@@ -34,6 +34,7 @@ add_custom_command(
         --plugin protoc-gen-dart=${GRPC_DART_PLUGIN} "${tabetai2_proto}"
     DEPENDS
         install_grpc_dart_plugin
+        "${tabetai2_proto}"
 )
 
 add_custom_target(${PROJECT_NAME}

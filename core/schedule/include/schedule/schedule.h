@@ -15,11 +15,11 @@ public:
 
     database::Id id() const;
 
-    void add_day(const ScheduleDay& day);
+    void add_day(ScheduleDay day);
 
     std::string start_date() const;
 
-    std::vector<ScheduleDay> days() const;
+    const std::vector<ScheduleDay>& days() const;
 
     ScheduleSummary summary() const;
 

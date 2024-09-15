@@ -82,8 +82,7 @@ class _SchedulesViewWidgetState extends State<SchedulesViewWidget> implements To
     for (ScheduleDayData day in _schedules[index].days) {
       str += DateFormat("EEEE").format(dCurr) + ": ";
       for (MealData meal in day.meals) {
-        RecipeData mealRecipeData = _recipes.firstWhere((recipe) => recipe.id == meal.recipeId);
-        str += "${mealRecipeData.name}, ";
+        str += "${meal.title}, ";
       }
       str = str.substring(0, str.length - 2);
       str += "\n";

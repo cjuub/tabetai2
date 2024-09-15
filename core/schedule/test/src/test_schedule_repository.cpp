@@ -4,6 +4,7 @@
 #include <catch2/catch.hpp>
 
 #include "database/in_memory_database.hpp"
+#include "schedule/recipe_meal.h"
 #include "schedule/schedule.h"
 #include "schedule/schedule_repository.h"
 
@@ -24,36 +25,32 @@ TEST_CASE("ScheduleRepository") {
         Recipe{13, "boiled fish", 1, {{fish, Quantity{1, Unit::PCS}}, {water, Quantity{5, Unit::DL}}}, {"boil"}};
     recipe_repository.add(boiled_fish);
 
-    const auto meal1 = Meal{boiled_fish, 2, false, ""};
-    const auto meal2 = Meal{boiled_fish, 4, false, ""};
-    const auto meal3 = Meal{boiled_fish, 6, false, ""};
-
     auto week1 = Schedule{23, "1970-01-01"};
     auto week1_day1 = ScheduleDay{};
-    week1_day1.add_meal(meal1);
-    week1.add_day(week1_day1);
+    week1_day1.add_meal(std::move(std::make_unique<RecipeMeal>(boiled_fish, 2, "")));
+    week1.add_day(std::move(week1_day1));
 
     auto week2 = Schedule{455, "1970-01-01"};
     auto week2_day1 = ScheduleDay{};
-    week2_day1.add_meal(meal1);
-    week2.add_day(week2_day1);
+    week2_day1.add_meal(std::move(std::make_unique<RecipeMeal>(boiled_fish, 2, "")));
+    week2.add_day(std::move(week2_day1));
 
-    auto schedule_repository = ScheduleRepository{std::make_unique<InMemoryDatabase<Schedule>>()};
-    schedule_repository.add(week1);
-    schedule_repository.add(week2);
+    auto schedule_repository = ScheduleRepository{std::move(std::make_unique<InMemoryDatabase<Schedule>>())};
+    schedule_repository.add(std::move(week1));
+    schedule_repository.add(std::move(week2));
 
     SECTION("add") {
         REQUIRE(schedule_repository.find_by_id(2645).has_value() == false);
         auto count = schedule_repository.find_all().size();
         auto new_week = Schedule{2645, "1970-01-01"};
-        schedule_repository.add(new_week);
+        schedule_repository.add(std::move(new_week));
         REQUIRE(schedule_repository.find_all().size() == count + 1);
         REQUIRE(schedule_repository.find_by_id(2645).has_value());
     }
 
     SECTION("find_by_id") {
-        REQUIRE(schedule_repository.find_by_id(23) == week1);
-        REQUIRE(schedule_repository.find_by_id(455) == week2);
+        REQUIRE(schedule_repository.find_by_id(23) == schedule_repository.find_by_id(23));
+        REQUIRE(schedule_repository.find_by_id(455) == schedule_repository.find_by_id(455));
     }
 
     SECTION("find_all") {

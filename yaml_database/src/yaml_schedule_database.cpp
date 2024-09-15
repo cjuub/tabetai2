@@ -1,7 +1,13 @@
+#include <schedule/external_recipe_meal.h>
+#include <schedule/recipe_meal.h>
 #include <yaml_database/yaml_schedule_database.h>
 
 #include <iostream>
+#include <memory>
 #include <string>
+
+#include "schedule/leftovers_meal.h"
+#include "schedule/other_meal.h"
 
 namespace tabetai2::yaml_database {
 
@@ -25,14 +31,29 @@ Schedule YamlScheduleDatabase::from_yaml(YAML::Node entry) const {
                 std::cout << "Non-existing recipe referenced in schedule." << std::endl;
             }
 
+            auto type = static_cast<MealType>(meal_entry["type"].as<int>());
+            auto title = meal_entry["title"].as<std::string>();
             auto servings = meal_entry["servings"].as<unsigned>();
-            auto is_leftovers = meal_entry["is_leftovers"].as<bool>();
             auto comment = meal_entry["comment"].as<std::string>();
-            Meal meal{recipe.value(), servings, is_leftovers, comment};
-            day.add_meal(meal);
+
+            switch (type) {
+                case MealType::Recipe:
+                    day.add_meal(std::make_unique<RecipeMeal>(recipe.value(), servings, comment));
+                    break;
+                case MealType::ExternalRecipe:
+                    day.add_meal(std::make_unique<ExternalRecipeMeal>(
+                        title, meal_entry["url"].as<std::string>(), servings, comment));
+                    break;
+                case MealType::Leftovers:
+                    day.add_meal(std::make_unique<LeftoversMeal>(title, servings, comment));
+                    break;
+                case MealType::Other:
+                    day.add_meal(std::make_unique<OtherMeal>(title, servings, comment));
+                    break;
+            }
         }
 
-        schedule.add_day(day);
+        schedule.add_day(std::move(day));
     }
 
     return schedule;
@@ -47,10 +68,22 @@ YAML::Node YamlScheduleDatabase::to_yaml(const Schedule &schedule) const {
     for (const auto &day : schedule.days()) {
         size_t meal_index = 0;
         for (const auto &meal : day.meals()) {
-            entry["days"][day_index][meal_index]["recipe"] = meal.recipe().id();
-            entry["days"][day_index][meal_index]["servings"] = meal.servings();
-            entry["days"][day_index][meal_index]["is_leftovers"] = meal.is_leftovers();
-            entry["days"][day_index][meal_index]["comment"] = meal.comment();
+            entry["days"][day_index][meal_index]["type"] = static_cast<unsigned>(meal->type());
+            entry["days"][day_index][meal_index]["title"] = meal->title();
+            entry["days"][day_index][meal_index]["servings"] = meal->servings();
+            entry["days"][day_index][meal_index]["comment"] = meal->comment();
+
+            switch (meal->type()) {
+                case MealType::Recipe:
+                    entry["days"][day_index][meal_index]["recipe"] = dynamic_cast<RecipeMeal &>(*meal).recipe().id();
+                    break;
+                case MealType::ExternalRecipe:
+                    entry["days"][day_index][meal_index]["url"] = dynamic_cast<ExternalRecipeMeal &>(*meal).url();
+                    break;
+                case MealType::Leftovers:
+                case MealType::Other:
+                    break;
+            }
             ++meal_index;
         }
 

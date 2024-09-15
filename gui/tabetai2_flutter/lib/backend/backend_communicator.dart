@@ -151,12 +151,74 @@ class BackendCommunicator {
     for (ScheduleDayData dayData in scheduleDays) {
       ScheduleDay scheduleDay = ScheduleDay();
       for (MealData mealData in dayData.meals) {
-        Meal meal = Meal();
-        meal.servings = mealData.servings;
-        meal.recipeId = Int64.parseInt(mealData.recipeId);
-        meal.isLeftovers = mealData.isLeftovers;
-        meal.comment = mealData.comment;
-        scheduleDay.meals.add(meal);
+        switch (mealData.runtimeType) {
+          case RecipeMealData:
+            RecipeMealData recipeMealData = mealData as RecipeMealData;
+
+            Meal meal = Meal();
+            meal.title = recipeMealData.title;
+            meal.servings = recipeMealData.servings;
+            meal.comment = recipeMealData.comment;
+
+            RecipeMeal recipeMeal = RecipeMeal();
+            recipeMeal.meal = meal;
+            recipeMeal.recipeId = Int64.parseInt(recipeMealData.recipeId);
+
+            ScheduleDayMeal scheduleDayMeal = ScheduleDayMeal();
+            scheduleDayMeal.type = MealType.RECIPE;
+            scheduleDayMeal.recipeMeal = recipeMeal;
+            scheduleDay.meals.add(scheduleDayMeal);
+            break;
+          case ExternalRecipeMealData:
+            ExternalRecipeMealData externalRecipeMealData = mealData as ExternalRecipeMealData;
+
+            Meal meal = Meal();
+            meal.title = externalRecipeMealData.title;
+            meal.servings = externalRecipeMealData.servings;
+            meal.comment = externalRecipeMealData.comment;
+
+            ExternalRecipeMeal externalRecipeMeal = ExternalRecipeMeal();
+            externalRecipeMeal.meal = meal;
+            externalRecipeMeal.url = externalRecipeMealData.url;
+
+            ScheduleDayMeal scheduleDayMeal = ScheduleDayMeal();
+            scheduleDayMeal.type = MealType.EXTERNAL_RECIPE;
+            scheduleDayMeal.externalRecipeMeal = externalRecipeMeal;
+            scheduleDay.meals.add(scheduleDayMeal);
+            break;
+          case LeftoversMealData:
+            LeftoversMealData leftoversMealData = mealData as LeftoversMealData;
+
+            Meal meal = Meal();
+            meal.title = leftoversMealData.title;
+            meal.servings = leftoversMealData.servings;
+            meal.comment = leftoversMealData.comment;
+
+            LeftoversMeal leftoversMeal = LeftoversMeal();
+            leftoversMeal.meal = meal;
+
+            ScheduleDayMeal scheduleDayMeal = ScheduleDayMeal();
+            scheduleDayMeal.type = MealType.LEFTOVERS;
+            scheduleDayMeal.leftoversMeal = leftoversMeal;
+            scheduleDay.meals.add(scheduleDayMeal);
+            break;
+          case OtherMealData:
+            OtherMealData otherMealData = mealData as OtherMealData;
+
+            Meal meal = Meal();
+            meal.title = otherMealData.title;
+            meal.servings = otherMealData.servings;
+            meal.comment = otherMealData.comment;
+
+            OtherMeal otherMeal = OtherMeal();
+            otherMeal.meal = meal;
+
+            ScheduleDayMeal scheduleDayMeal = ScheduleDayMeal();
+            scheduleDayMeal.type = MealType.OTHER;
+            scheduleDayMeal.otherMeal = otherMeal;
+            scheduleDay.meals.add(scheduleDayMeal);
+            break;
+        }
       }
 
       request.days.add(scheduleDay);
@@ -175,12 +237,74 @@ class BackendCommunicator {
     for (ScheduleDayData dayData in scheduleDays) {
       ScheduleDay scheduleDay = ScheduleDay();
       for (MealData mealData in dayData.meals) {
-        Meal meal = Meal();
-        meal.servings = mealData.servings;
-        meal.recipeId = Int64.parseInt(mealData.recipeId);
-        meal.isLeftovers = mealData.isLeftovers;
-        meal.comment = mealData.comment;
-        scheduleDay.meals.add(meal);
+        switch (mealData.runtimeType) {
+          case RecipeMealData:
+            RecipeMealData recipeMealData = mealData as RecipeMealData;
+
+            Meal meal = Meal();
+            meal.title = recipeMealData.title;
+            meal.servings = recipeMealData.servings;
+            meal.comment = recipeMealData.comment;
+
+            RecipeMeal recipeMeal = RecipeMeal();
+            recipeMeal.meal = meal;
+            recipeMeal.recipeId = Int64.parseInt(recipeMealData.recipeId);
+
+            ScheduleDayMeal scheduleDayMeal = ScheduleDayMeal();
+            scheduleDayMeal.type = MealType.RECIPE;
+            scheduleDayMeal.recipeMeal = recipeMeal;
+            scheduleDay.meals.add(scheduleDayMeal);
+            break;
+          case ExternalRecipeMealData:
+            ExternalRecipeMealData externalRecipeMealData = mealData as ExternalRecipeMealData;
+
+            Meal meal = Meal();
+            meal.title = externalRecipeMealData.title;
+            meal.servings = externalRecipeMealData.servings;
+            meal.comment = externalRecipeMealData.comment;
+
+            ExternalRecipeMeal externalRecipeMeal = ExternalRecipeMeal();
+            externalRecipeMeal.meal = meal;
+            externalRecipeMeal.url = externalRecipeMealData.url;
+
+            ScheduleDayMeal scheduleDayMeal = ScheduleDayMeal();
+            scheduleDayMeal.type = MealType.EXTERNAL_RECIPE;
+            scheduleDayMeal.externalRecipeMeal = externalRecipeMeal;
+            scheduleDay.meals.add(scheduleDayMeal);
+            break;
+          case LeftoversMealData:
+            LeftoversMealData leftoversMealData = mealData as LeftoversMealData;
+
+            Meal meal = Meal();
+            meal.title = leftoversMealData.title;
+            meal.servings = leftoversMealData.servings;
+            meal.comment = leftoversMealData.comment;
+
+            LeftoversMeal leftoversMeal = LeftoversMeal();
+            leftoversMeal.meal = meal;
+
+            ScheduleDayMeal scheduleDayMeal = ScheduleDayMeal();
+            scheduleDayMeal.type = MealType.LEFTOVERS;
+            scheduleDayMeal.leftoversMeal = leftoversMeal;
+            scheduleDay.meals.add(scheduleDayMeal);
+            break;
+          case OtherMealData:
+            OtherMealData otherMealData = mealData as OtherMealData;
+
+            Meal meal = Meal();
+            meal.title = otherMealData.title;
+            meal.servings = otherMealData.servings;
+            meal.comment = otherMealData.comment;
+
+            OtherMeal otherMeal = OtherMeal();
+            otherMeal.meal = meal;
+
+            ScheduleDayMeal scheduleDayMeal = ScheduleDayMeal();
+            scheduleDayMeal.type = MealType.OTHER;
+            scheduleDayMeal.otherMeal = otherMeal;
+            scheduleDay.meals.add(scheduleDayMeal);
+            break;
+        }
       }
 
       request.days.add(scheduleDay);
@@ -205,8 +329,30 @@ class BackendCommunicator {
         List<ScheduleDayData> scheduleDayData = [];
         for (ScheduleDay scheduleDay in schedule.days) {
           List<MealData> mealData = [];
-          for (Meal meal in scheduleDay.meals) {
-            mealData.add(MealData(meal.recipeId.toStringUnsigned(), meal.servings, meal.isLeftovers, meal.comment));
+          for (ScheduleDayMeal scheduleDayMeal in scheduleDay.meals) {
+            switch (scheduleDayMeal.type) {
+              case MealType.RECIPE:
+                RecipeMeal recipeMeal = scheduleDayMeal.recipeMeal;
+                Meal meal = recipeMeal.meal;
+                mealData.add(
+                    RecipeMealData(meal.title, meal.servings, meal.comment, recipeMeal.recipeId.toStringUnsigned()));
+                break;
+              case MealType.EXTERNAL_RECIPE:
+                ExternalRecipeMeal externalRecipeMeal = scheduleDayMeal.externalRecipeMeal;
+                Meal meal = externalRecipeMeal.meal;
+                mealData.add(ExternalRecipeMealData(meal.title, meal.servings, meal.comment, externalRecipeMeal.url));
+                break;
+              case MealType.LEFTOVERS:
+                LeftoversMeal leftoversMeal = scheduleDayMeal.leftoversMeal;
+                Meal meal = leftoversMeal.meal;
+                mealData.add(LeftoversMealData(meal.title, meal.servings, meal.comment));
+                break;
+              case MealType.OTHER:
+                OtherMeal otherMeal = scheduleDayMeal.otherMeal;
+                Meal meal = otherMeal.meal;
+                mealData.add(OtherMealData(meal.title, meal.servings, meal.comment));
+                break;
+            }
           }
           scheduleDayData.add(ScheduleDayData(mealData));
         }

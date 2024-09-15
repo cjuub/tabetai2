@@ -1,12 +1,14 @@
 #include <schedule/schedule_day.h>
 
+#include "schedule/meal.h"
+
 namespace tabetai2::core::schedule {
 
-void ScheduleDay::add_meal(const Meal &meal) {
-    m_meals.push_back(meal);
+void ScheduleDay::add_meal(std::unique_ptr<Meal> meal) {
+    m_meals.push_back(std::move(meal));
 }
 
-std::vector<Meal> ScheduleDay::meals() const {
+const std::vector<std::unique_ptr<Meal>>& ScheduleDay::meals() const {
     return m_meals;
 }
 
