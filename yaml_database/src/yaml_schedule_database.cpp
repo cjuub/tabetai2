@@ -26,20 +26,20 @@ Schedule YamlScheduleDatabase::from_yaml(YAML::Node entry) const {
     for (const auto &day_entry : entry["days"]) {
         ScheduleDay day;
         for (const auto &meal_entry : day_entry) {
-            auto recipe = m_recipe_repository->find_by_id(meal_entry["recipe"].as<Id>());
-            if (!recipe) {
-                std::cout << "Non-existing recipe referenced in schedule." << std::endl;
-            }
-
             auto type = static_cast<MealType>(meal_entry["type"].as<int>());
             auto title = meal_entry["title"].as<std::string>();
             auto servings = meal_entry["servings"].as<unsigned>();
             auto comment = meal_entry["comment"].as<std::string>();
 
             switch (type) {
-                case MealType::Recipe:
+                case MealType::Recipe: {
+                    auto recipe = m_recipe_repository->find_by_id(meal_entry["recipe"].as<Id>());
+                    if (!recipe) {
+                        std::cout << "Non-existing recipe referenced in schedule." << std::endl;
+                    }
                     day.add_meal(std::make_unique<RecipeMeal>(recipe.value(), servings, comment));
                     break;
+                }
                 case MealType::ExternalRecipe:
                     day.add_meal(std::make_unique<ExternalRecipeMeal>(
                         title, meal_entry["url"].as<std::string>(), servings, comment));

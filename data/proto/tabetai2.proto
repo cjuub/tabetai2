@@ -122,11 +122,6 @@ message ExternalRecipeMeal {
   string url = 2;
 }
 
-message RecipeLeftoversMeal {
-  Meal meal = 1;
-  uint64 recipe_id = 2;
-}
-
 message LeftoversMeal {
   Meal meal = 1;
 }
