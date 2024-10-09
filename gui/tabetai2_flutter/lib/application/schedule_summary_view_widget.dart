@@ -8,7 +8,8 @@ class ScheduleSummaryView extends StatelessWidget {
   final List<String> units;
   final Map<String, IngredientData> ingredientsDataMap = {};
 
-  ScheduleSummaryView({required this.summary, required this.ingredientsData, required this.units}) {
+  ScheduleSummaryView({Key? key, required this.summary, required this.ingredientsData, required this.units})
+      : super(key: key) {
     for (IngredientData ingredientData in ingredientsData) {
       ingredientsDataMap[ingredientData.id] = ingredientData;
     }

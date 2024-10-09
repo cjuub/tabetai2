@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tabetai2_flutter/backend/backend_data.dart';
@@ -45,7 +43,9 @@ class _RecipeIngredientListWidgetState extends State<RecipeIngredientListWidget>
           max: 8,
           label: _servings.toString(),
           onChanged: (double value) {
-            setState(() => {_servings = value.round()});
+            setState(() {
+              _servings = value.round();
+            });
           }),
       const Padding(padding: EdgeInsets.only(top: 10)),
       Expanded(

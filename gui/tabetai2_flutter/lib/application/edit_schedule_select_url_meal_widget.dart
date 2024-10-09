@@ -29,34 +29,42 @@ class _EditScheduleSelectUrlMealDialogState extends State<EditScheduleSelectUrlM
           max: 8,
           label: _servings.toString(),
           onChanged: (double value) {
-            setState(() => {_servings = value.round()});
+            setState(() {
+              _servings = value.round();
+            });
           },
         ),
         TextField(
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Enter recipe title...',
           ),
           onChanged: (text) {
-            setState(() => {_title = text});
+            setState(() {
+              _title = text;
+            });
           },
         ),
         TextField(
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Enter URL...',
           ),
           onChanged: (text) {
-            setState(() => {_url = text});
+            setState(() {
+              _url = text;
+            });
           },
         ),
         TextField(
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Enter comment...',
           ),
           onChanged: (text) {
-            setState(() => {_comment = text});
+            setState(() {
+              _comment = text;
+            });
           },
         ),
         TextButton(

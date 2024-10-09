@@ -23,12 +23,16 @@ class _EditRecipeStepListState extends State<EditRecipeStepListWidget> {
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         TextButton(
             onPressed: () => {
-                  setState(() => {widget.steps.removeLast()})
+                  setState(() {
+                    widget.steps.removeLast();
+                  })
                 },
             child: const Text("-", textScaleFactor: 3.0)),
         TextButton(
             onPressed: () => {
-                  setState(() => {widget.steps.add("")})
+                  setState(() {
+                    widget.steps.add("");
+                  })
                 },
             child: const Text("+", textScaleFactor: 3.0)),
       ])

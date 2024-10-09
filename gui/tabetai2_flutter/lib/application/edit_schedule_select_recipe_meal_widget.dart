@@ -30,19 +30,23 @@ class _EditScheduleSelectRecipeMealDialogState extends State<EditScheduleSelectR
           max: 8,
           label: _servings.toString(),
           onChanged: (double value) {
-            setState(() => {_servings = value.round()});
+            setState(() {
+              _servings = value.round();
+            });
           },
         ),
         TextField(
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Enter comment...',
           ),
           onChanged: (text) {
-            setState(() => {_comment = text});
+            setState(() {
+              _comment = text;
+            });
           },
         ),
-        Container(
+        SizedBox(
           width: double.minPositive + 1000,
           child: Column(
             children: [

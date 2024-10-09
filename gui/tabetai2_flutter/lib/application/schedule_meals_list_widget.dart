@@ -11,14 +11,14 @@ class ScheduleMealsListWidget extends StatefulWidget {
   final List<String> units;
   final BackendClient backendClient;
 
-  ScheduleMealsListWidget(
+  const ScheduleMealsListWidget(
       {required this.mealsData,
       required this.recipesData,
       required this.ingredientsData,
       required this.units,
       required this.backendClient,
       Key? key})
-      : super(key: key) {}
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ScheduleMealsListWidgetState();
