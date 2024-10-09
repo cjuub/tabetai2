@@ -11,10 +11,10 @@ class EditScheduleSelectRecipeMealDialog extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _EditScheduleMealsListEntryWidgetState();
+  State<StatefulWidget> createState() => _EditScheduleSelectRecipeMealDialogState();
 }
 
-class _EditScheduleMealsListEntryWidgetState extends State<EditScheduleSelectRecipeMealDialog> {
+class _EditScheduleSelectRecipeMealDialogState extends State<EditScheduleSelectRecipeMealDialog> {
   int _servings = 4;
   String _comment = "";
 

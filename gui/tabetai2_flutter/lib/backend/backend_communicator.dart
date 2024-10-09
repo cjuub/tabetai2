@@ -37,7 +37,7 @@ class BackendCommunicator {
         ingredients.add(IngredientData(ingredient.id.toStringUnsigned(), ingredient.name));
       }
     } catch (e) {
-      print('Caught error: $e');
+      print('Caught error in getIngredients: $e');
     }
 
     ingredients.sort((IngredientData a, IngredientData b) => a.name.compareTo(b.name));
@@ -128,7 +128,7 @@ class BackendCommunicator {
             .add(RecipeData(recipe.id.toStringUnsigned(), recipe.name, recipe.servings, ingredientsData, recipe.steps));
       }
     } catch (e) {
-      print('Caught error: $e');
+      print('Caught error in getRecipes: $e');
     }
 
     recipes.sort((RecipeData a, RecipeData b) => a.name.compareTo(b.name));
@@ -360,7 +360,7 @@ class BackendCommunicator {
             .add(ScheduleData(schedule.id.toStringUnsigned(), DateTime.parse(schedule.startDate), scheduleDayData));
       }
     } catch (e) {
-      print('Caught error: $e');
+      print('Caught error in getSchedules: $e');
     }
 
     schedules.sort((ScheduleData a, ScheduleData b) => b.startDate.compareTo(a.startDate));

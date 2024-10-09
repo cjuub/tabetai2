@@ -29,6 +29,22 @@ class _EditScheduleMealsListEntryWidgetState extends State<EditScheduleMealsList
   @override
   Widget build(BuildContext context) {
     MealData mealData = widget.mealsData[widget.index];
+
+    List<Widget> columnEntries = [
+      Text(mealData.title, textScaleFactor: 2.0),
+    ];
+
+    if (mealData is ExternalRecipeMealData) {
+      columnEntries.add(Text("URL: ${mealData.url}", textScaleFactor: 1.0));
+    }
+
+    columnEntries.addAll([
+      const Padding(padding: EdgeInsets.only(top: 15)),
+      Text("Servings: ${mealData.servings}", textScaleFactor: 1.0),
+      Text("Comment: ${mealData.comment}", textScaleFactor: 1.0),
+      const Padding(padding: EdgeInsets.only(top: 15)),
+    ]);
+
     return InkWell(
       onTap: () {
         showDialog(
@@ -46,13 +62,7 @@ class _EditScheduleMealsListEntryWidgetState extends State<EditScheduleMealsList
         );
       },
       child: Column(
-        children: [
-          const Padding(padding: EdgeInsets.only(top: 15)),
-          Text(mealData.title, textScaleFactor: 2.0),
-          Text("Servings: ${mealData.servings}", textScaleFactor: 1.0),
-          Text("Comment: ${mealData.comment}", textScaleFactor: 1.0),
-          const Padding(padding: EdgeInsets.only(top: 15)),
-        ],
+        children: columnEntries,
       ),
     );
   }

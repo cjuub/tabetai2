@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tabetai2_flutter/application/recipe_view.dart';
 import 'package:tabetai2_flutter/backend/backend_client.dart';
 import 'package:tabetai2_flutter/backend/backend_data.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ScheduleMealsListWidget extends StatefulWidget {
   final List<MealData> mealsData;
@@ -60,11 +61,13 @@ class _ScheduleMealsListWidgetState extends State<ScheduleMealsListWidget> {
               } else if (mealData is ExternalRecipeMealData) {
                 return InkWell(
                     onTap: () {
-                      // open browser
+                      final Uri url = Uri.parse(mealData.url);
+                      launchUrl(url);
                     },
                     child: Column(children: [
                       const Padding(padding: EdgeInsets.only(top: 15)),
                       Text(mealData.title, textScaleFactor: 2.0),
+                      Text("URL: ${mealData.url}", textScaleFactor: 1.0),
                       Text("Servings: ${mealData.servings}", textScaleFactor: 1.0),
                       Text("Comment: ${mealData.comment}", textScaleFactor: 1.0),
                       const Padding(padding: EdgeInsets.only(top: 15)),
