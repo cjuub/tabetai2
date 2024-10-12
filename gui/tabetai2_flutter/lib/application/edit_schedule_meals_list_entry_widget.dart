@@ -7,7 +7,6 @@ class EditScheduleMealsListEntryWidget extends StatefulWidget {
   final int index;
   final List<MealData> mealsData;
   final List<RecipeData> recipesData;
-  final List<IngredientData> ingredientsData;
   final List<String> units;
   final BackendClient backendClient;
 
@@ -15,7 +14,6 @@ class EditScheduleMealsListEntryWidget extends StatefulWidget {
       {required this.index,
       required this.mealsData,
       required this.recipesData,
-      required this.ingredientsData,
       required this.units,
       required this.backendClient,
       Key? key})

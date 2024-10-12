@@ -69,6 +69,26 @@ class ScheduleData {
   final List<ScheduleDayData> days;
 
   ScheduleData(this.id, this.startDate, this.days);
+
+  ScheduleData deepCopy() {
+    List<ScheduleDayData> daysCopy = [];
+    for (ScheduleDayData day in days) {
+      List<MealData> mealsCopy = [];
+      for (MealData meal in day.meals) {
+        if (meal is RecipeMealData) {
+          mealsCopy.add(RecipeMealData(meal.title, meal.servings, meal.comment, meal.recipeId));
+        } else if (meal is ExternalRecipeMealData) {
+          mealsCopy.add(ExternalRecipeMealData(meal.title, meal.servings, meal.comment, meal.url));
+        } else if (meal is LeftoversMealData) {
+          mealsCopy.add(LeftoversMealData(meal.title, meal.servings, meal.comment));
+        } else if (meal is OtherMealData) {
+          mealsCopy.add(OtherMealData(meal.title, meal.servings, meal.comment));
+        }
+      }
+      daysCopy.add(ScheduleDayData(mealsCopy));
+    }
+    return ScheduleData(id, startDate, daysCopy);
+  }
 }
 
 class ScheduleSummaryIngredientData {

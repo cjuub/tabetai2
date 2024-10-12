@@ -107,7 +107,7 @@ class _SchedulesViewWidgetState extends State<SchedulesViewWidget> implements To
                         context,
                         MaterialPageRoute(
                             builder: (BuildContext context) => ScheduleView(
-                                scheduleData: _schedules[index],
+                                scheduleId: _schedules[index].id,
                                 recipesData: _recipes,
                                 backendClient: widget.backendClient,
                                 ingredientsData: _ingredients,
@@ -161,9 +161,8 @@ class _SchedulesViewWidgetState extends State<SchedulesViewWidget> implements To
                       startDate: selectedDate,
                       backendClient: widget.backendClient,
                       scheduleId: "",
-                      scheduleDays: const [],
+                      scheduleDaysToModify: [],
                       recipesData: _recipes,
-                      ingredientsData: _ingredients,
                       units: _units,
                     )));
       }),

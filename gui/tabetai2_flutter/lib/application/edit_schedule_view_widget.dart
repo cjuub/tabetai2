@@ -8,9 +8,8 @@ class EditScheduleViewWidget extends StatefulWidget {
   final BackendClient backendClient;
   final DateTime startDate;
   final String scheduleId;
-  final List<ScheduleDayData> scheduleDays;
+  final List<ScheduleDayData> scheduleDaysToModify;
   final List<RecipeData> recipesData;
-  final List<IngredientData> ingredientsData;
   final List<String> units;
 
   const EditScheduleViewWidget({
@@ -18,9 +17,8 @@ class EditScheduleViewWidget extends StatefulWidget {
     required this.backendClient,
     required this.startDate,
     required this.scheduleId,
-    required this.scheduleDays,
+    required this.scheduleDaysToModify,
     required this.recipesData,
-    required this.ingredientsData,
     required this.units,
   }) : super(key: key);
 
@@ -39,16 +37,16 @@ class _EditScheduleViewState extends State<EditScheduleViewWidget> {
     defaultRecipeName = widget.recipesData[0].name;
     defaultRecipeId = widget.recipesData[0].id;
 
-    if (widget.scheduleDays.isEmpty) {
-      widget.scheduleDays.add(ScheduleDayData([RecipeMealData(defaultRecipeName, 4, "", defaultRecipeId)]));
+    if (widget.scheduleDaysToModify.isEmpty) {
+      widget.scheduleDaysToModify.add(ScheduleDayData([RecipeMealData(defaultRecipeName, 4, "", defaultRecipeId)]));
     }
   }
 
   void addSchedule() {
     if (widget.scheduleId.isEmpty) {
-      widget.backendClient.addSchedule(widget.startDate, widget.scheduleDays);
+      widget.backendClient.addSchedule(widget.startDate, widget.scheduleDaysToModify);
     } else {
-      widget.backendClient.updateSchedule(widget.scheduleId, widget.startDate, widget.scheduleDays);
+      widget.backendClient.updateSchedule(widget.scheduleId, widget.startDate, widget.scheduleDaysToModify);
     }
   }
 
@@ -68,7 +66,7 @@ class _EditScheduleViewState extends State<EditScheduleViewWidget> {
             Expanded(
                 child: ListView.builder(
               shrinkWrap: true,
-              itemCount: widget.scheduleDays.length,
+              itemCount: widget.scheduleDaysToModify.length,
               itemBuilder: (BuildContext context, int index) {
                 return Column(mainAxisSize: MainAxisSize.min, children: [
                   Flexible(
@@ -84,9 +82,8 @@ class _EditScheduleViewState extends State<EditScheduleViewWidget> {
                                 textScaleFactor: 1.5,
                               )),
                           EditScheduleMealsListWidget(
-                            mealsData: widget.scheduleDays[index].meals,
+                            mealsData: widget.scheduleDaysToModify[index].meals,
                             recipesData: widget.recipesData,
-                            ingredientsData: widget.ingredientsData,
                             units: widget.units,
                             backendClient: widget.backendClient,
                           )
@@ -100,14 +97,14 @@ class _EditScheduleViewState extends State<EditScheduleViewWidget> {
               TextButton(
                   onPressed: () => {
                         setState(() {
-                          widget.scheduleDays.removeLast();
+                          widget.scheduleDaysToModify.removeLast();
                         })
                       },
                   child: const Text("-", textScaleFactor: 3.0)),
               TextButton(
                   onPressed: () => {
                         setState(() {
-                          widget.scheduleDays
+                          widget.scheduleDaysToModify
                               .add(ScheduleDayData([RecipeMealData(defaultRecipeName, 4, "", defaultRecipeId)]));
                         })
                       },

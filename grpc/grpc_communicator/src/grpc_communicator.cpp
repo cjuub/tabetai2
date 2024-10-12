@@ -293,8 +293,9 @@ public:
                         if (!recipe) {
                             return {grpc::StatusCode::ABORTED, "Invalid recipe ID in schedule"};
                         }
-                        day.add_meal(std::make_unique<core::schedule::RecipeMeal>(
-                            *recipe, recipe_meal_entry.meal().servings(), recipe_meal_entry.meal().comment()));
+                        auto recipe_meal = std::make_unique<core::schedule::RecipeMeal>(
+                            *recipe, recipe_meal_entry.meal().servings(), recipe_meal_entry.meal().comment());
+                        day.add_meal(std::move(recipe_meal));
                     } break;
                     case ::MealType::EXTERNAL_RECIPE: {
                         auto external_recipe_meal_entry = meal_entry.external_recipe_meal();
