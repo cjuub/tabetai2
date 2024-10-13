@@ -84,33 +84,37 @@ class _ScheduleViewState extends State<ScheduleView> implements TopicSubscriber 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(_titleString()),
-          actions: <Widget>[
-            PopupMenuButton<String>(onSelected: (String choice) async {
+      appBar: AppBar(
+        title: Text(_titleString()),
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            onSelected: (String choice) async {
               if (choice == "Delete") {
                 showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text("Confirm Deletion"),
-                        content: const Text("This will permanently delete the schedule!"),
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text("Cancel")),
-                          TextButton(
-                              onPressed: () {
-                                widget.backendClient.removeSchedule(widget.scheduleId);
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                              },
-                              child: const Text("Delete")),
-                        ],
-                      );
-                    });
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text("Confirm Deletion"),
+                      content: const Text("This will permanently delete the schedule!"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("Cancel"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            widget.backendClient.removeSchedule(widget.scheduleId);
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          },
+                          child: const Text("Delete"),
+                        ),
+                      ],
+                    );
+                  },
+                );
               } else if (choice == "Edit") {
                 Navigator.push(
                   context,
@@ -128,52 +132,61 @@ class _ScheduleViewState extends State<ScheduleView> implements TopicSubscriber 
               } else if (choice == "Summary") {
                 ScheduleSummaryData summary = await widget.backendClient.scheduleSummary(widget.scheduleId);
                 await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => ScheduleSummaryView(
-                              summary: summary,
-                              ingredientsData: widget.ingredientsData,
-                              units: widget.units,
-                            )));
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => ScheduleSummaryView(
+                      summary: summary,
+                      ingredientsData: widget.ingredientsData,
+                      units: widget.units,
+                    ),
+                  ),
+                );
               }
-            }, itemBuilder: (BuildContext context) {
-              return {"Edit", "Delete", "Summary"}.map((String choice) {
-                return PopupMenuItem<String>(value: choice, child: Text(choice));
-              }).toList();
-            }),
-          ],
-        ),
-        body: ListView.builder(
-          itemCount: _scheduleData.days.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                    fit: FlexFit.loose,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Padding(padding: EdgeInsets.only(left: 40)),
-                        SizedBox(
-                            width: 150,
-                            child: Text(
-                              _dayString(index),
-                              textScaleFactor: 1.5,
-                            )),
-                        ScheduleMealsListWidget(
-                          mealsData: _scheduleData.days[index].meals,
-                          recipesData: widget.recipesData,
-                          ingredientsData: widget.ingredientsData,
-                          units: widget.units,
-                          backendClient: widget.backendClient,
-                        )
-                      ],
-                    )),
-                const Divider(),
-              ],
-            );
-          },
-        ));
+            },
+            itemBuilder: (BuildContext context) {
+              return {"Edit", "Delete", "Summary"}.map(
+                (String choice) {
+                  return PopupMenuItem<String>(value: choice, child: Text(choice));
+                },
+              ).toList();
+            },
+          ),
+        ],
+      ),
+      body: ListView.builder(
+        itemCount: _scheduleData.days.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(
+                fit: FlexFit.loose,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Padding(padding: EdgeInsets.only(left: 40)),
+                    SizedBox(
+                      width: 150,
+                      child: Text(
+                        _dayString(index),
+                        textScaleFactor: 1.5,
+                      ),
+                    ),
+                    ScheduleMealsListWidget(
+                      mealsData: _scheduleData.days[index].meals,
+                      recipesData: widget.recipesData,
+                      ingredientsData: widget.ingredientsData,
+                      units: widget.units,
+                      backendClient: widget.backendClient,
+                    )
+                  ],
+                ),
+              ),
+              const Divider(),
+            ],
+          );
+        },
+      ),
+    );
   }
 }
