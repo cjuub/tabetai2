@@ -84,6 +84,7 @@ class _EditScheduleViewState extends State<EditScheduleViewWidget> {
                           EditScheduleMealsListWidget(
                             mealsData: widget.scheduleDaysToModify[index].meals,
                             recipesData: widget.recipesData,
+                            scheduleDaysData: widget.scheduleDaysToModify,
                             units: widget.units,
                             backendClient: widget.backendClient,
                           )

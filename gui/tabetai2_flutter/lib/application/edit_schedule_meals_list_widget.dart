@@ -6,11 +6,17 @@ import 'package:tabetai2_flutter/backend/backend_data.dart';
 class EditScheduleMealsListWidget extends StatefulWidget {
   final List<MealData> mealsData;
   final List<RecipeData> recipesData;
+  final List<ScheduleDayData> scheduleDaysData;
   final List<String> units;
   final BackendClient backendClient;
 
   const EditScheduleMealsListWidget(
-      {required this.mealsData, required this.recipesData, required this.units, required this.backendClient, Key? key})
+      {required this.mealsData,
+      required this.recipesData,
+      required this.scheduleDaysData,
+      required this.units,
+      required this.backendClient,
+      Key? key})
       : super(key: key);
 
   @override
@@ -42,6 +48,7 @@ class _EditScheduleMealsListWidgetState extends State<EditScheduleMealsListWidge
                     index: index,
                     mealsData: widget.mealsData,
                     recipesData: widget.recipesData,
+                    scheduleDaysData: widget.scheduleDaysData,
                     units: widget.units,
                     backendClient: widget.backendClient);
               }),
