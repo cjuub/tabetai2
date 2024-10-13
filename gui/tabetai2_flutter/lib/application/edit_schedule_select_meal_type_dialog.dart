@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabetai2_flutter/application/edit_schedule_select_leftovers_meal_widget.dart';
+import 'package:tabetai2_flutter/application/edit_schedule_select_other_meal_widget.dart';
 import 'package:tabetai2_flutter/application/edit_schedule_select_recipe_meal_widget.dart';
 import 'package:tabetai2_flutter/application/edit_schedule_select_url_meal_widget.dart';
 import 'package:tabetai2_flutter/backend/backend_data.dart';
@@ -65,7 +66,16 @@ class EditScheduleSelectMealTypeDialog extends StatelessWidget {
         ),
         InkWell(
           child: const Text("Other", textScaleFactor: 2.0, textAlign: TextAlign.center),
-          onTap: () {},
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return EditScheduleSelectOtherMealDialog(index: index, mealsData: mealsData);
+              },
+            ).then(
+              (value) => {Navigator.pop(context)},
+            );
+          },
         ),
       ],
     );
