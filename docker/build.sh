@@ -6,7 +6,7 @@ PROJECT_ROOT=$(git rev-parse --show-toplevel)
 mkdir -p "${PROJECT_ROOT}/docker/build"
 
 DOCKER_BUILD_DIR="${PROJECT_ROOT}/docker/build"
-BUILD_DIR="${PROJECT_ROOT}/cmake-build-debug"
+BUILD_DIR="${PROJECT_ROOT}/build/Release"
 
 # Create Docker build directory
 rm -rf "${DOCKER_BUILD_DIR}" && mkdir "${DOCKER_BUILD_DIR}"
