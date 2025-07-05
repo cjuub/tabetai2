@@ -1,9 +1,11 @@
 include(FetchContent)
 
+set(ABSL_ENABLE_INSTALL ON)
+
 FetchContent_Declare(
     grpc
     GIT_REPOSITORY https://github.com/grpc/grpc.git
-    GIT_TAG        v1.50.1
+    GIT_TAG        v1.72.2
 )
 
 FetchContent_MakeAvailable(grpc)
