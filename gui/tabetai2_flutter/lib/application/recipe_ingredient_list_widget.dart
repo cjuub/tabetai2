@@ -37,6 +37,7 @@ class _RecipeIngredientListWidgetState extends State<RecipeIngredientListWidget>
     return Column(children: [
       const Padding(padding: EdgeInsets.only(top: 10)),
       Slider(
+          padding: EdgeInsets.zero,
           value: _servings.toDouble(),
           divisions: 7,
           min: 1,
