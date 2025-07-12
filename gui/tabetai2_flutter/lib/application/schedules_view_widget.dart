@@ -125,11 +125,14 @@ class _SchedulesViewWidgetState extends State<SchedulesViewWidget> implements To
                               ),
                               Text(
                                 _weekString(index),
-                                textScaleFactor: 2.0,
+                                textScaleFactor: 1.5,
                               ),
-                              Text(
-                                _dateSpanString(index),
-                                textScaleFactor: 1.0,
+                              Center(
+                                child: Text(
+                                  _dateSpanString(index),
+                                  textScaleFactor: 1.0,
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ]),
                           )),
