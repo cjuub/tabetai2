@@ -42,6 +42,7 @@ class _EditScheduleMealsListWidgetState extends State<EditScheduleMealsListWidge
         child: Column(children: [
           ListView.builder(
               shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: widget.mealsData.length,
               itemBuilder: (BuildContext context, int index) {
                 return EditScheduleMealsListEntryWidget(

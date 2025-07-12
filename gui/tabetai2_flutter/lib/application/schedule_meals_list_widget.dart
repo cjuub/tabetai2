@@ -31,6 +31,7 @@ class _ScheduleMealsListWidgetState extends State<ScheduleMealsListWidget> {
         fit: FlexFit.loose,
         child: ListView.builder(
             shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: widget.mealsData.length,
             itemBuilder: (BuildContext context, int index) {
               MealData mealData = widget.mealsData[index];
@@ -58,9 +59,9 @@ class _ScheduleMealsListWidgetState extends State<ScheduleMealsListWidget> {
                     child: Column(
                       children: [
                         const Padding(padding: EdgeInsets.only(top: 15)),
-                        Text(mealData.title, textScaleFactor: 2.0),
-                        Text("Servings: ${mealData.servings}", textScaleFactor: 1.0),
-                        Text("Comment: ${mealData.comment}", textScaleFactor: 1.0),
+                        Text(mealData.title, textScaler: const TextScaler.linear(2.0)),
+                        Text("Servings: ${mealData.servings}", textScaler: const TextScaler.linear(1.0)),
+                        Text("Comment: ${mealData.comment}", textScaler: const TextScaler.linear(1.0)),
                         const Padding(padding: EdgeInsets.only(top: 15)),
                       ],
                     ),
@@ -77,10 +78,10 @@ class _ScheduleMealsListWidgetState extends State<ScheduleMealsListWidget> {
                     child: Column(
                       children: [
                         const Padding(padding: EdgeInsets.only(top: 15)),
-                        Text(mealData.title, textScaleFactor: 2.0),
-                        Text("URL: ${mealData.url}", textScaleFactor: 1.0),
-                        Text("Servings: ${mealData.servings}", textScaleFactor: 1.0),
-                        Text("Comment: ${mealData.comment}", textScaleFactor: 1.0),
+                        Text(mealData.title, textScaler: const TextScaler.linear(2.0)),
+                        Text("URL: ${mealData.url}", textScaler: const TextScaler.linear(1.0)),
+                        Text("Servings: ${mealData.servings}", textScaler: const TextScaler.linear(1.0)),
+                        Text("Comment: ${mealData.comment}", textScaler: const TextScaler.linear(1.0)),
                         const Padding(padding: EdgeInsets.only(top: 15)),
                       ],
                     ),
@@ -96,9 +97,9 @@ class _ScheduleMealsListWidgetState extends State<ScheduleMealsListWidget> {
                     child: Column(
                       children: [
                         const Padding(padding: EdgeInsets.only(top: 15)),
-                        Text(mealData.title, textScaleFactor: 2.0),
-                        Text("Servings: ${mealData.servings}", textScaleFactor: 1.0),
-                        Text("Comment: ${mealData.comment}", textScaleFactor: 1.0),
+                        Text(mealData.title, textScaler: const TextScaler.linear(2.0)),
+                        Text("Servings: ${mealData.servings}", textScaler: const TextScaler.linear(1.0)),
+                        Text("Comment: ${mealData.comment}", textScaler: const TextScaler.linear(1.0)),
                         const Padding(padding: EdgeInsets.only(top: 15)),
                       ],
                     ),
@@ -114,9 +115,9 @@ class _ScheduleMealsListWidgetState extends State<ScheduleMealsListWidget> {
                     child: Column(
                       children: [
                         const Padding(padding: EdgeInsets.only(top: 15)),
-                        Text(mealData.title, textScaleFactor: 2.0),
-                        Text("Servings: ${mealData.servings}", textScaleFactor: 1.0),
-                        Text("Comment: ${mealData.comment}", textScaleFactor: 1.0),
+                        Text(mealData.title, textScaler: const TextScaler.linear(2.0)),
+                        Text("Servings: ${mealData.servings}", textScaler: const TextScaler.linear(1.0)),
+                        Text("Comment: ${mealData.comment}", textScaler: const TextScaler.linear(1.0)),
                         const Padding(padding: EdgeInsets.only(top: 15)),
                       ],
                     ),
