@@ -29,11 +29,11 @@ class RecipeStepWidget extends StatelessWidget {
       Row(children: [
         Text("${stepIndex + 1}.", textScaleFactor: 1.3, style: const TextStyle(color: Colors.grey)),
         const Padding(
-          padding: EdgeInsets.only(right: 50),
+          padding: EdgeInsets.only(right: 30),
         ),
         Flexible(child: Text(stepString, textScaleFactor: 1.3)),
         const Padding(
-          padding: EdgeInsets.only(right: 100),
+          padding: EdgeInsets.only(right: 40),
         ),
       ])
     ]);
