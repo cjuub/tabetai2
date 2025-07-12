@@ -50,6 +50,7 @@ class _RecipeIngredientListWidgetState extends State<RecipeIngredientListWidget>
       const Padding(padding: EdgeInsets.only(top: 10)),
       Expanded(
           child: ListView.builder(
+              padding: EdgeInsets.zero,
               itemCount: widget.recipeData.ingredients.length,
               itemBuilder: (BuildContext context, int index) {
                 String ingredientId = widget.recipeData.ingredients[index].id;
@@ -83,12 +84,15 @@ class RecipeIngredientWidget extends StatelessWidget {
     RecipeIngredientQuantityData quantity = recipeIngredientData.quantity;
     final amountFormatter = NumberFormat("#.##");
     String amount = amountFormatter.format((quantity.amount / recipeServings) * userServings);
-    String amountStr = amount + " " + quantity.unit;
-    return Row(children: [
-      Text(ingredientName, textScaleFactor: 1.1),
-      const Padding(padding: EdgeInsets.only(bottom: 30)),
-      Expanded(child: Align(alignment: Alignment.centerRight, child: Text(amountStr, textScaleFactor: 1.1))),
-      const Padding(padding: EdgeInsets.only(right: 10)),
-    ]);
+    return ListTile(
+      dense: true,
+      visualDensity: const VisualDensity(vertical: -4),
+      contentPadding: EdgeInsets.zero,
+      title: Text(ingredientName, style: const TextStyle(fontSize: 12)),
+      trailing: Text(
+        amount + " " + quantity.unit,
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+      ),
+    );
   }
 }
